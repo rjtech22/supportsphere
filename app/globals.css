@@ -193,6 +193,16 @@ body{background:#FFFFFF;color:#0F172A}
 .search-filters{display:grid;grid-template-columns:minmax(220px,2fr) repeat(3,minmax(140px,1fr)) auto;gap:10px;padding:14px;background:#F8FAFC;border:1px solid var(--line);border-radius:15px;margin-bottom:28px}.search-filters input,.search-filters select{min-width:0;width:100%;border:1px solid #CBD5E1;border-radius:10px;padding:11px 12px;background:#fff;color:#0F172A}.search-summary{margin:0 0 18px;color:#64748B}.result-section+.result-section{margin-top:42px}.verified-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.verified-item{padding:16px;border:1px solid var(--line);border-radius:12px;background:#fff}.verified-item b,.verified-item span{display:block}.verified-item span{font-size:11px;color:var(--muted);margin-top:4px}.independent-warning{margin:0 0 22px;background:#EFF6FF;border:1px solid #BFDBFE;color:#1E3A8A;padding:16px;border-radius:12px;font-size:13px}.company-mark{display:flex;align-items:center;gap:14px;margin-bottom:22px}.company-mark .company-logo{width:58px;height:58px;font-size:14px}.source-meta{display:block;color:var(--muted);font-size:10px;margin-top:4px}.support-unverified{color:#64748B;font-style:italic}.issue-list{display:flex;flex-wrap:wrap;gap:8px}.issue-list span{background:#EFF6FF;color:#1E3A8A;border:1px solid #BFDBFE;border-radius:999px;padding:7px 10px;font-size:11px}@media(max-width:900px){.search-filters{grid-template-columns:1fr 1fr}.search-filters .button{grid-column:1/-1}.verified-grid{grid-template-columns:1fr 1fr}}@media(max-width:600px){.search-filters{grid-template-columns:1fr}.search-filters .button{grid-column:auto}.verified-grid{grid-template-columns:1fr}}
 @media(max-width:900px){.nav>.country-selector{display:none}.country-hero-tools .country-selector{display:inline-flex;min-width:190px}}
 
+/* Compact company cards */
+.company-grid{gap:14px}
+.company-card{min-height:215px;padding:18px 20px}
+.company-card .company-logo{width:38px;height:38px;font-size:10px;border-radius:9px}
+.company-card .verified{padding:5px 7px}
+.company-card h3{font-size:18px;margin:14px 0 6px}
+.company-card p{display:-webkit-box;overflow:hidden;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-clamp:2;line-height:1.45}
+.company-card .card-link{padding-top:10px;margin-top:14px}
+@media(max-width:600px){.company-card{min-height:200px;padding:17px 18px}}
+
 /* Searchable ISO country selector */
 .country-selector.searchable{padding:5px 6px 5px 11px;max-width:290px}
 .country-selector.searchable input{min-width:0;width:100%;height:34px;border:0;background:transparent;color:#0F172A;font:inherit;outline:0}
