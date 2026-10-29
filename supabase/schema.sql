@@ -135,6 +135,11 @@ alter table public.companies add column if not exists regions jsonb not null def
 alter table public.company_country_support add column if not exists support_hours text;
 alter table public.company_country_support add column if not exists availability text;
 alter table public.company_country_support add column if not exists common_issues jsonb not null default '[]'::jsonb;
+alter table public.company_country_support add column if not exists support_types jsonb not null default '[]'::jsonb;
+alter table public.company_country_support add column if not exists replacement_information text;
+alter table public.company_country_support add column if not exists delivery_tracking_information text;
+alter table public.company_country_support add column if not exists billing_payment_information text;
+alter table public.company_country_support add column if not exists faq_items jsonb not null default '[]'::jsonb;
 alter table public.support_contacts add column if not exists source_url text;
 alter table public.support_contacts add column if not exists verified_at date;
 alter table public.support_contacts drop constraint if exists support_contacts_contact_type_check;

@@ -2,12 +2,22 @@ import fs from "node:fs";
 import vm from "node:vm";
 import ts from "typescript";
 
-const source = fs.readFileSync(new URL("../lib/global-data.ts", import.meta.url), "utf8");
-const compiled = ts.transpileModule(source, {
-  compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 }
-}).outputText;
+function compile(url) {
+  const source = fs.readFileSync(new URL(url, import.meta.url), "utf8");
+  return ts.transpileModule(source, {
+    compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 }
+  }).outputText;
+}
+
+const priorityModule = { exports: {} };
+vm.runInNewContext(compile("../lib/priority-companies.ts"), { module: priorityModule, exports: priorityModule.exports }, { filename: "priority-companies.js" });
+const compiled = compile("../lib/global-data.ts");
 const module = { exports: {} };
-vm.runInNewContext(compiled, { module, exports: module.exports, URL }, { filename: "global-data.js" });
+const require = (id) => {
+  if (id === "@/lib/priority-companies") return priorityModule.exports;
+  throw new Error(`Unexpected audit import: ${id}`);
+};
+vm.runInNewContext(compiled, { module, exports: module.exports, require, URL }, { filename: "global-data.js" });
 
 const { globalCompanies } = module.exports;
 const errors = [];
@@ -30,8 +40,8 @@ for (const company of globalCompanies) {
   if ((company.commonIssues || []).length < 4) errors.push(`${route}: fewer than four common issues`);
   if ((company.complaintSteps || []).length < 4) errors.push(`${route}: incomplete complaint steps`);
   if (!company.escalation || company.escalation.length < 60) errors.push(`${route}: thin escalation guidance`);
-  if (!company.phone && !company.liveChat && !company.email) notices.push(`${route}: official web/self-service only; no verified direct phone, chat or email published`);
-  if (!company.refundCancellation && !company.warranty) notices.push(`${route}: no refund/cancellation or warranty section (may be inapplicable)`);
+  if (!company.phone && !company.tollFree && !company.technicalSupportPhone && !company.salesSupportPhone && !company.whatsapp && !company.liveChat && !company.email) notices.push(`${route}: official web/self-service only; no verified direct phone, chat or email published`);
+  if (!company.refundCancellation && !company.warranty && !company.deliveryTracking && !company.billingPayment) notices.push(`${route}: no refund, warranty, delivery or billing section (may be inapplicable)`);
   if (!company.faqs?.length) notices.push(`${route}: uses localized generic FAQs; company-specific English FAQs not yet added`);
 }
 

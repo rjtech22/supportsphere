@@ -1,3 +1,5 @@
+import { priorityCompanies } from "@/lib/priority-companies";
+
 export type CountryCode = "us" | "in" | "uk" | "ca" | "au";
 export type VerificationStatus = "Verified" | "Needs Review" | "Unverified";
 
@@ -49,6 +51,9 @@ export type GlobalCompany = {
   supportHours?: string;
   warranty?: string;
   refundCancellation?: string;
+  replacement?: string;
+  deliveryTracking?: string;
+  billingPayment?: string;
   complaintSteps: string[];
   escalation: string;
   verifiedAt: string;
@@ -58,7 +63,7 @@ export type GlobalCompany = {
   faqs?: { question: string; answer: string }[];
 };
 
-export const globalCompanies: GlobalCompany[] = [
+const baseCompanies: GlobalCompany[] = [
   {
     slug: "usps", name: "USPS", country: "us", category: "courier-delivery", logoText: "USPS",
     summary: "Official United States Postal Service help for tracking, missing mail, delivery and account issues.",
@@ -310,6 +315,8 @@ export const globalCompanies: GlobalCompany[] = [
     faqs: [{ question: "How do I contact Adobe support?", answer: "Open Adobe's official contact page, sign in and select the affected product, plan or payment issue to see the available support option." }, { question: "How do I cancel an Adobe plan?", answer: "For a plan bought directly from Adobe, sign in, open Plans and payment, choose Manage plan and follow Cancel your plan." }, { question: "Does cancelling an Adobe subscription always create a refund?", answer: "No. Refunds and possible fees depend on the plan, purchase channel and cancellation timing shown in the official cancellation flow." }]
   }
 ];
+
+export const globalCompanies: GlobalCompany[] = [...baseCompanies, ...priorityCompanies];
 
 export const getCountry = (code: string) => countries.find((item) => item.code === code);
 export const getGlobalCompany = (country: string, slug: string) => globalCompanies.find((item) => item.country === country && item.slug === slug);
