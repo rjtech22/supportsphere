@@ -282,6 +282,84 @@ export const guides: Guide[] = [
     ],
     example: "Example: I am following up on case 5678 opened on 1 October. The stated response period has passed. Please confirm ownership of the case and the expected resolution date.",
     faqs: [["Should I open many duplicate tickets?", "Usually no. Duplicate tickets can fragment the history; follow up the original case unless the channel instructs otherwise."], ["Can I use the free follow-up tool?", "Yes. It creates editable text in your browser without requiring payment or login."]]
+  },
+  {
+    slug: "refund-not-received", title: "Refund Not Received: What to Do", category: "refund", readTime: "7 min", updatedAt: "2026-10-30",
+    description: "Trace a missing refund with the merchant, refund reference and original payment provider without exposing sensitive account details.",
+    keywords: ["refund not received", "refund pending", "refund status help", "processed refund missing"],
+    sections: [
+      { heading: "Confirm the merchant's refund status", body: "Open the original order or account and confirm whether the refund is requested, approved or processed. Save the date, amount and reference shown." },
+      { heading: "Check the original payment method", body: "Refunds normally follow the original payment route unless the official policy says otherwise. Check the correct card, bank account, wallet or store balance." },
+      { heading: "Request the refund reference", body: "If the merchant says the refund was processed, ask for the trace, retrieval or refund reference that the payment provider can use. Do not share an OTP, PIN or full card number." },
+      { heading: "Escalate through verified channels", body: "Follow up with the merchant case first. If the refund remains missing, contact the original payment provider through its authenticated app, website or number printed on the card." }
+    ],
+    example: "Example: Refund R-123 for order O-456 was marked processed on 18 October, but it is not visible on the original payment method. Please provide the refund trace reference and confirm the amount.",
+    faqs: [["How long should a refund take?", "There is no universal period. Use the timeline shown by the merchant and payment provider for that transaction."], ["What if the merchant says the refund is complete?", "Ask for the official refund or trace reference, then contact the original payment provider through its verified channel."]]
+  },
+  {
+    slug: "package-delivered-not-received", title: "Package Says Delivered but Not Received", category: "delivery", readTime: "7 min", updatedAt: "2026-10-30",
+    description: "Check delivery evidence, safe locations and household receipt before opening a missing-package case with the seller or carrier.",
+    keywords: ["package says delivered but not received", "delivered package missing", "missing package support", "order not received"],
+    sections: [
+      { heading: "Review the official tracking record", body: "Check the delivery time, location note, photo or signature in the seller or carrier's official tracking page." },
+      { heading: "Check likely receipt locations", body: "Check approved safe places, reception, parcel lockers and household members without publishing your address or access details." },
+      { heading: "Contact the responsible party", body: "For a retail order, start with the seller's order-support flow unless its policy directs you to the carrier. A sender may need to open the carrier claim." },
+      { heading: "Document the missing-package report", body: "Provide the order and tracking references, promised and recorded delivery times, and the resolution requested. Keep the case number." }
+    ],
+    example: "Example: Tracking T-123 shows delivered at 14:20, but the parcel is not at the approved location and no household member received it. Please open a delivery investigation.",
+    faqs: [["Should I contact the seller or carrier first?", "For a retail purchase, the seller is often the best first contact unless the official order page says otherwise."], ["Should I post my delivery address publicly?", "No. Share address details only inside the verified official support process when required."]]
+  },
+  {
+    slug: "tracking-number-not-working", title: "Tracking Number Not Working", category: "delivery", readTime: "6 min", updatedAt: "2026-10-30",
+    description: "Check the carrier, format and first scan before reporting an invalid or inactive parcel tracking number.",
+    keywords: ["tracking number not working", "invalid tracking number", "tracking not updating", "parcel tracking help"],
+    sections: [
+      { heading: "Confirm the carrier and number", body: "Copy the tracking number from the official order or dispatch notice and open the carrier website linked by the seller." },
+      { heading: "Allow for the first carrier scan", body: "A label can be created before the parcel is physically accepted. Check the seller's dispatch status and any stated activation period." },
+      { heading: "Check for a replacement tracking number", body: "International hand-offs, returns or re-shipments can create a new reference. Review the signed-in order and official messages." },
+      { heading: "Report persistent tracking failure", body: "Contact the seller or carrier with the order, tracking reference and dispatch date. Ask whether the parcel was handed over and request a trace when appropriate." }
+    ],
+    example: "Example: Tracking T-123 has shown no valid result since the dispatch notice on 18 October. Please confirm the carrier, hand-over date and correct active tracking reference.",
+    faqs: [["Does a tracking number work immediately?", "Not always. A label may exist before the carrier records its first physical scan."], ["Can I use a third-party tracking website?", "Use the carrier or seller's official tracking link first to reduce phishing and incorrect-status risk."]]
+  },
+  {
+    slug: "payment-failed-money-deducted", title: "Payment Failed but Money Was Deducted", category: "billing", readTime: "8 min", updatedAt: "2026-10-30",
+    description: "Document a failed payment debit, check the transaction status and raise the issue safely with the merchant and payment provider.",
+    keywords: ["payment failed but money deducted", "failed transaction money debited", "payment pending", "card transaction issue"],
+    sections: [
+      { heading: "Check whether the payment is pending or completed", body: "Review the merchant order and authenticated bank, card or wallet transaction. A pending authorization is not always a completed charge." },
+      { heading: "Record both transaction references", body: "Save the merchant order reference and the payment-provider transaction reference, plus the date and amount. Mask account and card numbers in evidence." },
+      { heading: "Raise the issue in the correct order", body: "Ask the merchant whether an order was created. If no order exists or the merchant cannot resolve the debit, use the payment provider's official dispute or failed-transaction route." },
+      { heading: "Escalate with the original case", body: "Keep every ticket number and follow the provider's published grievance process. Country, payment rail and provider rules determine any external escalation route." }
+    ],
+    example: "Example: Payment P-123 for 49.00 was debited on 18 October, but order O-456 is marked failed. Please confirm whether the payment was captured and provide the reversal or dispute reference.",
+    faqs: [["Should I make the payment again immediately?", "First confirm whether the original debit is pending or completed and whether an order was created to avoid a possible duplicate charge."], ["What details are safe to share?", "Share transaction references, date and amount through an authenticated channel, but never an OTP, PIN, CVV or password."]]
+  },
+  {
+    slug: "duplicate-charge", title: "How to Dispute a Duplicate Charge", category: "billing", readTime: "7 min", updatedAt: "2026-10-30",
+    description: "Compare transaction states, contact the merchant and dispute a genuine duplicate charge through the official payment-provider route.",
+    keywords: ["duplicate charge", "charged twice", "duplicate card transaction", "billing dispute"],
+    sections: [
+      { heading: "Compare the two transaction records", body: "Check dates, amounts, merchant names and whether one entry is only a pending authorization rather than a settled duplicate." },
+      { heading: "Check the merchant account", body: "Confirm whether two orders, subscriptions or invoices were created. Cancel or refund the extra order through the merchant when possible." },
+      { heading: "Request a correction in writing", body: "Use the merchant's official billing channel, identify both references and request reversal of the duplicate while keeping the valid transaction." },
+      { heading: "Use the official dispute route", body: "If the merchant cannot correct a settled duplicate, contact the bank or payment provider through its authenticated dispute process and observe its evidence and deadline rules." }
+    ],
+    example: "Example: Transactions P-123 and P-124 show the same merchant and amount for one order. Please reverse the duplicate P-124 and confirm the correction in writing.",
+    faqs: [["Is a pending authorization a duplicate charge?", "Not necessarily. Compare pending and settled status before opening a duplicate-charge dispute."], ["Should I dispute both transactions?", "Identify the valid purchase and dispute only the genuinely incorrect duplicate unless the provider instructs otherwise."]]
+  },
+  {
+    slug: "account-locked-support", title: "Account Locked: Safe Recovery Steps", category: "contact", readTime: "7 min", updatedAt: "2026-10-30",
+    description: "Recover a locked customer account through official identity and security channels without sharing passwords or one-time codes.",
+    keywords: ["account locked", "customer account recovery", "cannot sign in", "account access issue"],
+    sections: [
+      { heading: "Use the official sign-in page", body: "Open the company website or app directly and use its password reset, unlock or account-recovery option. Avoid links sent by unknown contacts." },
+      { heading: "Check security notifications", body: "Review official messages for suspicious access, verification requests or a reason for the lock. Do not approve a login you did not initiate." },
+      { heading: "Use verified account support", body: "If self-service recovery fails, open the company's official help center and choose account access or security support. Never send a password or one-time code." },
+      { heading: "Secure the account after recovery", body: "Change reused passwords, review contact methods and sessions, and enable the company's official multi-factor authentication option when available." }
+    ],
+    example: "Example: My account was locked after an unrecognized sign-in alert. The official recovery flow does not complete. Please open an account-access case and state the verification steps required.",
+    faqs: [["Will support ask for my password or OTP?", "Legitimate support should not ask you to reveal a password, PIN or one-time code."], ["What if the recovery email is unfamiliar?", "Stop and use the official security or account-compromise route from the company's own website or app."]]
   }
 ];
 

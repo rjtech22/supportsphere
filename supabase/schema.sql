@@ -180,6 +180,16 @@ create table if not exists public.reported_information (
   created_at timestamptz not null default now(), reviewed_at timestamptz
 );
 
+create table if not exists public.seo_keywords (
+  id uuid primary key default gen_random_uuid(), keyword text not null, search_intent text not null,
+  target_country text not null default 'global', target_page text not null,
+  keyword_role text not null check (keyword_role in ('primary','secondary')),
+  search_volume integer check (search_volume is null or search_volume >= 0), competition text,
+  metric_source text, content_status text not null default 'planned' check (content_status in ('published','planned','needs_verification')),
+  created_at timestamptz not null default now(), updated_at timestamptz not null default now(),
+  unique(keyword,target_country,target_page)
+);
+
 create table if not exists public.admin_users (
   user_id uuid primary key references auth.users(id) on delete cascade, active boolean not null default true,
   created_at timestamptz not null default now()
@@ -193,6 +203,7 @@ alter table public.complaint_templates enable row level security;
 alter table public.affiliate_links enable row level security;
 alter table public.sponsored_listings enable row level security;
 alter table public.reported_information enable row level security;
+alter table public.seo_keywords enable row level security;
 alter table public.admin_users enable row level security;
 
 create or replace function public.is_admin()
@@ -216,6 +227,7 @@ create policy "admins manage complaint templates" on public.complaint_templates 
 create policy "admins manage affiliate links" on public.affiliate_links for all using (public.is_admin()) with check (public.is_admin());
 create policy "admins manage sponsored listings" on public.sponsored_listings for all using (public.is_admin()) with check (public.is_admin());
 create policy "admins review reported information" on public.reported_information for all using (public.is_admin()) with check (public.is_admin());
+create policy "admins manage seo keywords" on public.seo_keywords for all using (public.is_admin()) with check (public.is_admin());
 create policy "admins read admin users" on public.admin_users for select using (public.is_admin());
 
 insert into public.countries (code,name,is_primary) values

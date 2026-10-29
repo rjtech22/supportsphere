@@ -1,5 +1,9 @@
 export type AnalyticsEvent =
   | "search"
+  | "search_results"
+  | "no_result_search"
+  | "organic_landing_view"
+  | "guide_view"
   | "category_click"
   | "country_select"
   | "generator_use"
