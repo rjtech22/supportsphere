@@ -189,13 +189,16 @@ create table if not exists public.reported_information (
 
 create table if not exists public.seo_keywords (
   id uuid primary key default gen_random_uuid(), keyword text not null, search_intent text not null,
-  target_country text not null default 'global', target_page text not null,
+  language_code text not null default 'en', target_country text not null default 'global', target_page text not null,
   keyword_role text not null check (keyword_role in ('primary','secondary')),
   search_volume integer check (search_volume is null or search_volume >= 0), competition text,
   metric_source text, content_status text not null default 'planned' check (content_status in ('published','planned','needs_verification')),
   created_at timestamptz not null default now(), updated_at timestamptz not null default now(),
   unique(keyword,target_country,target_page)
 );
+alter table public.seo_keywords add column if not exists language_code text not null default 'en';
+alter table public.seo_keywords drop constraint if exists seo_keywords_keyword_target_country_target_page_key;
+create unique index if not exists seo_keywords_locale_target_key on public.seo_keywords(keyword,language_code,target_country,target_page);
 
 create table if not exists public.admin_users (
   user_id uuid primary key references auth.users(id) on delete cascade, active boolean not null default true,
@@ -262,7 +265,19 @@ create table if not exists public.traffic_metrics_daily (
 );
 create table if not exists public.search_query_metrics (
   id uuid primary key default gen_random_uuid(), metric_date date not null, query text not null, page text not null default '', country text not null default '',
-  clicks integer not null default 0, impressions integer not null default 0, position numeric, imported_at timestamptz not null default now(), unique(metric_date,query,page,country)
+  language_code text not null default '', device text not null default '', search_type text not null default 'web', seo_keyword_id uuid references public.seo_keywords(id) on delete set null,
+  clicks integer not null default 0, impressions integer not null default 0, position numeric, imported_at timestamptz not null default now(), unique(metric_date,query,page,country,language_code,device,search_type)
+);
+alter table public.search_query_metrics add column if not exists language_code text not null default '';
+alter table public.search_query_metrics add column if not exists device text not null default '';
+alter table public.search_query_metrics add column if not exists search_type text not null default 'web';
+alter table public.search_query_metrics add column if not exists seo_keyword_id uuid references public.seo_keywords(id) on delete set null;
+alter table public.search_query_metrics drop constraint if exists search_query_metrics_metric_date_query_page_country_key;
+create unique index if not exists search_query_metrics_dimensions_key on public.search_query_metrics(metric_date,query,page,country,language_code,device,search_type);
+create table if not exists public.search_console_import_runs (
+  id uuid primary key default gen_random_uuid(), property_url text not null, start_date date not null, end_date date not null,
+  status text not null default 'running' check (status in ('running','completed','failed')),
+  rows_imported integer not null default 0, error_message text, started_at timestamptz not null default now(), completed_at timestamptz
 );
 create table if not exists public.ad_placements (
   id uuid primary key default gen_random_uuid(), placement_key text not null unique, label text not null, adsense_slot_id text,
@@ -272,6 +287,7 @@ alter table public.verification_reminders enable row level security;
 alter table public.link_checks enable row level security;
 alter table public.traffic_metrics_daily enable row level security;
 alter table public.search_query_metrics enable row level security;
+alter table public.search_console_import_runs enable row level security;
 alter table public.ad_placements enable row level security;
 drop policy if exists "admins manage verification reminders" on public.verification_reminders;
 create policy "admins manage verification reminders" on public.verification_reminders for all using (public.is_admin()) with check (public.is_admin());
@@ -281,5 +297,7 @@ drop policy if exists "admins read traffic metrics" on public.traffic_metrics_da
 create policy "admins read traffic metrics" on public.traffic_metrics_daily for select using (public.is_admin());
 drop policy if exists "admins read search metrics" on public.search_query_metrics;
 create policy "admins read search metrics" on public.search_query_metrics for select using (public.is_admin());
+drop policy if exists "admins manage search console imports" on public.search_console_import_runs;
+create policy "admins manage search console imports" on public.search_console_import_runs for all using (public.is_admin()) with check (public.is_admin());
 drop policy if exists "admins manage ad placements" on public.ad_placements;
 create policy "admins manage ad placements" on public.ad_placements for all using (public.is_admin()) with check (public.is_admin());

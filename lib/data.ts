@@ -187,7 +187,8 @@ export const guides: Guide[] = [
       { heading: "Use a searchable subject line", body: "Include the issue and reference, for example: Refund pending — order 1234. This helps the message reach the correct case." },
       { heading: "Open with the essential facts", body: "State the purchase or service, date and problem in the first paragraph. Keep emotion separate from the facts." },
       { heading: "List evidence and previous contact", body: "Mention attachments and earlier case numbers. Do not attach identity documents or full financial details unless the verified official process specifically requires them." },
-      { heading: "Ask for one clear outcome", body: "Request a realistic remedy and written confirmation. Add a reasonable follow-up date without making unsupported legal threats." }
+      { heading: "Ask for one clear outcome", body: "Request a realistic remedy and written confirmation. Add a reasonable follow-up date without making unsupported legal threats." },
+      { heading: "Write an escalation email when the first case is unresolved", body: "Use a subject such as Escalation request — case 1234. Summarise the original complaint, dates, promised action and the remedy still required. Send it only to an escalation address or form published by the company, and keep the original case reference in the thread." }
     ],
     example: "Subject: Refund pending — order 1234. I received confirmation on 10 October that a refund was initiated, but it has not reached the original payment method. Please confirm the refund reference and expected completion date.",
     faqs: [["Should a complaint email be firm or polite?", "Be calm and specific. A firm request can still be professional and evidence-based."], ["What should I avoid attaching?", "Do not send passwords, OTPs, full card numbers or unnecessary identity documents."]]
@@ -200,6 +201,7 @@ export const guides: Guide[] = [
       { heading: "Check the applicable refund policy", body: "Review the policy for the product, service, fare or subscription and note any deadline, return requirement or fee." },
       { heading: "Use the original order or account", body: "Start the request from the signed-in purchase record where possible so the company can verify the transaction." },
       { heading: "State the reason and requested amount", body: "Include the order reference, date, amount, reason and preferred remedy supported by the policy." },
+      { heading: "Respond to a rejected return request", body: "Ask for the exact policy reason and the evidence used to reject the request. Compare it with the policy that applied on the purchase date, provide missing proof, and use the company’s official appeal or complaint route if the decision appears inconsistent." },
       { heading: "Track the refund", body: "Save the confirmation and expected timeline. If marked processed, request the refund reference and check the original payment method without sharing full banking details." }
     ],
     example: "Example: Please refund the eligible amount for order 1234 to the original payment method. The return was accepted on 14 October under return reference R-55.",
@@ -252,6 +254,7 @@ export const guides: Guide[] = [
       { heading: "Check the warranty terms", body: "Confirm the warranty period, covered faults, exclusions and whether the seller or manufacturer handles the request." },
       { heading: "Record product and purchase details", body: "Prepare the model, serial number, purchase date, invoice and a concise description of the fault." },
       { heading: "Follow official diagnostics", body: "Complete safe troubleshooting requested by the manufacturer and record error codes or service outcomes." },
+      { heading: "Separate warranty and non-warranty replacements", body: "A damaged, incorrect or unwanted delivery may follow the seller’s return policy instead of the manufacturer warranty. Use the warranty route only for covered product faults; otherwise open the relevant return, delivery or order-support process." },
       { heading: "Request the available remedy", body: "Ask for repair, replacement or another remedy supported by the warranty and applicable consumer rules. Keep shipment and service references." }
     ],
     example: "Example: Product model X, serial ending 4321, purchased on 2 May, has stopped powering on after official troubleshooting. Please confirm the warranty service or replacement process.",
@@ -264,6 +267,7 @@ export const guides: Guide[] = [
     sections: [
       { heading: "Identify the disputed charge", body: "Record the date, amount, merchant or service, invoice line and why it appears incorrect." },
       { heading: "Check for a simple explanation", body: "Review credits, taxes, renewal terms, partial refunds, pending authorisations and household purchases before raising a dispute." },
+      { heading: "Identify the card transaction type", body: "Separate a pending authorisation, reversed payment, duplicate charge, incorrect amount and unrecognised transaction. Each can require a different merchant or bank workflow; use the authenticated fraud route immediately for a transaction you do not recognise." },
       { heading: "Contact the biller in writing", body: "Use the official billing-support channel, attach the relevant statement section with sensitive numbers masked, and request a correction." },
       { heading: "Use the payment-provider route when appropriate", body: "If the biller does not resolve an eligible card or account dispute, contact the bank through its official channel and follow its deadlines. Rules differ by country and payment type." }
     ],

@@ -7,6 +7,7 @@ export type ContentStatus = "published" | "planned" | "needs-verification";
 export type KeywordResearchRow = {
   keyword: string;
   searchIntent: SearchIntent;
+  languageCode: "en" | "ta" | "hi" | "fr";
   targetCountry: string;
   targetPage: string;
   targetTitle: string;
@@ -18,7 +19,7 @@ export type KeywordResearchRow = {
 };
 
 const published = (keyword: string, searchIntent: SearchIntent, targetPage: string, targetTitle: string, role: KeywordRole = "primary", targetCountry = "global"): KeywordResearchRow => ({
-  keyword, searchIntent, targetCountry, targetPage, targetTitle, role,
+  keyword, searchIntent, languageCode: "en", targetCountry, targetPage, targetTitle, role,
   searchVolume: null, competition: null, metricSource: null, contentStatus: "published"
 });
 
@@ -53,9 +54,11 @@ const companyKeywords: KeywordResearchRow[] = globalCompanies.flatMap((company) 
   const base = [
     published(`${company.name} customer service`, "company-support", page, `${company.name} Customer Care & Support`, "primary", company.country),
     published(`${company.name} customer support`, "company-support", page, `${company.name} Customer Care & Support`, "secondary", company.country),
-    published(`${company.name} contact number`, "company-support", page, `${company.name} Customer Care & Support`, "secondary", company.country),
     published(`${company.name} help center`, "company-support", page, `${company.name} Customer Care & Support`, "secondary", company.country)
   ];
+  if (company.phone || company.tollFree || company.technicalSupportPhone || company.salesSupportPhone) {
+    base.push(published(`${company.name} contact number`, "company-support", page, `${company.name} Customer Care & Support`, "secondary", company.country));
+  }
   if (company.tollFree) base.push(published(`${company.name} toll-free number`, "company-support", page, `${company.name} Customer Care & Support`, "secondary", company.country));
   if (company.liveChat) base.push(published(`${company.name} live chat support`, "company-support", page, `${company.name} Customer Care & Support`, "secondary", company.country));
   if (company.email) base.push(published(`${company.name} support email`, "company-support", page, `${company.name} Customer Care & Support`, "secondary", company.country));

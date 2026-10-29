@@ -36,7 +36,18 @@ export async function generateMetadata({ params }: { params: Promise<PageParams>
   if (!s.length) return meta(locale, "", d.seo.homeTitle, d.seo.homeDescription);
   if (s.length === 1 && getCountry(s[0])) { const entry = getCountry(s[0])!; const country = d.countries[s[0]] || entry.name; const result = meta(locale, path, `${t(d.directory.title, { country })} | SupportSphere`, t(d.directory.intro, { country })); if (!allCompanies.some((item) => item.country === s[0])) result.robots = { index: false, follow: true }; return result; }
   if (s.length === 3 && s[1] === "categories") { const category = d.categories[s[2]] || globalCategories.find((item) => item.slug === s[2]); const entry = getCountry(s[0]); const country = entry ? d.countries[s[0]] || entry.name : ""; if (category && country) { const result = meta(locale, path, `${category.name} — ${country} | SupportSphere`, t(d.category.resolve, { category: category.name })); if (!allCompanies.some((item) => item.country === s[0] && item.category === s[2])) result.robots = { index: false, follow: true }; return result; } }
-  if (s.length === 3 && s[1] === "companies") { const company = await getPublishedCompany(s[0], s[2]); const entry = getCountry(s[0]); const country = entry ? d.countries[s[0]] || entry.name : ""; if (company && country) return meta(locale, path, `${company.name} Customer Care & Support — ${country} | SupportSphere`, `${company.summary} Find verified official support links, phone information, refund, warranty and complaint escalation guidance.`, [`${company.name} customer service`, `${company.name} customer support`, `${company.name} contact number`, `${company.name} help center`, country]); }
+  if (s.length === 3 && s[1] === "companies") {
+    const company = await getPublishedCompany(s[0], s[2]);
+    const entry = getCountry(s[0]);
+    const country = entry ? d.countries[s[0]] || entry.name : "";
+    if (company && country) {
+      const hasVerifiedPhone = Boolean(company.phone || company.tollFree || company.technicalSupportPhone || company.salesSupportPhone);
+      const keywords = [`${company.name} customer service`, `${company.name} customer support`, `${company.name} help center`, country];
+      if (hasVerifiedPhone) keywords.push(`${company.name} contact number`);
+      const channelSummary = hasVerifiedPhone ? "verified phone information and official support links" : "verified official support links and available contact channels";
+      return meta(locale, path, `${company.name} Customer Care & Support — ${country} | SupportSphere`, `${company.summary} Find ${channelSummary}, refund, warranty and complaint escalation guidance.`, keywords);
+    }
+  }
   if (s[0] === "guides") { const guide = s[1] ? d.guides.items[s[1]] : null; const original = s[1] ? guides.find((item) => item.slug === s[1]) : null; return meta(locale, path, guide ? `${guide.title} | SupportSphere` : `${d.guides.title} | SupportSphere`, guide?.description || d.guides.intro, original?.keywords); }
   if (s.join("/") === "tools/complaint-letter") return meta(locale, path, d.generator.seoTitle, d.generator.seoDescription, ["free complaint letter generator", "customer complaint email template", "refund request email template", "billing dispute letter"]);
   if (staticNames.includes(s[0] as typeof staticNames[number])) { const key = s[0] === "privacy-policy" ? "privacy" : s[0] as keyof typeof d.static; const [title, description] = d.static[key]; return meta(locale, path, `${title} | SupportSphere`, description); }
@@ -179,7 +190,16 @@ async function Company({ locale, countryCode, slug }: { locale: Locale; countryC
   </>;
 }
 
-function Generator({ locale }: { locale: Locale }) { const d = getDictionary(locale); return <><Hero crumbs={[d.generator.h1]} eyebrow={d.generator.eyebrow} title={d.generator.h1} text={d.generator.intro} /><section className="section"><div className="shell"><LocalizedTemplateGenerator locale={locale} /></div></section><section className="section soft"><div className="shell prose-page"><h2>{d.generator.howTitle}</h2><p>{d.generator.howText}</p><h2>{d.generator.whenTitle}</h2><p>{d.generator.whenText}</p><h2>{d.generator.includeTitle}</h2><ul>{d.generator.includeItems.map((item) => <li key={item}>{item}</li>)}</ul></div></section></>; }
+function Generator({ locale }: { locale: Locale }) {
+  const d = getDictionary(locale);
+  const useCases = ({
+    en: { title: "Messages this complaint tool can help you draft", items: ["Refund request email for an eligible or pending refund", "Complaint follow-up email for an unanswered support case", "Warranty claim letter for repair or replacement", "Billing dispute letter for an incorrect or duplicate charge"] },
+    ta: { title: "இந்த புகார் கருவி உருவாக்க உதவும் செய்திகள்", items: ["தகுதியான அல்லது நிலுவையில் உள்ள பணத்திருப்பிக்கான கோரிக்கை மின்னஞ்சல்", "பதில் வராத ஆதரவு வழக்கிற்கான தொடர்ச்சி மின்னஞ்சல்", "பழுது நீக்கம் அல்லது மாற்றீட்டிற்கான உத்தரவாதக் கோரிக்கை கடிதம்", "தவறான அல்லது இருமுறை வசூலிக்கப்பட்ட தொகைக்கான பில்லிங் தகராறு கடிதம்"] },
+    hi: { title: "इस शिकायत टूल से तैयार किए जा सकने वाले संदेश", items: ["योग्य या लंबित रिफंड के लिए अनुरोध ईमेल", "अनुत्तरित सहायता मामले के लिए फॉलो-अप ईमेल", "मरम्मत या बदलने के लिए वारंटी दावा पत्र", "गलत या दोहरे शुल्क के लिए बिलिंग विवाद पत्र"] },
+    fr: { title: "Messages que cet outil de réclamation peut vous aider à rédiger", items: ["E-mail de demande pour un remboursement admissible ou en attente", "E-mail de relance pour un dossier d’assistance sans réponse", "Lettre de garantie pour une réparation ou un remplacement", "Lettre de contestation d’une facturation incorrecte ou en double"] }
+  } as const)[locale];
+  return <><Hero crumbs={[d.generator.h1]} eyebrow={d.generator.eyebrow} title={d.generator.h1} text={d.generator.intro} /><section className="section"><div className="shell"><LocalizedTemplateGenerator locale={locale} /></div></section><section className="section soft"><div className="shell prose-page"><h2>{d.generator.howTitle}</h2><p>{d.generator.howText}</p><h2>{d.generator.whenTitle}</h2><p>{d.generator.whenText}</p><h2>{useCases.title}</h2><ul>{useCases.items.map((item) => <li key={item}>{item}</li>)}</ul><h2>{d.generator.includeTitle}</h2><ul>{d.generator.includeItems.map((item) => <li key={item}>{item}</li>)}</ul></div></section></>;
+}
 function Guides({ locale }: { locale: Locale }) { const d = getDictionary(locale); return <><Hero crumbs={[d.guides.title]} eyebrow={d.nav.guides} title={d.guides.title} text={d.guides.intro} /><section className="section"><div className="shell"><GuideCards locale={locale} /></div></section></>; }
 function Guide({ locale, slug }: { locale: Locale; slug: string }) {
   const d = getDictionary(locale); const guide = d.guides.items[slug]; const original = guides.find((item) => item.slug === slug); if (!guide || !original) notFound();
