@@ -238,7 +238,7 @@ create policy "admins manage seo keywords" on public.seo_keywords for all using 
 create policy "admins read admin users" on public.admin_users for select using (public.is_admin());
 
 insert into public.countries (code,name,is_primary) values
-('us','United States',true),('in','India',false),('uk','United Kingdom',false),('ca','Canada',false),('au','Australia',false)
+('us','United States',true),('in','India',false),('gb','United Kingdom',false),('ca','Canada',false),('au','Australia',false)
 on conflict (code) do update set name = excluded.name;
 
 -- Create an Auth user, then grant admin access explicitly:
