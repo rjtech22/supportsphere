@@ -6,6 +6,7 @@ import { SearchBox } from "@/components/SearchBox";
 import { SearchAnalytics } from "@/components/SearchAnalytics";
 import { CountrySelector } from "@/components/CountrySelector";
 import { CountryDirectory } from "@/components/CountryDirectory";
+import { CompanyReviews } from "@/components/CompanyReviews";
 import { GlobalCompanyCard } from "@/components/GlobalCompanyCard";
 import { LocalizedTemplateGenerator } from "@/components/LocalizedTemplateGenerator";
 import { TrackedLink } from "@/components/TrackedLink";
@@ -195,6 +196,7 @@ async function Company({ locale, countryCode, slug }: { locale: Locale; countryC
           {relatedCompanies.length > 0 && <div className="sidebar-card"><h3>Related company support</h3>{relatedCompanies.map((item) => <Link key={`${item.country}-${item.slug}`} href={localePath(locale, `/${item.country}/companies/${item.slug}`)}>{item.name}</Link>)}</div>}
         </aside>
       </div>
+      <CompanyReviews companySlug={company.slug} companyName={company.name} companyCountryCode={countryCode} locale={locale} />
     </div></section>
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleLd) }} />
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
