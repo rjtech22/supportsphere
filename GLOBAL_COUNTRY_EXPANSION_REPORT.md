@@ -59,7 +59,7 @@ The old non-ISO `uk` route and data key were migrated to ISO `gb`. Permanent red
 ### Routing and empty-country handling
 
 - Existing `/{locale}/{country}/...` architecture was retained.
-- Added generic two-letter country redirects to the default English locale.
+- Kept safe bare-country redirects for published markets; every global canonical route uses `/{locale}/{country}` to avoid collisions between two-letter locale and country codes.
 - Migrated United Kingdom routes from `uk` to `gb` with permanent redirects.
 - Unsupported ISO countries resolve to an informative country page rather than a fake directory.
 - Legacy ambiguous `/company/{slug}` URLs now go to global search instead of incorrectly forcing India and producing country mismatches.
