@@ -11,7 +11,8 @@ export const metadata: Metadata = {
   description: siteConfig.description,
   openGraph: { type: "website", locale: "en_US", siteName: siteConfig.name, title: "SupportSphere", description: siteConfig.description, url: "/" },
   twitter: { card: "summary_large_image", title: "SupportSphere", description: siteConfig.description },
-  robots: { index: true, follow: true }
+  robots: { index: true, follow: true },
+  verification: { google: "hG0c5NX2RN807fAn_eRqbFY96MRqNWsyvrRKDZit18s" }
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
