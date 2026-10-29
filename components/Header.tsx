@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Menu, Search, ShieldCheck } from "lucide-react";
+import { Menu, Search } from "lucide-react";
 import { CountrySelector } from "@/components/CountrySelector";
 import { LanguageSelector } from "@/components/LanguageSelector";
 import { getDictionary, localePath, type Locale } from "@/lib/i18n";
@@ -7,8 +7,6 @@ import { getDictionary, localePath, type Locale } from "@/lib/i18n";
 export function Header({ locale }: { locale: Locale }) {
   const d = getDictionary(locale);
   return (
-    <>
-      <div className="notice"><div className="shell notice-inner"><span><ShieldCheck size={14} /> {d.notice}</span><Link href={localePath(locale, "/disclaimer")}>{d.verificationPolicy}</Link></div></div>
       <header className="header">
         <div className="shell nav">
           <Link className="brand" href={localePath(locale)}><span className="brand-mark"><img className="brand-logo" src="/supportsphere-logo.png" alt="" width="44" height="44" /></span><span>Support<span>Sphere</span></span></Link>
@@ -19,6 +17,5 @@ export function Header({ locale }: { locale: Locale }) {
           <details className="mobile-menu"><summary aria-label="Open menu"><Menu size={21} /></summary><div><Link href={localePath(locale, "/search")}>{d.nav.search}</Link><Link href={localePath(locale, "/us")}>{d.nav.companies}</Link><Link href={localePath(locale, "/guides")}>{d.nav.guides}</Link><Link href={localePath(locale, "/tools/complaint-letter")}>{d.nav.tools}</Link><Link href={localePath(locale, "/about")}>{d.nav.about}</Link></div></details>
         </div>
       </header>
-    </>
   );
 }
