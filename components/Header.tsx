@@ -11,7 +11,7 @@ export function Header({ locale }: { locale: Locale }) {
       <div className="notice"><div className="shell notice-inner"><span><ShieldCheck size={14} /> {d.notice}</span><Link href={localePath(locale, "/disclaimer")}>{d.verificationPolicy}</Link></div></div>
       <header className="header">
         <div className="shell nav">
-          <Link className="brand" href={localePath(locale)}><span className="brand-mark">SS</span><span>Support<span>Sphere</span></span></Link>
+          <Link className="brand" href={localePath(locale)}><span className="brand-mark"><img className="brand-logo" src="/supportsphere-logo.png" alt="" width="44" height="44" /></span><span>Support<span>Sphere</span></span></Link>
           <nav className="desktop-nav" aria-label="Main navigation"><Link href={localePath(locale, "/us")}>{d.nav.companies}</Link><Link href={localePath(locale, "/guides")}>{d.nav.guides}</Link><Link href={localePath(locale, "/tools/complaint-letter")}>{d.nav.tools}</Link><Link href={localePath(locale, "/about")}>{d.nav.about}</Link></nav>
           <LanguageSelector locale={locale} label={d.nav.language} />
           <CountrySelector locale={locale} compact />

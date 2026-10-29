@@ -1,2 +1,2 @@
 import type { MetadataRoute } from "next";
-export default function manifest(): MetadataRoute.Manifest { return { name: "SupportSphere", short_name: "SupportSphere", description: "Find support. Resolve issues. Get answers.", start_url: "/en", display: "standalone", background_color: "#0B0F17", theme_color: "#0B0F17", icons: [{ src: "/icon.svg", sizes: "any", type: "image/svg+xml" }] }; }
+export default function manifest(): MetadataRoute.Manifest { return { name: "SupportSphere", short_name: "SupportSphere", description: "Find support. Resolve issues. Get answers.", start_url: "/en", display: "standalone", background_color: "#FFFFFF", theme_color: "#2563EB", icons: [{ src: "/supportsphere-logo.png", sizes: "1536x1536", type: "image/png" }] }; }
