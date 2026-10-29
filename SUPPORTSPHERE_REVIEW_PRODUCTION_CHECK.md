@@ -30,6 +30,14 @@ A clearly labelled QA review was accepted as `pending`, remained absent from the
 | Authenticated direct insert | PASS | Authenticated users have no direct INSERT privilege. |
 | Admin-only modification policy | PASS | Review and report policies use `is_admin()` for both `USING` and `WITH CHECK`. |
 | Public PATCH/DELETE | PASS | Public review endpoint does not implement update or delete methods. |
+| Supabase Auth users | BLOCKED | Production contains `0` Auth users, `0` active `admin_users` rows and `0` admin profiles. No legitimate identity exists to authenticate the admin API. |
+| Application admin sign-in UI | MISSING | The repository contains the admin review API and Supabase browser client, but no `/admin/login`, sign-up or session UI. |
+| Rejected review visibility | PASS | Production contains one rejected QA row; Dell's public page shows the empty approved-review state. |
+| Approved review display | BLOCKED | There is no genuine approved production review. Fake QA content was not approved merely to exercise the UI. |
+| Approved count and rating average | LOCAL PASS | The UI now derives count and average only from the approved-only API response. This necessary code change is local and has not been pushed or deployed. |
+| Desktop Dell page | PASS | Live desktop DOM exposes the complete accessible form, country/rating/date fields, privacy warning and empty approved-review state. |
+| Mobile review layout | CODE PASS | At `600px` and below, the form fields and summary stack to one column. A physical mobile-device submission was not performed. |
+| Production build after local UI change | PASS | Next.js production build completed successfully and generated 384 static pages. |
 
 ## Endpoint results
 
@@ -45,6 +53,7 @@ A clearly labelled QA review was accepted as `pending`, remained absent from the
 | Public PATCH | 405 | PASS |
 | Public DELETE | 405 | PASS |
 | Admin queue without bearer token | 401 | PASS |
+| Admin queue with legitimate admin bearer token | Not run | BLOCKED: no Auth/admin identity exists |
 
 ## Supabase access-control result
 
@@ -57,19 +66,45 @@ A clearly labelled QA review was accepted as `pending`, remained absent from the
 
 ## Remaining limitations
 
-1. **No application admin identity is configured.** Supabase Authentication currently has no promoted SupportSphere admin user. Dashboard/SQL moderation works, but `/api/admin/reviews` cannot be tested end to end with an administrator bearer token until an Auth user is created and added to `admin_users`.
+1. **No application admin identity or sign-in UI is configured.** Production counts are `auth.users = 0`, active `admin_users = 0`, and admin `profiles = 0`; the codebase also has no admin login/session route. Dashboard/SQL moderation works, but `/api/admin/reviews` cannot be tested end to end until the real site owner creates a legitimate Auth identity, explicitly promotes it, and uses an approved secure sign-in/token flow.
 2. **24-hour rate limit was not exhausted.** Duplicate and unsafe-content checks were tested. Creating multiple additional production rows solely to force the three-per-day limit was avoided.
 3. **Report-review flow needs a genuine approved review.** The QA review was intentionally rejected and never made public, so the public report button was not submitted against fake content.
-4. **Mobile backend behavior is shared and operational.** Responsive styles are present, but a physical mobile-device submission was not performed in this audit.
+4. **Approved-review rendering cannot be proven in production yet.** There are no genuine approved reviews. The API and client code both consume only approved rows, and rejected content is confirmed hidden.
+5. **Physical mobile-device testing remains outstanding.** Responsive CSS was inspected and the production desktop form was verified; no physical mobile submission was made.
+6. **Approved count/average UI is not deployed.** The local implementation passed the production build, but this report update and UI change remain unpushed as requested.
 
-## Optional admin activation
+## Exact legitimate administrator setup
 
-When an administrator account is wanted:
+Do not create a placeholder or fake administrator. Use the real site owner's email and a password known only to that owner.
 
-1. Create the intended user in Supabase Authentication.
-2. Add only that user's UUID to `public.admin_users` with `active = true`.
-3. Sign in and verify `/api/admin/reviews` lists pending reviews.
-4. Verify a normal authenticated user receives no review-table access.
+1. The application currently has no login/sign-up UI. In **Supabase → Authentication → Users**, choose **Add user → Send invitation** for the legitimate site owner's real email. The owner must open the invitation and set their own password; do not invent or retain a password on their behalf.
+2. Copy the resulting Auth user UUID and verify that the email belongs to the intended owner.
+3. In Supabase SQL Editor, run this once with that exact UUID:
+
+```sql
+insert into public.admin_users (user_id, active)
+values ('REAL_AUTH_USER_UUID', true)
+on conflict (user_id) do update set active = excluded.active;
+```
+
+4. Confirm exactly one intended row exists:
+
+```sql
+select au.user_id, au.active, u.email
+from public.admin_users au
+join auth.users u on u.id = au.user_id
+where au.active;
+```
+
+5. Choose one secure authentication path before using the admin API:
+   - continue moderating through the protected Supabase dashboard; or
+   - implement and deploy a secure owner-only admin login/session UI; or
+   - use a local trusted Supabase client to sign in as the owner and obtain a short-lived access token for API verification.
+6. Never put the service-role key in a browser or use it as the admin bearer token.
+7. Call `GET /api/admin/reviews?status=pending` with `Authorization: Bearer <access-token>`; expect `200` for the promoted owner.
+8. Call the same endpoint with a normal authenticated user; expect `403`.
+9. Moderate one genuine pending review with `PATCH /api/admin/reviews`, then confirm it appears only after approval. Reject test, abusive or privacy-violating submissions.
+10. Deactivate access by setting `active = false`; do not delete Auth identities merely to revoke admin rights.
 
 Do not make all authenticated users administrators.
 
@@ -81,9 +116,10 @@ Do not make all authenticated users administrators.
 - `app/api/reviews/[id]/report/route.ts`
 - `app/api/admin/reviews/route.ts`
 - `components/CompanyReviews.tsx`
+- `app/globals.css`
 - `lib/reviews.ts`
 - `.env.example`
 
 ## Final status
 
-The public production review pipeline is working: submit, validate, store pending, hide from public display, and moderate to rejected. The remaining optional setup is an application admin Auth identity for the admin API/dashboard workflow.
+The public production review pipeline is working: submit, validate, store pending, hide from public display, and moderate to rejected. A legitimate Auth/admin identity is still required before authenticated admin API verification and real-review approval can be completed. The approved-only count/average UI change builds successfully but remains local pending approval to push and deploy.

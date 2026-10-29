@@ -30,14 +30,26 @@ const reportReasons = [
   ["other", "Other"]
 ] as const;
 
+const summaryCopy = {
+  en: { approved: (count: number) => `${count} approved ${count === 1 ? "review" : "reviews"}`, average: (value: string) => `${value}/5 average rating` },
+  ta: { approved: (count: number) => `${count} அங்கீகரிக்கப்பட்ட விமர்சனங்கள்`, average: (value: string) => `${value}/5 சராசரி மதிப்பீடு` },
+  hi: { approved: (count: number) => `${count} स्वीकृत समीक्षाएँ`, average: (value: string) => `${value}/5 औसत रेटिंग` },
+  fr: { approved: (count: number) => `${count} avis approuvés`, average: (value: string) => `Note moyenne : ${value}/5` }
+} as const;
+
 export function CompanyReviews({ companySlug, companyName, companyCountryCode, locale }: { companySlug: string; companyName: string; companyCountryCode: string; locale: Locale }) {
   const text = copy[locale];
+  const summaryText = summaryCopy[locale];
   const [reviews, setReviews] = useState<PublicReview[]>([]);
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState("");
   const [startedAt, setStartedAt] = useState(() => Date.now());
   const [reportingId, setReportingId] = useState<string | null>(null);
   const [reportStartedAt, setReportStartedAt] = useState(() => Date.now());
+  const ratedReviews = useMemo(() => reviews.filter((review) => review.rating !== null), [reviews]);
+  const averageRating = useMemo(() => ratedReviews.length
+    ? (ratedReviews.reduce((sum, review) => sum + review.rating!, 0) / ratedReviews.length).toFixed(1)
+    : null, [ratedReviews]);
   const regionNames = useMemo(() => {
     try { return new Intl.DisplayNames([locale], { type: "region" }); } catch { return null; }
   }, [locale]);
@@ -106,6 +118,7 @@ export function CompanyReviews({ companySlug, companyName, companyCountryCode, l
         {message && <p className="review-status" role="status">{message}</p>}
       </form>
       <div className="review-list" aria-live="polite">
+        {!loading && reviews.length ? <div className="review-summary" aria-label={summaryText.approved(reviews.length)}><strong>{summaryText.approved(reviews.length)}</strong>{averageRating ? <span>{summaryText.average(averageRating)}</span> : null}</div> : null}
         {loading ? <p>{text.loading}</p> : reviews.length ? reviews.map((review) => <article className="review-item" key={review.id}>
           <div className="review-meta"><strong>{review.display_name || text.anonymous}</strong>{review.rating ? <span className="review-stars" aria-label={`${review.rating} out of 5 stars`}>{Array.from({ length: 5 }, (_, index) => <Star key={index} size={14} fill={index < review.rating! ? "currentColor" : "none"} />)}</span> : null}</div>
           <p>{review.review_body}</p>
