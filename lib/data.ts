@@ -31,10 +31,13 @@ export type Guide = {
   slug: string;
   title: string;
   description: string;
-  category: "complaint" | "refund" | "cancellation";
+  category: "contact" | "complaint" | "email" | "refund" | "cancellation" | "delivery" | "warranty" | "billing" | "escalation";
   readTime: string;
   updatedAt: string;
+  keywords: string[];
   sections: { heading: string; body: string; bullets?: string[] }[];
+  example?: string;
+  faqs: Array<[string, string]>;
 };
 
 export const categories: Category[] = [
@@ -151,46 +154,134 @@ export const companies: Company[] = [
 
 export const guides: Guide[] = [
   {
-    slug: "how-to-file-a-customer-complaint",
-    title: "How to file a customer complaint that gets acted on",
-    description: "A clear evidence-first process for raising and escalating a service complaint.",
-    category: "complaint",
-    readTime: "6 min",
-    updatedAt: "2026-10-29",
+    slug: "how-to-contact-customer-support", title: "How to Contact Customer Support", category: "contact", readTime: "6 min", updatedAt: "2026-10-29",
+    description: "Find the right official customer service contact and prepare the information needed for a useful response.",
+    keywords: ["how to contact customer support", "customer service contact", "company customer support"],
     sections: [
-      { heading: "Start with the official channel", body: "Use the company's own app, website or support page. Avoid numbers copied from comments, search ads or unverified directories." },
-      { heading: "Prepare a clean evidence pack", body: "A short, complete complaint is easier to route.", bullets: ["Order, account or transaction reference", "Exact date and amount", "Screenshots or receipts", "What happened and the resolution requested"] },
-      { heading: "Save the acknowledgement", body: "Record the ticket, docket or complaint number and the promised response time." },
-      { heading: "Escalate if unresolved", body: "Use the company's grievance process first. Eligible consumer grievances can then be raised through the Government of India's National Consumer Helpline portal." }
-    ]
+      { heading: "Find the official support channel", body: "Start on the company’s official website or signed-in app. Use its Contact, Help or Support section instead of numbers copied from comments, forums or advertisements." },
+      { heading: "Choose the channel that matches the issue", body: "Order-linked chat is often best for a purchase, while a formal complaint form is better for an unresolved case. Use emergency or fraud channels only for the purpose stated by the company." },
+      { heading: "Prepare a concise summary", body: "Give support enough information to locate the case without exposing credentials.", bullets: ["Order, booking or masked account reference", "Date, amount and affected product or service", "What happened and what you already tried", "The specific resolution you want"] },
+      { heading: "Keep a record", body: "Save the case number, transcript, promised response time and any follow-up date. This record makes later escalation clearer." }
+    ],
+    example: "Example: Order 1234 was due on 20 October but has not arrived. Tracking has not changed since 18 October. Please confirm the parcel status or the available refund process.",
+    faqs: [["What is the safest way to find customer support?", "Use the company’s official website or app and verify the domain before entering personal information."], ["Should I share an OTP with support?", "No. Never share an OTP, PIN, CVV or password with anyone claiming to provide support."]]
   },
   {
-    slug: "refund-not-received-checklist",
-    title: "Refund not received: a practical checklist",
-    description: "Check the refund trail, collect evidence and escalate without sharing sensitive banking data.",
-    category: "refund",
-    readTime: "5 min",
-    updatedAt: "2026-10-29",
+    slug: "how-to-file-a-customer-complaint", title: "How to File a Complaint Against a Company", category: "complaint", readTime: "7 min", updatedAt: "2026-10-29",
+    description: "Use an evidence-first process to file a company complaint, request a clear remedy and escalate when appropriate.",
+    keywords: ["how to file a complaint against a company", "customer complaint help", "complaint resolution"],
     sections: [
-      { heading: "Confirm the refund status", body: "Check whether the merchant says initiated, processed or completed and note the stated timeline." },
-      { heading: "Match the payment method", body: "Refunds normally return to the original method. Check the relevant card, bank, UPI or wallet statement." },
-      { heading: "Request the reference", body: "Ask the merchant for the refund reference or ARN when applicable, then contact the payment provider through its official channel." },
-      { heading: "Escalate with dates", body: "State the order ID, refund initiation date, amount and reference. Never publish full card or bank-account details." }
-    ]
+      { heading: "Define the problem and remedy", body: "Write one sentence explaining what went wrong and one sentence stating the remedy you want, such as delivery, repair, correction, cancellation or an eligible refund." },
+      { heading: "Collect evidence", body: "A complete complaint is easier to review.", bullets: ["Receipt, invoice or contract", "Order, account or transaction reference", "Screenshots, photographs or correspondence", "Dates and previous complaint numbers"] },
+      { heading: "Submit through the official complaints route", body: "Use the company’s published complaint or grievance channel. Avoid posting sensitive details publicly and keep the acknowledgement." },
+      { heading: "Escalate by country and sector", body: "Complete the company’s process before approaching an applicable regulator, ombudsman or consumer body. Rules differ by country and sector; use an official government source." }
+    ],
+    example: "Example: I reported the billing error under case 5678 on 12 October. The duplicate charge remains. Please reverse the duplicate amount and confirm the correction in writing.",
+    faqs: [["How long should a complaint be?", "Keep it focused: the facts, evidence, previous case number and requested resolution are more useful than a long narrative."], ["Can SupportSphere file the complaint for me?", "No. The tools help you prepare text, but you submit it to the company’s official channel."]]
   },
   {
-    slug: "order-service-cancellation-guide",
-    title: "Order and service cancellation guide",
-    description: "Reduce avoidable charges by checking eligibility, evidence and confirmation before cancelling.",
-    category: "cancellation",
-    readTime: "4 min",
-    updatedAt: "2026-10-29",
+    slug: "how-to-write-professional-complaint-email", title: "How to Write a Professional Complaint Email", category: "email", readTime: "6 min", updatedAt: "2026-10-29",
+    description: "Write a clear complaint email with a useful subject line, evidence, requested outcome and follow-up deadline.",
+    keywords: ["how to write a complaint email", "professional complaint email", "customer service email"],
     sections: [
-      { heading: "Read the applicable policy", body: "Cancellation windows and charges vary by product, fare, subscription and fulfilment stage." },
-      { heading: "Cancel inside the logged-in account", body: "Use the official app or website so the action is tied to your account and produces a record." },
-      { heading: "Capture the confirmation", body: "Save the cancellation ID, timestamp, refund amount and expected completion date." },
-      { heading: "Stop future billing separately", body: "For subscriptions, verify renewal is disabled. If an autopay mandate is involved, review it in the bank or payment app as a separate step." }
-    ]
+      { heading: "Use a searchable subject line", body: "Include the issue and reference, for example: Refund pending — order 1234. This helps the message reach the correct case." },
+      { heading: "Open with the essential facts", body: "State the purchase or service, date and problem in the first paragraph. Keep emotion separate from the facts." },
+      { heading: "List evidence and previous contact", body: "Mention attachments and earlier case numbers. Do not attach identity documents or full financial details unless the verified official process specifically requires them." },
+      { heading: "Ask for one clear outcome", body: "Request a realistic remedy and written confirmation. Add a reasonable follow-up date without making unsupported legal threats." }
+    ],
+    example: "Subject: Refund pending — order 1234. I received confirmation on 10 October that a refund was initiated, but it has not reached the original payment method. Please confirm the refund reference and expected completion date.",
+    faqs: [["Should a complaint email be firm or polite?", "Be calm and specific. A firm request can still be professional and evidence-based."], ["What should I avoid attaching?", "Do not send passwords, OTPs, full card numbers or unnecessary identity documents."]]
+  },
+  {
+    slug: "how-to-request-a-refund", title: "How to Request a Refund", category: "refund", readTime: "6 min", updatedAt: "2026-10-29",
+    description: "Check eligibility, document the transaction and send a clear refund request through the official company channel.",
+    keywords: ["how to request a refund", "refund complaint", "refund not received"],
+    sections: [
+      { heading: "Check the applicable refund policy", body: "Review the policy for the product, service, fare or subscription and note any deadline, return requirement or fee." },
+      { heading: "Use the original order or account", body: "Start the request from the signed-in purchase record where possible so the company can verify the transaction." },
+      { heading: "State the reason and requested amount", body: "Include the order reference, date, amount, reason and preferred remedy supported by the policy." },
+      { heading: "Track the refund", body: "Save the confirmation and expected timeline. If marked processed, request the refund reference and check the original payment method without sharing full banking details." }
+    ],
+    example: "Example: Please refund the eligible amount for order 1234 to the original payment method. The return was accepted on 14 October under return reference R-55.",
+    faqs: [["Where should a refund normally be sent?", "It commonly returns to the original payment method, but the official policy and payment arrangement control the process."], ["What if a processed refund is missing?", "Ask the merchant for the refund reference, then contact the payment provider through its verified official channel."]]
+  },
+  {
+    slug: "how-to-cancel-an-online-order", title: "How to Cancel an Online Order", category: "cancellation", readTime: "5 min", updatedAt: "2026-10-29",
+    description: "Check cancellation eligibility, cancel through the official order page and save confirmation of any refund.",
+    keywords: ["how to cancel an online order", "order cancellation guide", "cancel purchase"],
+    sections: [
+      { heading: "Check fulfilment status", body: "Cancellation may depend on whether the seller has accepted, packed or shipped the order. Open the official order page for the current options." },
+      { heading: "Review fees and exceptions", body: "Personalised, perishable, digital or time-sensitive products may follow different rules. Read the policy that applied when you bought the item." },
+      { heading: "Cancel inside the account", body: "Use the company’s app or website so the request produces a timestamp and cancellation reference." },
+      { heading: "Confirm future charges and refund", body: "Save the cancellation status, refund amount and expected return method. For subscriptions, separately confirm that renewal is disabled." }
+    ],
+    example: "Example: I cancelled order 1234 before dispatch and received cancellation reference C-88. Please confirm the refund amount and expected completion date.",
+    faqs: [["Can an order always be cancelled before delivery?", "No. Eligibility depends on the seller, item and fulfilment stage shown in the official order flow."], ["Is cancelling a subscription the same as requesting a refund?", "No. Stopping renewal and requesting a refund are often separate actions."]]
+  },
+  {
+    slug: "how-to-escalate-customer-complaint", title: "How to Escalate a Customer Complaint", category: "escalation", readTime: "7 min", updatedAt: "2026-10-29",
+    description: "Escalate an unresolved customer complaint with a case history, clear remedy and the correct country or industry route.",
+    keywords: ["how to escalate a customer complaint", "complaint escalation", "customer support not responding"],
+    sections: [
+      { heading: "Complete first-line support", body: "Give the company a fair opportunity to resolve the issue and keep the original case number and response." },
+      { heading: "Use the formal grievance route", body: "Look for complaints, grievance, escalation or appeals on the official website. Include the earlier case number so the history is visible." },
+      { heading: "Create a short case timeline", body: "List the important dates, promises, responses and evidence. Avoid resending unrelated material." },
+      { heading: "Identify external escalation carefully", body: "The correct regulator, ombudsman or consumer body depends on country and sector. Use an official government or scheme website and check eligibility before filing." }
+    ],
+    example: "Example: Case 5678 was opened on 1 October and followed up on 8 and 15 October. The issue remains unresolved. I request a written review and the remedy described below.",
+    faqs: [["When should I escalate a complaint?", "Escalate when the published response period has passed or the first response does not address the documented issue."], ["Should I threaten legal action?", "Avoid unsupported threats. State the facts and use the applicable official escalation process."]]
+  },
+  {
+    slug: "complain-about-delayed-delivery", title: "How to Complain About a Delayed Delivery", category: "delivery", readTime: "6 min", updatedAt: "2026-10-29",
+    description: "Check tracking, identify the responsible seller or carrier, and request a clear resolution for a delayed delivery.",
+    keywords: ["how to complain about a delayed delivery", "delivery complaint", "missing parcel help"],
+    sections: [
+      { heading: "Check tracking and service alerts", body: "Use the carrier’s official tracking page and note the last scan, delivery estimate and any weather or service notice." },
+      { heading: "Contact the correct party", body: "For many retail purchases, the seller remains the best first contact. For a parcel you sent, use the carrier’s claims or missing-item route." },
+      { heading: "Provide delivery evidence", body: "Include the order and tracking references, promised date, delivery address confirmation without publishing it, and any safe-place or access detail." },
+      { heading: "Request a specific resolution", body: "Ask for an updated delivery date, trace, replacement or eligible refund based on the seller or carrier policy." }
+    ],
+    example: "Example: Tracking 1234 has shown the same depot scan since 18 October, and the promised date was 20 October. Please start a trace and confirm the next step.",
+    faqs: [["Who should I contact for a delayed retail order?", "Start with the seller’s official order support unless its policy directs you to the carrier."], ["What if tracking says delivered but nothing arrived?", "Check the carrier’s official delivered-but-missing steps, household members and approved safe places before reporting it."]]
+  },
+  {
+    slug: "request-warranty-replacement", title: "How to Request a Warranty Replacement", category: "warranty", readTime: "7 min", updatedAt: "2026-10-29",
+    description: "Prepare proof of purchase, product details and fault evidence for an official warranty repair or replacement request.",
+    keywords: ["how to request a warranty replacement", "warranty complaint", "product replacement request"],
+    sections: [
+      { heading: "Check the warranty terms", body: "Confirm the warranty period, covered faults, exclusions and whether the seller or manufacturer handles the request." },
+      { heading: "Record product and purchase details", body: "Prepare the model, serial number, purchase date, invoice and a concise description of the fault." },
+      { heading: "Follow official diagnostics", body: "Complete safe troubleshooting requested by the manufacturer and record error codes or service outcomes." },
+      { heading: "Request the available remedy", body: "Ask for repair, replacement or another remedy supported by the warranty and applicable consumer rules. Keep shipment and service references." }
+    ],
+    example: "Example: Product model X, serial ending 4321, purchased on 2 May, has stopped powering on after official troubleshooting. Please confirm the warranty service or replacement process.",
+    faqs: [["Is an invoice always needed?", "Proof-of-purchase requirements vary; check the official warranty terms and prepare the best available purchase record."], ["Should I send the product to an address found in a comment?", "No. Use only an address or service route published by the official manufacturer or seller."]]
+  },
+  {
+    slug: "resolve-billing-dispute", title: "How to Resolve a Billing Dispute", category: "billing", readTime: "7 min", updatedAt: "2026-10-29",
+    description: "Document an incorrect charge, contact the biller and use the appropriate bank or service complaint route without exposing credentials.",
+    keywords: ["how to resolve a billing issue", "billing dispute help", "incorrect charge complaint"],
+    sections: [
+      { heading: "Identify the disputed charge", body: "Record the date, amount, merchant or service, invoice line and why it appears incorrect." },
+      { heading: "Check for a simple explanation", body: "Review credits, taxes, renewal terms, partial refunds, pending authorisations and household purchases before raising a dispute." },
+      { heading: "Contact the biller in writing", body: "Use the official billing-support channel, attach the relevant statement section with sensitive numbers masked, and request a correction." },
+      { heading: "Use the payment-provider route when appropriate", body: "If the biller does not resolve an eligible card or account dispute, contact the bank through its official channel and follow its deadlines. Rules differ by country and payment type." }
+    ],
+    example: "Example: Invoice 1234 includes a duplicate charge of 49.00 dated 15 October. Please remove the duplicate and issue a corrected invoice.",
+    faqs: [["Should I publish a bank statement with my complaint?", "No. Share only what the verified official process requires and mask account or card numbers."], ["Is a pending card authorisation always a completed charge?", "No. Check the transaction status and ask the bank through its official channel when uncertain."]]
+  },
+  {
+    slug: "customer-support-not-responding", title: "What to Do When Customer Support Does Not Respond", category: "escalation", readTime: "6 min", updatedAt: "2026-10-29",
+    description: "Follow up an unanswered support case, document the timeline and move to the company’s formal escalation route.",
+    keywords: ["customer support not responding", "unanswered complaint", "follow up customer service"],
+    sections: [
+      { heading: "Check the stated response time", body: "Confirm whether the company gave a service level or expected reply date and allow for weekends or required verification." },
+      { heading: "Send one useful follow-up", body: "Reply in the same case thread with the reference, original date, unresolved issue and requested next action." },
+      { heading: "Try a second official channel", body: "If the first channel is unavailable, use another contact method published by the company while quoting the original reference." },
+      { heading: "Escalate with the full timeline", body: "Use the formal grievance or appeals route and list each contact date. If external escalation becomes appropriate, use an official country and sector source." }
+    ],
+    example: "Example: I am following up on case 5678 opened on 1 October. The stated response period has passed. Please confirm ownership of the case and the expected resolution date.",
+    faqs: [["Should I open many duplicate tickets?", "Usually no. Duplicate tickets can fragment the history; follow up the original case unless the channel instructs otherwise."], ["Can I use the free follow-up tool?", "Yes. It creates editable text in your browser without requiring payment or login."]]
   }
 ];
 

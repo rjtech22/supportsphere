@@ -85,6 +85,38 @@ export const globalCompanies: GlobalCompany[] = [
     commonIssues: ["Recharge issue", "Network problem", "Lost SIM", "Broadband request"]
   },
   {
+    slug: "sbi", name: "State Bank of India", country: "in", category: "banking", logoText: "SBI",
+    summary: "Official SBI complaint routes for accounts, cards, transactions and digital banking issues in India.",
+    officialWebsite: "https://sbi.co.in/", supportWebsite: "https://crcf.sbi.co.in/ccf/",
+    complaintSteps: ["Do not share a PIN, OTP, CVV or banking password.", "Keep the transaction reference, date and amount ready.", "Use SBI's official complaint form or authenticated support channel.", "Save the complaint number and follow the published escalation route."],
+    escalation: "Use the complaint reference when following SBI's official grievance process. Check the latest escalation details on SBI's official domain.",
+    verifiedAt: "2026-10-29", verificationStatus: "Verified",
+    sourceLinks: [{ label: "SBI complaint form", url: "https://crcf.sbi.co.in/ccf/" }, { label: "SBI official website", url: "https://sbi.co.in/" }],
+    commonIssues: ["Failed transaction", "Card issue", "Digital banking", "Complaint escalation"]
+  },
+  {
+    slug: "lg-india", name: "LG India", country: "in", category: "home-appliances", logoText: "LG",
+    summary: "Official LG India support for troubleshooting, warranty, repair and service requests.",
+    officialWebsite: "https://www.lg.com/in/", supportWebsite: "https://www.lg.com/in/support/contact-us/",
+    warranty: "Warranty eligibility depends on the product, purchase date and applicable LG terms. Keep the invoice, model and serial number ready.",
+    complaintSteps: ["Find the model and serial number on the product.", "Review official troubleshooting for that model.", "Book service through LG India's official support route.", "Keep the service-request confirmation and proof of purchase."],
+    escalation: "Follow up with the official service-request reference through LG India's support channel.",
+    verifiedAt: "2026-10-29", verificationStatus: "Verified",
+    sourceLinks: [{ label: "LG India Support", url: "https://www.lg.com/in/support/" }, { label: "LG India Contact Us", url: "https://www.lg.com/in/support/contact-us/" }, { label: "LG repair request", url: "https://www.lg.com/in/support/product-support/repair-request/" }],
+    commonIssues: ["Product fault", "Warranty help", "Repair booking", "Service status"]
+  },
+  {
+    slug: "irctc", name: "IRCTC", country: "in", category: "travel", logoText: "IR",
+    summary: "Official IRCTC routes for e-ticketing queries, cancellations, TDR and railway ticket refund issues.",
+    officialWebsite: "https://www.irctc.co.in/", supportWebsite: "https://equery.irctc.co.in/",
+    refundCancellation: "Cancellation, TDR and refund eligibility depend on the ticket status, timing and applicable railway rules shown in the official account.",
+    complaintSteps: ["Keep the PNR and transaction ID ready.", "Check the ticket status in the IRCTC account.", "Use the applicable cancellation or TDR option.", "Raise an official eQuery if the issue remains unresolved."],
+    escalation: "Use the official eQuery reference for follow-up and avoid sharing account credentials outside IRCTC's official domains.",
+    verifiedAt: "2026-10-29", verificationStatus: "Verified",
+    sourceLinks: [{ label: "IRCTC official website", url: "https://www.irctc.co.in/" }, { label: "IRCTC eQuery", url: "https://equery.irctc.co.in/" }],
+    commonIssues: ["Ticket cancellation", "Refund pending", "TDR filing", "Booking issue"]
+  },
+  {
     slug: "royal-mail", name: "Royal Mail", country: "uk", category: "courier-delivery", logoText: "RM",
     summary: "Official Royal Mail help for tracking, lost items, postage, refunds and delivery support in the United Kingdom.",
     officialWebsite: "https://www.royalmail.com/", supportWebsite: "https://www.royalmail.com/help", phone: "03457 740 740",

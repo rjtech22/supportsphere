@@ -9,10 +9,10 @@ export function Header() {
       <header className="header">
         <div className="shell nav">
           <Link className="brand" href="/"><span className="brand-mark">SS</span><span>Support<span>Sphere</span></span></Link>
-          <nav className="desktop-nav" aria-label="Main navigation"><Link href="/us/">Companies</Link><Link href="/guides/how-to-file-a-customer-complaint">Guides</Link><Link href="/tools/complaint-letter">Complaint tools</Link><Link href="/about">About</Link></nav>
+          <nav className="desktop-nav" aria-label="Main navigation"><Link href="/us/">Companies</Link><Link href="/guides">Guides</Link><Link href="/tools/complaint-letter">Complaint tools</Link><Link href="/about">About</Link></nav>
           <CountrySelector compact />
           <Link className="nav-search" href="/search" aria-label="Search"><Search size={18} /><span>Search</span></Link>
-          <details className="mobile-menu"><summary aria-label="Open menu"><Menu size={21} /></summary><div><Link href="/search">Search</Link><Link href="/us/">Companies</Link><Link href="/guides/how-to-file-a-customer-complaint">Guides</Link><Link href="/tools/complaint-letter">Tools</Link><Link href="/about">About</Link></div></details>
+          <details className="mobile-menu"><summary aria-label="Open menu"><Menu size={21} /></summary><div><Link href="/search">Search</Link><Link href="/us/">Companies</Link><Link href="/guides">Guides</Link><Link href="/tools/complaint-letter">Tools</Link><Link href="/about">About</Link></div></details>
         </div>
       </header>
     </>
