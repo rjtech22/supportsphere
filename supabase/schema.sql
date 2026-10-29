@@ -129,6 +129,17 @@ create table if not exists public.support_contacts (
   created_at timestamptz not null default now(), updated_at timestamptz not null default now()
 );
 
+-- Global directory expansion: every published contact can carry its own source and review date.
+alter table public.companies add column if not exists aliases jsonb not null default '[]'::jsonb;
+alter table public.companies add column if not exists regions jsonb not null default '[]'::jsonb;
+alter table public.company_country_support add column if not exists support_hours text;
+alter table public.company_country_support add column if not exists availability text;
+alter table public.company_country_support add column if not exists common_issues jsonb not null default '[]'::jsonb;
+alter table public.support_contacts add column if not exists source_url text;
+alter table public.support_contacts add column if not exists verified_at date;
+alter table public.support_contacts drop constraint if exists support_contacts_contact_type_check;
+alter table public.support_contacts add constraint support_contacts_contact_type_check check (contact_type in ('phone','toll_free','technical_phone','sales_phone','whatsapp','email','support_url','complaint_url','help_center','chat','address','hours'));
+
 create table if not exists public.official_sources (
   id uuid primary key default gen_random_uuid(), support_id uuid not null references public.company_country_support(id) on delete cascade,
   label text not null, url text not null, checked_at timestamptz, notes text, created_at timestamptz not null default now()

@@ -6,7 +6,8 @@ import { languageAlternates, locales } from "@/lib/i18n";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
-  const paths = ["", "/about", "/contact", "/privacy-policy", "/terms", "/disclaimer", "/guides", "/search", "/tools/complaint-letter", ...countries.map((item) => `/${item.code}`), ...globalCompanies.map((item) => `/${item.country}/companies/${item.slug}`), ...countries.flatMap((country) => globalCategories.map((category) => `/${country.code}/categories/${category.slug}`)), ...guides.map((item) => `/guides/${item.slug}`)];
+  const usefulCategoryPaths = countries.flatMap((country) => globalCategories.filter((category) => globalCompanies.some((company) => company.country === country.code && company.category === category.slug)).map((category) => `/${country.code}/categories/${category.slug}`));
+  const paths = ["", "/about", "/contact", "/privacy-policy", "/terms", "/disclaimer", "/guides", "/search", "/tools/complaint-letter", ...countries.map((item) => `/${item.code}`), ...globalCompanies.filter((item) => item.verificationStatus === "Verified" && item.sourceLinks.length > 0).map((item) => `/${item.country}/companies/${item.slug}`), ...usefulCategoryPaths, ...guides.map((item) => `/guides/${item.slug}`)];
   return locales.flatMap((locale) => paths.map((path) => ({
     url: `${siteConfig.url}/${locale}${path}`,
     lastModified: now,

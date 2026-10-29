@@ -15,7 +15,7 @@ for (const locale of ["en", "ta", "hi", "fr"]) {
 const sitemap = fs.readFileSync(".next/server/app/sitemap.xml.body", "utf8");
 const urls = (sitemap.match(/<url>/g) || []).length;
 const alternatives = (sitemap.match(/hreflang=/g) || []).length;
-if (urls !== 296) throw new Error(`Expected 296 sitemap URLs, got ${urls}`);
-if (alternatives !== 1480) throw new Error(`Expected 1480 sitemap language alternatives, got ${alternatives}`);
+if (urls < 150) throw new Error(`Expected at least 150 useful sitemap URLs, got ${urls}`);
+if (alternatives !== urls * 5) throw new Error(`Expected ${urls * 5} sitemap language alternatives, got ${alternatives}`);
 if (!sitemap.includes("/ta/in/companies/sbi") || !sitemap.includes('hreflang="x-default"')) throw new Error("Localized sitemap examples missing");
 console.log(`sitemap: ${urls} URLs and ${alternatives} language alternatives OK`);

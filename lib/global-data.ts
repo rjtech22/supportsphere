@@ -18,6 +18,12 @@ export const globalCategories = [
   { slug: "home-appliances", name: "Home Appliances", icon: "HA", description: "Warranty, repair and service requests" },
   { slug: "courier-delivery", name: "Courier & Delivery", icon: "CD", description: "Tracking, missing parcels and claims" },
   { slug: "insurance", name: "Insurance", icon: "IS", description: "Policies, claims and grievance routes" }
+  ,{ slug: "software-technology", name: "Software & Technology", icon: "ST", description: "Accounts, subscriptions, cloud products and technical help" }
+  ,{ slug: "automotive", name: "Automotive", icon: "AU", description: "Vehicle support, service, warranty and roadside help" }
+  ,{ slug: "healthcare", name: "Healthcare", icon: "HC", description: "Appointments, billing and patient support channels" }
+  ,{ slug: "food-delivery", name: "Food & Delivery", icon: "FD", description: "Orders, missing items, refunds and delivery issues" }
+  ,{ slug: "utilities", name: "Utilities", icon: "UT", description: "Electricity, gas, water, billing and service complaints" }
+  ,{ slug: "other-services", name: "Other Services", icon: "OS", description: "Verified support routes for other customer services" }
 ];
 
 export type GlobalCompany = {
@@ -27,10 +33,20 @@ export type GlobalCompany = {
   category: string;
   summary: string;
   logoText: string;
+  aliases?: string[];
+  regions?: string[];
+  supportTypes?: string[];
   officialWebsite: string;
   supportWebsite: string;
   phone?: string;
+  tollFree?: string;
+  technicalSupportPhone?: string;
+  salesSupportPhone?: string;
+  whatsapp?: string;
   email?: string;
+  liveChat?: string;
+  helpCenter?: string;
+  supportHours?: string;
   warranty?: string;
   refundCancellation?: string;
   complaintSteps: string[];
