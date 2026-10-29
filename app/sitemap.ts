@@ -1,13 +1,16 @@
 import type { MetadataRoute } from "next";
 import { guides } from "@/lib/data";
 import { siteConfig } from "@/lib/site";
-import { publishedCountries, globalCategories, globalCompanies } from "@/lib/global-data";
+import { globalCategories } from "@/lib/global-data";
 import { languageAlternates, locales } from "@/lib/i18n";
+import { getPublishedCompanies } from "@/lib/database-content";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
-  const usefulCategoryPaths = publishedCountries.flatMap((country) => globalCategories.filter((category) => globalCompanies.some((company) => company.country === country.code && company.category === category.slug)).map((category) => `/${country.code}/categories/${category.slug}`));
-  const paths = ["", "/about", "/contact", "/privacy-policy", "/terms", "/disclaimer", "/guides", "/search", "/tools/complaint-letter", ...publishedCountries.map((item) => `/${item.code}`), ...globalCompanies.filter((item) => item.verificationStatus === "Verified" && item.sourceLinks.length > 0).map((item) => `/${item.country}/companies/${item.slug}`), ...usefulCategoryPaths, ...guides.map((item) => `/guides/${item.slug}`)];
+  const companies = await getPublishedCompanies();
+  const activeCountries = [...new Set(companies.map((company) => company.country))];
+  const usefulCategoryPaths = activeCountries.flatMap((country) => globalCategories.filter((category) => companies.some((company) => company.country === country && company.category === category.slug)).map((category) => `/${country}/categories/${category.slug}`));
+  const paths = ["", "/about", "/contact", "/privacy-policy", "/terms", "/disclaimer", "/guides", "/search", "/tools/complaint-letter", ...activeCountries.map((code) => `/${code}`), ...companies.filter((item) => item.verificationStatus === "Verified" && item.sourceLinks.length > 0).map((item) => `/${item.country}/companies/${item.slug}`), ...usefulCategoryPaths, ...guides.map((item) => `/guides/${item.slug}`)];
   return locales.flatMap((locale) => paths.map((path) => ({
     url: `${siteConfig.url}/${locale}${path}`,
     lastModified: now,

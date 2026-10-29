@@ -1,0 +1,5 @@
+{
+  "crons": [
+    { "path": "/api/automation/verify-support-links", "schedule": "0 3 * * 0" }
+  ]
+}

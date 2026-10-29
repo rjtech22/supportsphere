@@ -9,7 +9,8 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "audit:companies": "node scripts/audit-company-pages.mjs",
-    "seed:countries": "node scripts/seed-countries.mjs"
+    "seed:countries": "node scripts/seed-countries.mjs",
+    "setup:admin": "node scripts/setup-admin.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "latest",

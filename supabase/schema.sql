@@ -243,3 +243,43 @@ on conflict (code) do update set name = excluded.name;
 
 -- Create an Auth user, then grant admin access explicitly:
 -- insert into public.admin_users(user_id) values ('YOUR_AUTH_USER_UUID');
+
+-- Safe operations: reminders and link checks never auto-publish or replace contact data.
+create table if not exists public.verification_reminders (
+  id uuid primary key default gen_random_uuid(), support_id uuid not null unique references public.company_country_support(id) on delete cascade,
+  reason text not null, status text not null default 'open' check (status in ('open','resolved','dismissed')),
+  due_at timestamptz not null default now(), resolved_at timestamptz, created_at timestamptz not null default now(), updated_at timestamptz not null default now()
+);
+create table if not exists public.link_checks (
+  id uuid primary key default gen_random_uuid(), source_id uuid not null unique references public.official_sources(id) on delete cascade,
+  support_id uuid references public.company_country_support(id) on delete cascade, url text not null, http_status integer,
+  final_url text, is_working boolean not null default false, error_message text, checked_at timestamptz not null default now()
+);
+create table if not exists public.traffic_metrics_daily (
+  id uuid primary key default gen_random_uuid(), metric_date date not null unique, organic_users integer not null default 0,
+  organic_sessions integer not null default 0, impressions integer not null default 0, clicks integer not null default 0,
+  source text not null default 'google', imported_at timestamptz not null default now()
+);
+create table if not exists public.search_query_metrics (
+  id uuid primary key default gen_random_uuid(), metric_date date not null, query text not null, page text not null default '', country text not null default '',
+  clicks integer not null default 0, impressions integer not null default 0, position numeric, imported_at timestamptz not null default now(), unique(metric_date,query,page,country)
+);
+create table if not exists public.ad_placements (
+  id uuid primary key default gen_random_uuid(), placement_key text not null unique, label text not null, adsense_slot_id text,
+  page_pattern text not null default '*', enabled boolean not null default false, updated_at timestamptz not null default now()
+);
+alter table public.verification_reminders enable row level security;
+alter table public.link_checks enable row level security;
+alter table public.traffic_metrics_daily enable row level security;
+alter table public.search_query_metrics enable row level security;
+alter table public.ad_placements enable row level security;
+drop policy if exists "admins manage verification reminders" on public.verification_reminders;
+create policy "admins manage verification reminders" on public.verification_reminders for all using (public.is_admin()) with check (public.is_admin());
+drop policy if exists "admins read link checks" on public.link_checks;
+create policy "admins read link checks" on public.link_checks for select using (public.is_admin());
+drop policy if exists "admins read traffic metrics" on public.traffic_metrics_daily;
+create policy "admins read traffic metrics" on public.traffic_metrics_daily for select using (public.is_admin());
+drop policy if exists "admins read search metrics" on public.search_query_metrics;
+create policy "admins read search metrics" on public.search_query_metrics for select using (public.is_admin());
+drop policy if exists "admins manage ad placements" on public.ad_placements;
+create policy "admins manage ad placements" on public.ad_placements for all using (public.is_admin()) with check (public.is_admin());
