@@ -78,10 +78,92 @@ function Category({ locale, countryCode, slug }: { locale: Locale; countryCode: 
 }
 
 function Company({ locale, countryCode, slug }: { locale: Locale; countryCode: string; slug: string }) {
-  const d = getDictionary(locale); const company = getGlobalCompany(countryCode, slug); const country = getCountry(countryCode); if (!company || !country) notFound(); const countryName = d.countries[countryCode]; const cat = d.categories[company.category] || globalCategories.find((item) => item.slug === company.category); const path = `/${countryCode}/companies/${slug}`;
-  const faq: [string, string][] = [[t(d.company.faqContact, { company: company.name }), t(d.company.faqContactAnswer, { date: company.verifiedAt })], [t(d.company.faqComplaint, { company: company.name }), d.company.faqComplaintAnswer], [t(d.company.faqRefund, { company: company.name }), t(d.company.faqRefundAnswer, { company: company.name })]];
-  const articleLd = { "@context": "https://schema.org", "@type": "Article", headline: `${company.name} Customer Care & Support — ${countryName}`, description: company.summary, dateModified: company.verifiedAt, inLanguage: d.htmlLang, mainEntityOfPage: `${siteConfig.url}${localePath(locale, path)}` };
-  return <><Hero crumbs={[countryName, cat?.name || company.category, company.name]} eyebrow={`${company.verificationStatus} · ${d.company.lastVerified} ${company.verifiedAt}`} title={`${company.name} Customer Care & Support — ${countryName}`} text={company.summary} /><section className="section"><div className="shell"><p className="independent-warning">SupportSphere is an independent information directory. Always verify contact details through the official company website before sharing personal information.</p><div className="content-layout"><article className="content-card"><div className="company-mark"><span className="company-logo blue">{company.logoText}</span><div><h2>{company.name}</h2><p>{countryName} · {cat?.name || company.category}</p></div></div><h2>{d.company.officialInfo}</h2><Info label={d.company.officialWebsite} value={new URL(company.officialWebsite).hostname} /><Info label="Official help center" value={new URL(company.helpCenter || company.supportWebsite).hostname} />{company.phone ? <Info label={d.company.phone} value={company.phone} /> : <Info label={d.company.phone} value="Phone support information has not been verified." muted />}{company.tollFree && <Info label="Toll-free number" value={company.tollFree} />}{company.technicalSupportPhone && <Info label="Technical support number" value={company.technicalSupportPhone} />}{company.salesSupportPhone && <Info label="Sales support number" value={company.salesSupportPhone} />}{company.whatsapp && <Info label="WhatsApp support" value={company.whatsapp} />}{company.email && <Info label={d.company.email} value={company.email} />}{company.supportHours && <Info label="Support hours" value={company.supportHours} />}{company.regions && <Info label="Country or region availability" value={company.regions.join(", ")} />}<TrackedLink className="official-link" href={company.supportWebsite} eventName="official_support_click" params={{ country: countryCode, company: slug, locale }}><span>{d.company.openOfficial}<small>{new URL(company.supportWebsite).hostname}</small></span><ExternalLink /></TrackedLink>{company.liveChat && <TrackedLink className="official-link" href={company.liveChat} eventName="official_support_click" params={{ country: countryCode, company: slug, locale }}><span>Open official live chat</span><ExternalLink /></TrackedLink>}<div className="warning-box"><ShieldCheck /><span><b>{d.company.securityTitle}:</b> {d.company.securityText}</span></div><h2>Common customer issues</h2><div className="issue-list">{company.commonIssues.map((issue) => <span key={issue}>{issue}</span>)}</div>{company.refundCancellation && <><h2>Refund and cancellation information</h2><p>{company.refundCancellation}</p></>}{company.warranty && <><h2>Warranty and repair information</h2><p>{company.warranty}</p></>}<h2>{d.company.complaintTitle}</h2><ol>{company.complaintSteps.map((step) => <li key={step}>{step}</li>)}</ol><h2>{d.company.escalationTitle}</h2><p>{company.escalation}</p><h2>{d.company.sourcesTitle}</h2>{company.sourceLinks.map((source) => <TrackedLink className="official-link" href={source.url} eventName="official_support_click" params={{ country: countryCode, company: slug, locale }} key={source.url}><span>{source.label}<small>{new URL(source.url).hostname}<span className="source-meta">Verified {company.verifiedAt}</span></small></span><ExternalLink /></TrackedLink>)}<section className="faq-wrap"><h2>{company.name} {d.company.faqTitle}</h2><Faqs items={faq} /></section></article><aside><div className="sidebar-card"><h3>{d.company.verificationTitle}</h3><p><b>{company.verificationStatus}</b><br />Last verified: {company.verifiedAt}</p><p>{d.company.verificationText}</p></div><div className="sidebar-card"><h3>{d.company.relatedGuides}</h3>{Object.entries(d.guides.items).slice(0, 5).map(([guideSlug, guide]) => <Link key={guideSlug} href={localePath(locale, `/guides/${guideSlug}`)}>{guide.title}</Link>)}</div></aside></div></div></section><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleLd) }} /></>;
+  const d = getDictionary(locale);
+  const company = getGlobalCompany(countryCode, slug);
+  const country = getCountry(countryCode);
+  if (!company || !country) notFound();
+
+  const countryName = d.countries[countryCode];
+  const cat = d.categories[company.category] || globalCategories.find((item) => item.slug === company.category);
+  const path = `/${countryCode}/companies/${slug}`;
+  const genericFaq: [string, string][] = [
+    [t(d.company.faqContact, { company: company.name }), t(d.company.faqContactAnswer, { date: company.verifiedAt })],
+    [t(d.company.faqComplaint, { company: company.name }), d.company.faqComplaintAnswer],
+    [t(d.company.faqRefund, { company: company.name }), t(d.company.faqRefundAnswer, { company: company.name })]
+  ];
+  const faq: [string, string][] = locale === "en" && company.faqs?.length
+    ? company.faqs.map((item) => [item.question, item.answer])
+    : genericFaq;
+  const relatedCompanies = globalCompanies
+    .filter((item) => item.slug !== company.slug && (item.category === company.category || item.country === company.country))
+    .slice(0, 5);
+  const articleLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: `${company.name} Customer Care & Support — ${countryName}`,
+    description: company.summary,
+    dateModified: company.verifiedAt,
+    inLanguage: d.htmlLang,
+    mainEntityOfPage: `${siteConfig.url}${localePath(locale, path)}`
+  };
+  const faqLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faq.map(([question, answer]) => ({
+      "@type": "Question",
+      name: question,
+      acceptedAnswer: { "@type": "Answer", text: answer }
+    }))
+  };
+
+  return <>
+    <Hero
+      crumbs={[countryName, cat?.name || company.category, company.name]}
+      eyebrow={`${company.verificationStatus} · ${d.company.lastVerified} ${company.verifiedAt}`}
+      title={`${company.name} Customer Care & Support — ${countryName}`}
+      text={company.summary}
+    />
+    <section className="section"><div className="shell">
+      <p className="independent-warning">SupportSphere is an independent information directory. Always verify contact details through the official company website before sharing personal information.</p>
+      <div className="content-layout">
+        <article className="content-card">
+          <div className="company-mark"><span className="company-logo blue">{company.logoText}</span><div><h2>{company.name}</h2><p>{countryName} · {cat?.name || company.category}</p></div></div>
+          <h2>{d.company.officialInfo}</h2>
+          <Info label={d.company.officialWebsite} value={new URL(company.officialWebsite).hostname} />
+          <Info label="Official help center" value={new URL(company.helpCenter || company.supportWebsite).hostname} />
+          {company.phone ? <Info label={d.company.phone} value={company.phone} /> : <Info label={d.company.phone} value="Phone support information has not been verified." muted />}
+          {company.tollFree && <Info label="Toll-free number" value={company.tollFree} />}
+          {company.technicalSupportPhone && <Info label="Technical support number" value={company.technicalSupportPhone} />}
+          {company.salesSupportPhone && <Info label="Sales support number" value={company.salesSupportPhone} />}
+          {company.whatsapp && <Info label="WhatsApp support" value={company.whatsapp} />}
+          {company.email && <Info label={d.company.email} value={company.email} />}
+          {company.supportHours && <Info label="Support hours" value={company.supportHours} />}
+          {company.regions && <Info label="Country or region availability" value={company.regions.join(", ")} />}
+          <TrackedLink className="official-link" href={company.supportWebsite} eventName="official_support_click" params={{ country: countryCode, company: slug, locale }}><span>{d.company.openOfficial}<small>{new URL(company.supportWebsite).hostname}</small></span><ExternalLink /></TrackedLink>
+          {company.liveChat && <TrackedLink className="official-link" href={company.liveChat} eventName="official_support_click" params={{ country: countryCode, company: slug, locale }}><span>Open official live chat</span><ExternalLink /></TrackedLink>}
+          <div className="warning-box"><ShieldCheck /><span><b>{d.company.securityTitle}:</b> {d.company.securityText}</span></div>
+          <h2>Common customer issues</h2>
+          <div className="issue-list">{company.commonIssues.map((issue) => <span key={issue}>{issue}</span>)}</div>
+          {company.refundCancellation && <><h2>Refund and cancellation information</h2><p>{company.refundCancellation}</p></>}
+          {company.warranty && <><h2>Warranty and repair information</h2><p>{company.warranty}</p></>}
+          <h2>{d.company.complaintTitle}</h2>
+          <ol>{company.complaintSteps.map((step) => <li key={step}>{step}</li>)}</ol>
+          <h2>{d.company.escalationTitle}</h2>
+          <p>{company.escalation}</p>
+          <h2>{d.company.sourcesTitle}</h2>
+          {company.sourceLinks.map((source) => <TrackedLink className="official-link" href={source.url} eventName="official_support_click" params={{ country: countryCode, company: slug, locale }} key={source.url}><span>{source.label}<small>{new URL(source.url).hostname}<span className="source-meta">Verified {company.verifiedAt}</span></small></span><ExternalLink /></TrackedLink>)}
+          <section className="faq-wrap"><h2>{company.name} {d.company.faqTitle}</h2><Faqs items={faq} /></section>
+        </article>
+        <aside>
+          <div className="sidebar-card"><h3>{d.company.verificationTitle}</h3><p><b>{company.verificationStatus}</b><br />Last verified: {company.verifiedAt}</p><p>{d.company.verificationText}</p></div>
+          <div className="sidebar-card"><h3>{d.company.relatedGuides}</h3>{Object.entries(d.guides.items).slice(0, 5).map(([guideSlug, guide]) => <Link key={guideSlug} href={localePath(locale, `/guides/${guideSlug}`)}>{guide.title}</Link>)}</div>
+          {relatedCompanies.length > 0 && <div className="sidebar-card"><h3>Related company support</h3>{relatedCompanies.map((item) => <Link key={`${item.country}-${item.slug}`} href={localePath(locale, `/${item.country}/companies/${item.slug}`)}>{item.name}</Link>)}</div>}
+        </aside>
+      </div>
+    </div></section>
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleLd) }} />
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
+  </>;
 }
 
 function Generator({ locale }: { locale: Locale }) { const d = getDictionary(locale); return <><Hero crumbs={[d.generator.h1]} eyebrow={d.generator.eyebrow} title={d.generator.h1} text={d.generator.intro} /><section className="section"><div className="shell"><LocalizedTemplateGenerator locale={locale} /></div></section><section className="section soft"><div className="shell prose-page"><h2>{d.generator.howTitle}</h2><p>{d.generator.howText}</p><h2>{d.generator.whenTitle}</h2><p>{d.generator.whenText}</p><h2>{d.generator.includeTitle}</h2><ul>{d.generator.includeItems.map((item) => <li key={item}>{item}</li>)}</ul></div></section></>; }
