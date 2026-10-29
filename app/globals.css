@@ -85,3 +85,42 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 @media(max-width:900px){.hero{padding:82px 0}.hero-grid{gap:48px}.hero-panel{max-width:none}.content-layout{gap:28px}.language-selector{margin-left:auto}.nav>.country-selector{display:none}}
 @media(max-width:600px){.shell{width:min(100% - 28px,1180px)}.hero{padding:66px 0 60px}.hero h1{font-size:clamp(42px,13vw,56px)}.page-hero,.detail-hero{padding:58px 0}.page-hero h1,.detail-hero h1{font-size:clamp(36px,11vw,46px)}.section{padding:70px 0}.content-card{padding:22px}.nav{height:70px}.brand>span:last-child{display:none}.language-selector select{max-width:76px}.footer{padding-top:48px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important}}
+
+/* Country selector: one clean control without a nested native border */
+.country-selector{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  width:auto;
+  min-width:168px;
+  max-width:220px;
+  height:42px;
+  margin:0;
+  padding:0 10px;
+  overflow:hidden;
+  white-space:nowrap;
+}
+.country-selector svg{flex:0 0 16px}
+.country-selector select{
+  flex:1 1 auto;
+  width:100%;
+  min-width:0;
+  height:40px;
+  margin:0;
+  padding:0 4px;
+  border:0!important;
+  border-radius:0;
+  outline:0;
+  box-shadow:none!important;
+  background:transparent!important;
+  color:#E2E8F0;
+  font-size:12px;
+  font-weight:750;
+  cursor:pointer;
+}
+.country-selector select:focus{outline:0;box-shadow:none!important}
+.country-selector.compact{min-width:174px;max-width:190px;flex:0 0 180px}
+.country-hero-tools .country-selector{max-width:240px}
+@media(max-width:1100px){.nav{gap:15px}.desktop-nav{gap:18px}.country-selector.compact{min-width:148px;max-width:158px;flex-basis:154px}.language-selector select{max-width:74px}}
+@media(max-width:900px){.nav>.country-selector{display:none}.country-hero-tools .country-selector{display:inline-flex;min-width:190px}}
+@media(max-width:600px){.country-hero-tools .country-selector{width:100%;max-width:100%;margin:0}.country-selector select{font-size:13px}.country-hero-tools{align-items:stretch}.country-hero-tools .search-box{width:100%}}
