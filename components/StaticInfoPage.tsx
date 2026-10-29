@@ -7,7 +7,7 @@ const pages = {
     ["Editorial independence", "Advertisements, affiliate links and sponsored listings are labelled. Payment never changes which destination is presented as official support."]
   ] },
   contact: { title: "Contact", description: "Contact the SupportSphere editorial team or report incorrect information.", sections: [
-    ["Editorial enquiries", "Before launch, replace hello@your-domain.com with an email address on your own domain. Do not send account passwords, OTPs, card numbers or identity documents."],
+    ["Editorial enquiries", "Use the correction option on the relevant company page for listing updates. A public editorial email will be added after a custom domain is connected. Never send account passwords, OTPs, card numbers or identity documents."],
     ["Corrections", "Use the report button on a company page to identify an outdated or incorrect contact. Reports are stored only after Supabase is connected."],
     ["Company support", "We cannot access company accounts, orders or refunds. Use the official links on the relevant country-specific company page."]
   ] },
@@ -15,7 +15,7 @@ const pages = {
     ["Information collected", "The site may collect standard server logs, page views, searches and click events. Correction reports may include details and an optional email address for editorial follow-up."],
     ["Analytics and advertising", "When configured, Google Analytics 4 measures usage and Google AdSense may use cookies or similar technologies. Add a consent platform where required for your visitors."],
     ["Data minimisation", "Never submit OTPs, passwords, payment credentials, full account numbers or sensitive identity documents."],
-    ["Your choices", "Browser controls can block cookies or analytics. Contact the published domain email to request deletion of a submitted report."]
+    ["Your choices", "Browser controls can block cookies or analytics. A deletion-request channel will be published before collection of optional contact details is enabled."]
   ] },
   terms: { title: "Terms of Use", description: "Rules for using SupportSphere and its independent support guides.", sections: [
     ["Information service", "Content is general information. It does not create a customer-service relationship and is not legal, financial or professional advice."],
