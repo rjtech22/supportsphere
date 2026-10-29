@@ -1,10 +1,10 @@
 import "server-only";
 import type { GlobalCompany } from "@/lib/global-data";
 import { globalCompanies } from "@/lib/global-data";
-import { isSupabaseConfigured } from "@/lib/supabase/server";
 import { createClient } from "@supabase/supabase-js";
 
 type Row = Record<string, unknown>;
+function isSupabaseConfigured() { return Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY); }
 
 function publicClient() {
   return createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!, { auth: { persistSession: false } });

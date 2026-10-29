@@ -1,6 +1,6 @@
 # SupportSphere
 
-Production-ready Next.js MVP for global customer-support discovery, complaint-resolution tools, SEO content, monetization placements, analytics and a secure Supabase admin. Launch countries: United States, India, United Kingdom, Canada and Australia.
+Production-ready Next.js MVP for global customer-support discovery, complaint-resolution tools, SEO content, monetization placements and analytics.
 
 ## Local setup
 
@@ -10,18 +10,16 @@ copy .env.example .env.local
 npm run dev
 ```
 
-The verified public seed content works without Supabase. Database editing, authenticated admin access and report workflows activate after Supabase is configured.
+The verified public seed content works without Supabase. Published database records and public report workflows activate after Supabase is configured.
 
 ## Supabase
 
 1. Create a Supabase project.
 2. Run `supabase/schema.sql` in the SQL Editor.
 3. Add `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` to `.env.local` and Vercel.
-4. Create the first user in Supabase Authentication.
-5. Copy the user's UUID and run the final commented `insert into public.admin_users...` statement in `schema.sql`.
-6. Add `https://YOUR_DOMAIN/auth/callback` to Supabase Auth redirect URLs.
+4. Keep service-role credentials server-side and use the protected automation endpoint only through Vercel Cron.
 
-There is no fallback password or insecure mock admin. Row Level Security protects writes.
+The public website has no administrator login or dashboard route. Row Level Security protects database writes.
 
 ## Google Analytics 4
 
@@ -29,7 +27,7 @@ Create a GA4 web data stream and set `NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX`. Page view
 
 ## AdSense and commercial links
 
-Ad placements are labelled and remain placeholders until approval. Once approved, set `NEXT_PUBLIC_ADSENSE_CLIENT` plus the slot variables in `.env.example`. Affiliate and sponsored records require disclosure text and are managed at `/admin/global`.
+Ad placements are labelled and remain placeholders until approval. Once approved, set `NEXT_PUBLIC_ADSENSE_CLIENT` plus the slot variables in `.env.example`. There is no public administrator dashboard or login flow.
 
 ## Vercel deployment
 
@@ -37,7 +35,7 @@ Ad placements are labelled and remain placeholders until approval. Once approved
 2. Import it at https://vercel.com/new.
 3. Add the environment variables from `.env.example`.
 4. Set `NEXT_PUBLIC_SITE_URL` to the final `https://` domain.
-5. Deploy, then add the custom domain in Vercel and update the Supabase redirect URL.
+5. Deploy, then add the custom domain in Vercel.
 
 ## Google Search Console
 
