@@ -107,9 +107,16 @@ create policy "admins manage profiles" on public.profiles for all using (public.
 -- Global, country-specific extension tables.
 create table if not exists public.countries (
   id uuid primary key default gen_random_uuid(), code text unique not null check (code ~ '^[a-z]{2}$'),
-  name text not null, is_active boolean not null default true, is_primary boolean not null default false,
+    name text not null, iso3 text, flag text, native_name text, language_codes jsonb not null default '[]'::jsonb,
+    default_locale text not null default 'en', is_active boolean not null default true, is_primary boolean not null default false,
   created_at timestamptz not null default now(), updated_at timestamptz not null default now()
 );
+
+  alter table public.countries add column if not exists iso3 text;
+  alter table public.countries add column if not exists flag text;
+  alter table public.countries add column if not exists native_name text;
+  alter table public.countries add column if not exists language_codes jsonb not null default '[]'::jsonb;
+  alter table public.countries add column if not exists default_locale text not null default 'en';
 
 alter table public.companies add column if not exists logo_url text;
 alter table public.companies add column if not exists base_category_slug text;

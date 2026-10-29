@@ -40,7 +40,7 @@ export const countrySeo: Record<CountryCode, {
     terminology: "India pages use customer care, grievance officer, docket number, PIN code and consumer helpline where applicable.",
     faqs: [["Where can an unresolved consumer complaint be raised in India?", "After using the company’s grievance process, eligible matters can be raised through the official National Consumer Helpline portal."], ["Should I trust customer-care numbers in comments?", "No. Use contact details published on the company’s official website or app and verify the domain first."]]
   },
-  uk: {
+  gb: {
     seoTitle: "Customer Support & Consumer Complaint Help in the UK",
     description: "Find official UK customer support links, refund and cancellation help, and clear steps for escalating consumer complaints.",
     h1: "Customer Support & Consumer Complaint Help in the UK",

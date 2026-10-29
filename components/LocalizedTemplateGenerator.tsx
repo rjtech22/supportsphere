@@ -11,7 +11,7 @@ export function LocalizedTemplateGenerator({ locale }: { locale: Locale }) {
   const [output, setOutput] = useState(""); const [copied, setCopied] = useState(false);
   function generate(event: FormEvent<HTMLFormElement>) {
     event.preventDefault(); const data = new FormData(event.currentTarget); const get = (key: string) => String(data.get(key) || "").trim();
-    const company = get("company"); const tone = get("tone"); const countryCode = get("country"); const country = d.countries[countryCode] || countryCode;
+    const company = get("company"); const tone = get("tone"); const countryCode = get("country"); const country = d.countries[countryCode] || countries.find((item) => item.code === countryCode)?.name || countryCode;
     const opener = tone === "firm" ? c.openerFirm : tone === "polite" ? c.openerPolite : c.openerProfessional;
     const body = `${c.subject} — ${get("issue")}\n\n${t(c.greeting, { company })}\n\n${opener} ${get("issue")}\n${t(c.referenceLine, { country, reference: get("reference") || "—" })}\n\n${c.detailsLine}: ${get("details")}\n\n${c.resolutionLine}: ${get("resolution")}\n\n${c.closing}\n\n${c.sincerely},\n${get("name")}`;
     setOutput(body); setCopied(false); trackEvent("generator_use", { generator_type: "complaint", country: countryCode, tone, locale });

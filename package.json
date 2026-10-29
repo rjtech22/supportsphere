@@ -8,11 +8,13 @@
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "audit:companies": "node scripts/audit-company-pages.mjs"
+    "audit:companies": "node scripts/audit-company-pages.mjs",
+    "seed:countries": "node scripts/seed-countries.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "latest",
     "@supabase/supabase-js": "latest",
+    "countries-list": "^3.4.1",
     "lucide-react": "latest",
     "next": "latest",
     "react": "latest",

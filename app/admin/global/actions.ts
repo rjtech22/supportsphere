@@ -6,7 +6,25 @@ import { requireAdmin } from "@/lib/supabase/server";
 
 async function db() { const auth = await requireAdmin(); if (!auth.user || !auth.isAdmin) throw new Error("Unauthorized"); return auth.supabase; }
 const uuid = z.string().uuid();
-export async function addCountry(form: FormData) { const supabase = await db(); const { error } = await supabase.from("countries").insert({ code: z.string().regex(/^[a-z]{2}$/).parse(form.get("code")), name: z.string().min(2).parse(form.get("name")), is_active: form.get("is_active") === "on" }); if (error) throw new Error(error.message); revalidatePath("/admin/global"); }
+export async function addCountry(form: FormData) {
+  const supabase = await db();
+  const code = z.string().regex(/^[a-zA-Z]{2}$/).parse(form.get("code")).toLowerCase();
+  const rawIso3 = String(form.get("iso3") || "");
+  const iso3 = rawIso3 ? z.string().regex(/^[a-zA-Z]{3}$/).parse(rawIso3).toUpperCase() : null;
+  const languageCodes = String(form.get("language_codes") || "").split(",").map((item) => item.trim().toLowerCase()).filter(Boolean);
+  const { error } = await supabase.from("countries").insert({
+    code,
+    iso3,
+    name: z.string().min(2).parse(form.get("name")),
+    native_name: String(form.get("native_name") || "") || null,
+    flag: String(form.get("flag") || "") || null,
+    language_codes: languageCodes,
+    default_locale: z.string().min(2).parse(form.get("default_locale") || "en"),
+    is_active: form.get("is_active") === "on"
+  });
+  if (error) throw new Error(error.message);
+  revalidatePath("/admin/global");
+}
 export async function addCountrySupport(form: FormData) { const supabase = await db(); const { error } = await supabase.from("company_country_support").insert({ company_id: uuid.parse(form.get("company_id")), country_id: uuid.parse(form.get("country_id")), summary: z.string().min(20).parse(form.get("summary")), verification_status: z.enum(["verified","needs_review","unverified"]).parse(form.get("verification_status")), verified_at: form.get("verified_at") || null, published: form.get("published") === "on" }); if (error) throw new Error(error.message); revalidatePath("/admin/global"); }
 export async function addSupportContact(form: FormData) { const supabase = await db(); const { error } = await supabase.from("support_contacts").insert({ support_id: uuid.parse(form.get("support_id")), contact_type: z.enum(["phone","email","support_url","complaint_url","chat","address"]).parse(form.get("contact_type")), label: z.string().min(2).parse(form.get("label")), value: z.string().min(3).parse(form.get("value")), is_official: form.get("is_official") === "on" }); if (error) throw new Error(error.message); revalidatePath("/admin/global"); }
 export async function addOfficialSource(form: FormData) { const supabase = await db(); const { error } = await supabase.from("official_sources").insert({ support_id: uuid.parse(form.get("support_id")), label: z.string().min(2).parse(form.get("label")), url: z.string().url().parse(form.get("url")), checked_at: new Date().toISOString() }); if (error) throw new Error(error.message); revalidatePath("/admin/global"); }

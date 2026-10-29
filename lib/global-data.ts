@@ -1,15 +1,10 @@
 import { priorityCompanies } from "@/lib/priority-companies";
+import { allCountries, countryByCode } from "@/lib/country-catalog";
 
-export type CountryCode = "us" | "in" | "uk" | "ca" | "au";
+export type CountryCode = string;
 export type VerificationStatus = "Verified" | "Needs Review" | "Unverified";
 
-export const countries = [
-  { code: "us" as const, name: "United States", flag: "US", primary: true },
-  { code: "in" as const, name: "India", flag: "IN", primary: false },
-  { code: "uk" as const, name: "United Kingdom", flag: "UK", primary: false },
-  { code: "ca" as const, name: "Canada", flag: "CA", primary: false },
-  { code: "au" as const, name: "Australia", flag: "AU", primary: false }
-];
+export const countries = allCountries;
 
 export const globalCategories = [
   { slug: "e-commerce", name: "E-commerce", icon: "EC", description: "Orders, returns, refunds and account help" },
@@ -146,7 +141,7 @@ const baseCompanies: GlobalCompany[] = [
     faqs: [{ question: "What details are useful for an IRCTC ticket complaint?", answer: "Keep the PNR, transaction ID, journey date and the cancellation or TDR status ready." }, { question: "Where do I raise an unresolved IRCTC refund query?", answer: "Use the official IRCTC eQuery portal and save its reference for follow-up." }, { question: "Does every cancelled ticket receive the same refund?", answer: "No. Eligibility and deductions depend on ticket status, timing and the railway rules shown in the official account." }]
   },
   {
-    slug: "royal-mail", name: "Royal Mail", country: "uk", category: "courier-delivery", logoText: "RM",
+    slug: "royal-mail", name: "Royal Mail", country: "gb", category: "courier-delivery", logoText: "RM",
     summary: "Official Royal Mail help for tracking, lost items, postage, refunds and delivery support in the United Kingdom.",
     officialWebsite: "https://www.royalmail.com/", supportWebsite: "https://www.royalmail.com/help", phone: "03457 740 740",
     refundCancellation: "Refund routes vary between personal postage, business accounts and shop orders. Use the official help topic that matches the purchase.",
@@ -318,6 +313,12 @@ const baseCompanies: GlobalCompany[] = [
 
 export const globalCompanies: GlobalCompany[] = [...baseCompanies, ...priorityCompanies];
 
-export const getCountry = (code: string) => countries.find((item) => item.code === code);
+export const publishedCountryCodes = [...new Set(globalCompanies.map((company) => company.country))];
+export const publishedCountries = publishedCountryCodes
+  .map((code) => countryByCode.get(code))
+  .filter((country): country is NonNullable<typeof country> => Boolean(country))
+  .sort((a, b) => Number(b.primary) - Number(a.primary) || a.name.localeCompare(b.name));
+
+export const getCountry = (code: string) => countryByCode.get(code.toLowerCase());
 export const getGlobalCompany = (country: string, slug: string) => globalCompanies.find((item) => item.country === country && item.slug === slug);
 export const companiesForCountry = (country: string) => globalCompanies.filter((item) => item.country === country);

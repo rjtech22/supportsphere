@@ -20,7 +20,7 @@ export const priorityCompanies: GlobalCompany[] = [
     faqs: [{ question: "How do I contact Amazon India about an order?", answer: "Sign in, open Your Orders, select the affected order and use the contact or help option shown for that purchase." }, { question: "Where can I check an Amazon India refund?", answer: "Open the order in Your Orders and review its refund status and payment-method details." }, { question: "Does this page list an Amazon India phone number?", answer: "No general number is shown because it was not verified from the official sources used for this page. Use Amazon's signed-in support flow." }]
   },
   {
-    slug: "amazon", name: "Amazon UK", country: "uk", category: "e-commerce", logoText: "AMZ",
+    slug: "amazon", name: "Amazon UK", country: "gb", category: "e-commerce", logoText: "AMZ",
     aliases: ["Amazon.co.uk", "Amazon UK customer service", "Amazon UK returns"], regions: ["United Kingdom"], supportTypes: ["orders", "returns", "refunds", "delivery", "account support"],
     summary: "Official Amazon UK support routes for orders, deliveries, returns, refunds, payments and account-related customer service.",
     officialWebsite: "https://www.amazon.co.uk/", supportWebsite: "https://www.amazon.co.uk/gp/help/customer/contact-us", helpCenter: "https://www.amazon.co.uk/gp/help/customer/display.html?nodeId=508510",
