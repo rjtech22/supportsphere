@@ -74,10 +74,14 @@ function compile(url) {
 function loadCompanies() {
   const priorityModule = { exports: {} };
   vm.runInNewContext(compile("../lib/priority-companies.ts"), { module: priorityModule, exports: priorityModule.exports }, { filename: "priority-companies.js" });
-  const module = { exports: {} };
-  const require = (id) => { if (id === "@/lib/priority-companies") return priorityModule.exports; throw new Error(`Unexpected import ${id}`); };
-  vm.runInNewContext(compile("../lib/global-data.ts"), { module, exports: module.exports, require, URL }, { filename: "global-data.js" });
-  return module.exports.globalCompanies;
+  const dataModule = { exports: {} };
+  const require = (id) => {
+    if (id === "@/lib/priority-companies") return priorityModule.exports;
+    if (id === "@/lib/country-catalog") return { allCountries: [], countryByCode: new Map() };
+    throw new Error(`Unexpected import ${id}`);
+  };
+  vm.runInNewContext(compile("../lib/global-data.ts"), { module: dataModule, exports: dataModule.exports, require, URL }, { filename: "global-data.js" });
+  return dataModule.exports.globalCompanies;
 }
 
 const htmlFiles = filesUnder(path.join(root, ".next", "server", "app"), ".html");

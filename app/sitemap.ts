@@ -10,7 +10,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const companies = await getPublishedCompanies();
   const activeCountries = [...new Set(companies.map((company) => company.country))];
   const usefulCategoryPaths = activeCountries.flatMap((country) => globalCategories.filter((category) => companies.some((company) => company.country === country && company.category === category.slug)).map((category) => `/${country}/categories/${category.slug}`));
-  const paths = ["", "/about", "/contact", "/privacy-policy", "/terms", "/disclaimer", "/guides", "/search", "/tools/complaint-letter", ...activeCountries.map((code) => `/${code}`), ...companies.filter((item) => item.verificationStatus === "Verified" && item.sourceLinks.length > 0).map((item) => `/${item.country}/companies/${item.slug}`), ...usefulCategoryPaths, ...guides.map((item) => `/guides/${item.slug}`)];
+  const paths = ["", "/about", "/contact", "/privacy-policy", "/terms", "/disclaimer", "/guides", "/tools/complaint-letter", ...activeCountries.map((code) => `/${code}`), ...companies.filter((item) => item.verificationStatus === "Verified" && item.sourceLinks.length > 0).map((item) => `/${item.country}/companies/${item.slug}`), ...usefulCategoryPaths, ...guides.map((item) => `/guides/${item.slug}`)];
   return locales.flatMap((locale) => paths.map((path) => ({
     url: `${siteConfig.url}/${locale}${path}`,
     lastModified: now,

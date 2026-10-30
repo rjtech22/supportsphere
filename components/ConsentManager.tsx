@@ -19,7 +19,7 @@ export function ConsentManager() {
   const [open, setOpen] = useState(false);
   useEffect(() => {
     const saved = localStorage.getItem(key) as Choice | null;
-    if (saved) apply(saved); else setOpen(true);
+    if (saved) apply(saved); else window.setTimeout(() => setOpen(true), 0);
   }, []);
   function choose(choice: Choice) { localStorage.setItem(key, choice); apply(choice); setOpen(false); }
   if (!open) return null;

@@ -12,7 +12,7 @@ function compile(url) {
 const priorityModule = { exports: {} };
 vm.runInNewContext(compile("../lib/priority-companies.ts"), { module: priorityModule, exports: priorityModule.exports }, { filename: "priority-companies.js" });
 const compiled = compile("../lib/global-data.ts");
-const module = { exports: {} };
+const dataModule = { exports: {} };
 const auditCountries = [
   { code: "us", name: "United States", primary: true },
   { code: "in", name: "India", primary: false },
@@ -25,9 +25,9 @@ const require = (id) => {
   if (id === "@/lib/country-catalog") return { allCountries: auditCountries, countryByCode: new Map(auditCountries.map((country) => [country.code, country])) };
   throw new Error(`Unexpected audit import: ${id}`);
 };
-vm.runInNewContext(compiled, { module, exports: module.exports, require, URL }, { filename: "global-data.js" });
+vm.runInNewContext(compiled, { module: dataModule, exports: dataModule.exports, require, URL }, { filename: "global-data.js" });
 
-const { globalCompanies } = module.exports;
+const { globalCompanies } = dataModule.exports;
 const errors = [];
 const notices = [];
 const routes = new Set();
