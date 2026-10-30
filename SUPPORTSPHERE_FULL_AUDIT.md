@@ -1,7 +1,7 @@
 # ResolveNexa Full Website Audit
 
 Audit date: 2026-10-30  
-Production URL: https://supportsphere-one.vercel.app  
+Production URL: https://resolvenexa.vercel.app
 Audited commit: `f96d39f`  
 Audit mode: read-only verification; no production content or company data was replaced.
 

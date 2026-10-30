@@ -5,7 +5,7 @@ for (const locale of ["en", "ta", "hi", "fr"]) {
   const canonical = html.match(/rel="canonical" href="([^"]+)/)?.[1];
   const hreflang = (html.match(/hrefLang=/g) || []).length;
   const h1 = (html.match(/<h1/g) || []).length;
-  if (canonical !== `https://supportsphere-one.vercel.app/${locale}/`) throw new Error(`${locale}: bad canonical ${canonical}`);
+  if (canonical !== `https://resolvenexa.vercel.app/${locale}/`) throw new Error(`${locale}: bad canonical ${canonical}`);
   if (hreflang !== 5) throw new Error(`${locale}: expected 5 hreflang links, got ${hreflang}`);
   if (h1 !== 1) throw new Error(`${locale}: expected one H1, got ${h1}`);
   if (!html.includes("language-selector")) throw new Error(`${locale}: language selector missing`);

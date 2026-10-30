@@ -2,7 +2,7 @@
 
 **Audit date:** 2026-10-30  
 **Scope:** keyword strategy, company/country mappings, issue and tool mappings, localized metadata, sitemap publication rules, and Search Console metric storage readiness.  
-**Evidence basis:** repository code and the Search Console state already observed for `https://supportsphere-one.vercel.app/`. No Search Console query-performance export was available, so this report does not contain invented impressions, clicks, CTR, average position, search volume, or keyword difficulty.
+**Evidence basis:** repository code and the Search Console state already observed for the previous `https://supportsphere-one.vercel.app/` property. The canonical production domain is now `https://resolvenexa.vercel.app/`. No Search Console query-performance export was available, so this report does not contain invented impressions, clicks, CTR, average position, search volume, or keyword difficulty.
 
 > **Post-audit implementation update — 2026-10-30:** The P0/P1 fixes were applied locally after this audit. Unsupported `contact number` rows are no longer generated, reducing the current strategy from the audited 191 rows to **173 accurate rows**. Company metadata now mentions phone information only when a verified phone field exists. `language_code` was added to keyword research/schema, Search Console metric dimensions were extended, and the partial-intent guides/tool content were strengthened. The detailed tables below preserve the original audit evidence that led to those fixes.
 

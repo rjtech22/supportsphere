@@ -4,7 +4,7 @@ import vm from "node:vm";
 import ts from "typescript";
 
 const root = process.cwd();
-const baseUrl = process.env.AUDIT_BASE_URL || "https://supportsphere-one.vercel.app";
+const baseUrl = process.env.AUDIT_BASE_URL || "https://resolvenexa.vercel.app";
 const locales = ["en", "ta", "hi", "fr"];
 
 function filesUnder(directory, suffix) {

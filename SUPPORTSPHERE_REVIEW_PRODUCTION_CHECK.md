@@ -1,7 +1,7 @@
 # ResolveNexa Review Production Check
 
 Audit date: 2026-10-30  
-Production site: `https://supportsphere-one.vercel.app`  
+Production site: `https://resolvenexa.vercel.app`
 Scope: Dell company review UI, Vercel configuration, Supabase storage, moderation, validation and access controls.
 
 ## Executive result
