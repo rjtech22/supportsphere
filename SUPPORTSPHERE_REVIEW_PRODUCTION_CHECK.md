@@ -1,4 +1,4 @@
-# SupportSphere Review Production Check
+# ResolveNexa Review Production Check
 
 Audit date: 2026-10-30  
 Production site: `https://supportsphere-one.vercel.app`  

@@ -59,7 +59,7 @@ async function mapLimit(values, limit, work) {
 async function fetchPage(url, timeoutMs = 15000) {
   const controller = new AbortController(); const timer = setTimeout(() => controller.abort(), timeoutMs);
   try {
-    const response = await fetch(url, { redirect: "follow", signal: controller.signal, headers: { "user-agent": "SupportSphere-Audit/1.0" } });
+    const response = await fetch(url, { redirect: "follow", signal: controller.signal, headers: { "user-agent": "ResolveNexa-Audit/1.0" } });
     const contentType = response.headers.get("content-type") || "";
     const body = contentType.includes("text") || contentType.includes("json") || contentType.includes("xml") ? await response.text() : "";
     return { requestedUrl: url, finalUrl: response.url, status: response.status, contentType, body, error: "" };

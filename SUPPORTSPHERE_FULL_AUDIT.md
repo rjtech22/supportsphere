@@ -1,4 +1,4 @@
-# SupportSphere Full Website Audit
+# ResolveNexa Full Website Audit
 
 Audit date: 2026-10-30  
 Production URL: https://supportsphere-one.vercel.app  
@@ -7,7 +7,7 @@ Audit mode: read-only verification; no production content or company data was re
 
 ## Executive summary
 
-SupportSphere's indexable SEO surface is technically healthy: all 336 sitemap URLs returned HTTP 200, all had one H1, a self-referencing canonical, a complete five-entry hreflang set, a meta title and description, and parseable JSON-LD. No sitemap URL was orphaned in the live internal-link crawl.
+ResolveNexa's indexable SEO surface is technically healthy: all 336 sitemap URLs returned HTTP 200, all had one H1, a self-referencing canonical, a complete five-entry hreflang set, a meta title and description, and parseable JSON-LD. No sitemap URL was orphaned in the live internal-link crawl.
 
 The audit found one P0 data-trust issue and several P1 international SEO issues:
 
@@ -248,7 +248,7 @@ File requiring change:
 
 #### P2-3: Structured data parses but omits breadcrumb schema
 
-Article, FAQPage, Organization and WebSite JSON-LD parse successfully. Visual breadcrumbs are present, but there is no `BreadcrumbList` JSON-LD. Company pages use `Article`; carefully adding publisher/source relationships may be more useful than presenting SupportSphere as the listed company.
+Article, FAQPage, Organization and WebSite JSON-LD parse successfully. Visual breadcrumbs are present, but there is no `BreadcrumbList` JSON-LD. Company pages use `Article`; carefully adding publisher/source relationships may be more useful than presenting ResolveNexa as the listed company.
 
 File requiring change:
 
@@ -292,7 +292,7 @@ File requiring change:
 Legend:
 
 - **Pass**: primary official/support links responded and page has useful complaint guidance.
-- **Web-only**: no verified direct phone/email/chat is published on SupportSphere; the page correctly directs users to official web/app support.
+- **Web-only**: no verified direct phone/email/chat is published on ResolveNexa; the page correctly directs users to official web/app support.
 - **Inconclusive**: automated crawler was blocked, timed out or received a server-side 500; not classified as broken.
 - **Fail**: confirmed HTTP 404/410.
 

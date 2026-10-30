@@ -1,4 +1,4 @@
-# SupportSphere
+# ResolveNexa
 
 Production-ready Next.js MVP for global customer-support discovery, complaint-resolution tools, SEO content, monetization placements and analytics.
 

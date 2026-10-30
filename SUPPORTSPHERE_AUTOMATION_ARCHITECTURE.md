@@ -1,4 +1,4 @@
-# SupportSphere automation architecture audit
+# ResolveNexa automation architecture audit
 
 Date: 2026-10-30  
 Scope: local implementation only. Nothing in this change set was pushed or deployed.
@@ -51,7 +51,7 @@ Scope: local implementation only. Nothing in this change set was pushed or deplo
 
 ## Database migration required before deployment
 
-Run the appended section of `supabase/schema.sql` in the existing SupportSphere Supabase project. It adds:
+Run the appended section of `supabase/schema.sql` in the existing ResolveNexa Supabase project. It adds:
 
 - `verification_reminders`
 - `link_checks`

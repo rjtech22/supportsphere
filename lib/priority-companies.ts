@@ -65,7 +65,7 @@ export const priorityCompanies: GlobalCompany[] = [
     verifiedAt, verificationStatus: "Verified",
     sourceLinks: [{ label: "Meesho official support guidance", url: "https://www.meesho.com/adult-support/pl/9o6" }, { label: "Meesho official website", url: "https://www.meesho.com/" }],
     commonIssues: ["Order not delivered", "Return or exchange", "Refund pending", "Payment issue", "Account access"],
-    faqs: [{ question: "How do I contact Meesho support?", answer: "Open the affected order in the Meesho app and use Help Centre. Chat or callback options may be shown for the issue." }, { question: "Why is no Meesho phone number shown here?", answer: "Meesho directs users to the contact shown inside its app. SupportSphere does not publish an unverified number." }, { question: "How do I request a Meesho return?", answer: "Open the order in the app and use the available return or exchange option shown for that item." }]
+    faqs: [{ question: "How do I contact Meesho support?", answer: "Open the affected order in the Meesho app and use Help Centre. Chat or callback options may be shown for the issue." }, { question: "Why is no Meesho phone number shown here?", answer: "Meesho directs users to the contact shown inside its app. ResolveNexa does not publish an unverified number." }, { question: "How do I request a Meesho return?", answer: "Open the order in the app and use the available return or exchange option shown for that item." }]
   },
   {
     slug: "myntra", name: "Myntra", country: "in", category: "e-commerce", logoText: "MY",
@@ -166,7 +166,7 @@ export const priorityCompanies: GlobalCompany[] = [
     verifiedAt, verificationStatus: "Verified",
     sourceLinks: [{ label: "Paytm Support", url: "https://paytm.com/support" }, { label: "Paytm Help Center", url: "https://support.paytm.com/" }, { label: "Paytm grievance policy", url: "https://paytm.com/company/grievance" }],
     commonIssues: ["Payment failed", "Payment pending", "Refund pending", "Recharge issue", "Account access"],
-    faqs: [{ question: "How do I contact Paytm support?", answer: "Open 24x7 Help in the Paytm app or use Paytm's official Support page and select the affected transaction." }, { question: "Why is no Paytm phone number shown?", answer: "The official sources reviewed direct users to app and web support. SupportSphere does not publish unverified agent numbers." }, { question: "How do I escalate a Paytm complaint?", answer: "Keep the ticket reference and use Paytm's official grievance process if regular support does not resolve it." }]
+    faqs: [{ question: "How do I contact Paytm support?", answer: "Open 24x7 Help in the Paytm app or use Paytm's official Support page and select the affected transaction." }, { question: "Why is no Paytm phone number shown?", answer: "The official sources reviewed direct users to app and web support. ResolveNexa does not publish unverified agent numbers." }, { question: "How do I escalate a Paytm complaint?", answer: "Keep the ticket reference and use Paytm's official grievance process if regular support does not resolve it." }]
   },
   {
     slug: "phonepe", name: "PhonePe", country: "in", category: "banking", logoText: "PPE",

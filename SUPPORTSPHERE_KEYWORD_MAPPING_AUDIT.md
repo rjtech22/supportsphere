@@ -1,4 +1,4 @@
-# SupportSphere keyword strategy is connected, but the live code generates 191—not 171—keyword rows
+# ResolveNexa keyword strategy is connected, but the live code generates 191—not 171—keyword rows
 
 **Audit date:** 2026-10-30  
 **Scope:** keyword strategy, company/country mappings, issue and tool mappings, localized metadata, sitemap publication rules, and Search Console metric storage readiness.  

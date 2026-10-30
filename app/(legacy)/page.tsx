@@ -10,7 +10,7 @@ import { siteConfig } from "@/lib/site";
 
 const problems = ["Refund not received", "Laptop warranty issue", "Courier parcel missing", "Bank transaction failed", "Customer support not responding"];
 const faqs = [
-  ["Is SupportSphere a customer-care centre?", "No. SupportSphere is an independent information publisher that links to official company support channels."],
+  ["Is ResolveNexa a customer-care centre?", "No. ResolveNexa is an independent information publisher that links to official company support channels."],
   ["What does Verified mean?", "Verified means the displayed detail was checked against a cited official source on the shown review date."],
   ["Do the complaint tools upload my data?", "The template generators run locally in your browser. They do not require a paid API or ask for sensitive banking information."],
   ["Are sponsored listings official support?", "No. Sponsored and affiliate placements are clearly labelled and kept separate from official support information."]

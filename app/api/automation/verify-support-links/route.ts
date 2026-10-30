@@ -20,8 +20,8 @@ function safeUrl(raw: string) {
 async function check(url: string) {
   const controller = new AbortController(); const timer = setTimeout(() => controller.abort(), 12000);
   try {
-    let response = await fetch(url, { method: "HEAD", redirect: "follow", signal: controller.signal, headers: { "user-agent": "SupportSphere-LinkVerifier/1.0" } });
-    if (response.status === 405 || response.status === 403) response = await fetch(url, { method: "GET", redirect: "follow", signal: controller.signal, headers: { "user-agent": "SupportSphere-LinkVerifier/1.0", range: "bytes=0-1024" } });
+    let response = await fetch(url, { method: "HEAD", redirect: "follow", signal: controller.signal, headers: { "user-agent": "ResolveNexa-LinkVerifier/1.0" } });
+    if (response.status === 405 || response.status === 403) response = await fetch(url, { method: "GET", redirect: "follow", signal: controller.signal, headers: { "user-agent": "ResolveNexa-LinkVerifier/1.0", range: "bytes=0-1024" } });
     return { status: response.status, finalUrl: response.url, ok: response.ok || (response.status >= 300 && response.status < 400), error: null as string | null };
   } catch (error) { return { status: null, finalUrl: null, ok: false, error: error instanceof Error ? error.message.slice(0, 300) : "Request failed" }; }
   finally { clearTimeout(timer); }

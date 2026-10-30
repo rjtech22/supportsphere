@@ -177,7 +177,7 @@ export const guides: Guide[] = [
       { heading: "Escalate by country and sector", body: "Complete the company’s process before approaching an applicable regulator, ombudsman or consumer body. Rules differ by country and sector; use an official government source." }
     ],
     example: "Example: I reported the billing error under case 5678 on 12 October. The duplicate charge remains. Please reverse the duplicate amount and confirm the correction in writing.",
-    faqs: [["How long should a complaint be?", "Keep it focused: the facts, evidence, previous case number and requested resolution are more useful than a long narrative."], ["Can SupportSphere file the complaint for me?", "No. The tools help you prepare text, but you submit it to the company’s official channel."]]
+    faqs: [["How long should a complaint be?", "Keep it focused: the facts, evidence, previous case number and requested resolution are more useful than a long narrative."], ["Can ResolveNexa file the complaint for me?", "No. The tools help you prepare text, but you submit it to the company’s official channel."]]
   },
   {
     slug: "how-to-write-professional-complaint-email", title: "How to Write a Professional Complaint Email", category: "email", readTime: "6 min", updatedAt: "2026-10-29",

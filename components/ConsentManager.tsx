@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 type Choice = "granted" | "denied";
-const key = "supportsphere-consent-v1";
+const key = "resolvenexa-consent-v1";
 
 function apply(choice: Choice) {
   const win = window as typeof window & { dataLayer?: unknown[]; gtag?: (...args: unknown[]) => void };
@@ -12,7 +12,7 @@ function apply(choice: Choice) {
   win.gtag("consent", "update", {
     analytics_storage: choice, ad_storage: choice, ad_user_data: choice, ad_personalization: choice
   });
-  window.dispatchEvent(new CustomEvent("supportsphere:consent", { detail: choice }));
+  window.dispatchEvent(new CustomEvent("resolvenexa:consent", { detail: choice }));
 }
 
 export function ConsentManager() {
@@ -30,15 +30,15 @@ export function AdSenseLoader({ client }: { client?: string }) {
   useEffect(() => {
     if (!client) return;
     const load = (choice: Choice | null) => {
-      if (choice !== "granted" || document.querySelector(`script[data-supportsphere-ads]`)) return;
+      if (choice !== "granted" || document.querySelector(`script[data-resolvenexa-ads]`)) return;
       const script = document.createElement("script"); script.async = true; script.crossOrigin = "anonymous";
       script.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${client}`;
-      script.dataset.supportsphereAds = "true"; document.head.appendChild(script);
+      script.dataset.resolvenexaAds = "true"; document.head.appendChild(script);
     };
     load(localStorage.getItem(key) as Choice | null);
     const listener = (event: Event) => load((event as CustomEvent<Choice>).detail);
-    window.addEventListener("supportsphere:consent", listener);
-    return () => window.removeEventListener("supportsphere:consent", listener);
+    window.addEventListener("resolvenexa:consent", listener);
+    return () => window.removeEventListener("resolvenexa:consent", listener);
   }, [client]);
   return null;
 }

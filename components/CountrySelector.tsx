@@ -23,8 +23,8 @@ export function CountrySelector({ locale = "en", value = "us", compact = false }
   return <form className={`country-selector searchable ${compact ? "compact" : ""}`} onSubmit={navigate}>
     <Globe2 size={15} aria-hidden="true" />
     <label className="sr-only" htmlFor={`country-search-${id}`}>{d.nav.country}</label>
-    <input id={`country-search-${id}`} list={`supportsphere-country-list-${id}`} value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search country" autoComplete="off" />
-    <datalist id={`supportsphere-country-list-${id}`}>{allCountries.map((country) => <option value={country.name} key={country.code}>{country.flag} {country.iso2}</option>)}</datalist>
+    <input id={`country-search-${id}`} list={`resolvenexa-country-list-${id}`} value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search country" autoComplete="off" />
+    <datalist id={`resolvenexa-country-list-${id}`}>{allCountries.map((country) => <option value={country.name} key={country.code}>{country.flag} {country.iso2}</option>)}</datalist>
     <button type="submit" aria-label={`Open ${query}`}>Go</button>
   </form>;
 }

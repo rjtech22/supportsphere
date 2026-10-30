@@ -10,7 +10,7 @@ export function RouteAnalytics() {
     const parts = pathname.split("/").filter(Boolean);
     const organicHosts = ["google.", "bing.com", "duckduckgo.com", "yahoo.", "ecosia.org", "yandex."];
     const referrerHost = document.referrer ? new URL(document.referrer).hostname.toLowerCase() : "";
-    const landingKey = "supportsphere_landing_tracked";
+    const landingKey = "resolvenexa_landing_tracked";
     if (!sessionStorage.getItem(landingKey) && organicHosts.some((host) => referrerHost.includes(host))) {
       trackEvent("organic_landing_view", { landing_page: pathname, search_engine: referrerHost });
       sessionStorage.setItem(landingKey, "1");

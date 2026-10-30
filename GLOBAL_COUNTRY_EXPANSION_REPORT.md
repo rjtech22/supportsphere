@@ -1,10 +1,10 @@
-# SupportSphere Global Country Expansion Report
+# ResolveNexa Global Country Expansion Report
 
 Date: 2026-10-30
 
 ## Executive summary
 
-SupportSphere now has a scalable ISO 3166-1 country catalog covering **249 officially assigned countries and territories**. The catalog is available to country selection, search, complaint templates, routing, and the database seed workflow. It includes alpha-2 and alpha-3 codes, English and native names, emoji flags, ISO 639-1 language codes and names, a default regional locale, and the subset of site UI locales supported by each market.
+ResolveNexa now has a scalable ISO 3166-1 country catalog covering **249 officially assigned countries and territories**. The catalog is available to country selection, search, complaint templates, routing, and the database seed workflow. It includes alpha-2 and alpha-3 codes, English and native names, emoji flags, ISO 639-1 language codes and names, a default regional locale, and the subset of site UI locales supported by each market.
 
 The implementation deliberately separates **country catalog support** from **published company-support data**:
 

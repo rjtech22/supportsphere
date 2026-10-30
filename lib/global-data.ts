@@ -92,7 +92,7 @@ const baseCompanies: GlobalCompany[] = [
     verifiedAt: "2026-10-29", verificationStatus: "Verified",
     sourceLinks: [{ label: "Flipkart Help Centre", url: "https://www.flipkart.com/helpcentre" }],
     commonIssues: ["Refund pending", "Return request", "Order not delivered", "Account access"],
-    faqs: [{ question: "How do I contact Flipkart about an order?", answer: "Sign in to Flipkart Help Centre, open the affected order and use the support option displayed for that purchase." }, { question: "Where can I check a Flipkart refund or return?", answer: "Open the order in the signed-in account. Its order-help flow shows the available return, replacement or refund status." }, { question: "Does SupportSphere publish a Flipkart phone number?", answer: "No verified general customer-care number is displayed here. Use the official order-linked Help Centre to avoid impersonation scams." }]
+    faqs: [{ question: "How do I contact Flipkart about an order?", answer: "Sign in to Flipkart Help Centre, open the affected order and use the support option displayed for that purchase." }, { question: "Where can I check a Flipkart refund or return?", answer: "Open the order in the signed-in account. Its order-help flow shows the available return, replacement or refund status." }, { question: "Does ResolveNexa publish a Flipkart phone number?", answer: "No verified general customer-care number is displayed here. Use the official order-linked Help Centre to avoid impersonation scams." }]
   },
   {
     slug: "jio", name: "Jio", country: "in", category: "telecom", logoText: "JIO",
