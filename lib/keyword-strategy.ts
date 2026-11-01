@@ -62,6 +62,17 @@ const companyKeywords: KeywordResearchRow[] = globalCompanies.flatMap((company) 
   if (company.tollFree) base.push(published(`${company.name} toll-free number`, "company-support", page, `${company.name} Customer Care & Support`, "secondary", company.country));
   if (company.liveChat) base.push(published(`${company.name} live chat support`, "company-support", page, `${company.name} Customer Care & Support`, "secondary", company.country));
   if (company.email) base.push(published(`${company.name} support email`, "company-support", page, `${company.name} Customer Care & Support`, "secondary", company.country));
+  if (company.refundCancellation) {
+    base.push(published(`${company.name} refund not received`, "refund-return", page, `${company.name} Customer Care & Support`, "secondary", company.country));
+  }
+  if (company.deliveryTracking) {
+    base.push(published(`${company.name} package delivered but not received`, "delivery", page, `${company.name} Customer Care & Support`, "secondary", company.country));
+    base.push(published(`${company.name} tracking not updating`, "delivery", page, `${company.name} Customer Care & Support`, "secondary", company.country));
+  }
+  if (company.complaintSteps.length && company.escalation) {
+    base.push(published(`${company.name} customer support not responding`, "company-support", page, `${company.name} Customer Care & Support`, "secondary", company.country));
+    base.push(published(`${company.name} complaint escalation`, "company-support", page, `${company.name} Customer Care & Support`, "secondary", company.country));
+  }
   return base;
 });
 

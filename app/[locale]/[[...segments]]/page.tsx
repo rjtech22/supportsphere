@@ -179,15 +179,15 @@ async function Company({ locale, countryCode, slug }: { locale: Locale; countryC
           <div className="warning-box"><ShieldCheck /><span><b>{d.company.securityTitle}:</b> {d.company.securityText}</span></div>
           <h2>Common customer issues</h2>
           <div className="issue-list">{company.commonIssues.map((issue) => <span key={issue}>{issue}</span>)}</div>
-          {company.refundCancellation && <><h2>Refund and cancellation information</h2><p>{company.refundCancellation}</p></>}
-          {company.replacement && <><h2>Replacement information</h2><p>{company.replacement}</p></>}
-          {company.deliveryTracking && <><h2>Delivery and tracking help</h2><p>{company.deliveryTracking}</p></>}
-          {company.billingPayment && <><h2>Billing and payment support</h2><p>{company.billingPayment}</p></>}
-          {company.warranty && <><h2>Warranty and repair information</h2><p>{company.warranty}</p></>}
-          <h2>{d.company.complaintTitle}</h2>
+          {company.refundCancellation && <section id="refund-cancellation"><h2>Refund and cancellation information</h2><p>{company.refundCancellation}</p></section>}
+          {company.replacement && <section id="replacement"><h2>Replacement information</h2><p>{company.replacement}</p></section>}
+          {company.deliveryTracking && <section id="delivery-tracking"><h2>Delivery and tracking help</h2><p>{company.deliveryTracking}</p></section>}
+          {company.billingPayment && <section id="billing-payment"><h2>Billing and payment support</h2><p>{company.billingPayment}</p></section>}
+          {company.warranty && <section id="warranty-repair"><h2>Warranty and repair information</h2><p>{company.warranty}</p></section>}
+          <section id="complaint-escalation"><h2>{d.company.complaintTitle}</h2>
           <ol>{company.complaintSteps.map((step) => <li key={step}>{step}</li>)}</ol>
           <h2>{d.company.escalationTitle}</h2>
-          <p>{company.escalation}</p>
+          <p>{company.escalation}</p></section>
           <h2>{d.company.sourcesTitle}</h2>
           {company.sourceLinks.map((source) => <TrackedLink className="official-link" href={source.url} eventName="official_support_click" params={{ country: countryCode, company: slug, locale }} key={source.url}><span>{source.label}<small>{new URL(source.url).hostname}<span className="source-meta">Verified {company.verifiedAt}</span></small></span><ExternalLink /></TrackedLink>)}
           <section className="faq-wrap"><h2>{company.name} {d.company.faqTitle}</h2><Faqs items={faq} /></section>

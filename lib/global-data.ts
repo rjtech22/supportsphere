@@ -195,6 +195,9 @@ const baseCompanies: GlobalCompany[] = [
     summary: "Official Amazon.com help for orders, delivery, returns, replacements, refunds, account access and marketplace purchases in the United States.",
     officialWebsite: "https://www.amazon.com/", supportWebsite: "https://www.amazon.com/gp/help/customer/display.html?nodeId=508510", helpCenter: "https://www.amazon.com/gp/help/customer/display.html?nodeId=508510",
     refundCancellation: "Open Your Orders to cancel an eligible order, start a return or replacement, and view the option offered for the item. Return eligibility and refund timing vary by item, seller, condition, payment method and the stage of fulfillment.",
+    replacement: "Open Your Orders and choose the item-specific return or replacement option when one is offered. The available remedy depends on the item, seller, condition and order status.",
+    deliveryTracking: "Track the shipment from Your Orders. If tracking says delivered but the package is missing, use the order-specific delivery help route and follow Amazon's checks before requesting further support.",
+    billingPayment: "Use the affected order or transaction in Your Orders to review charges, payment status and refund progress. Keep the order number and payment method ready when contacting support.",
     complaintSteps: ["Sign in to the Amazon account used for the purchase.", "Open Your Orders and select the affected order.", "Use the order-specific return, replacement, delivery or support option.", "Keep the return confirmation, chat transcript and refund-status details."],
     escalation: "Return to the affected order in Customer Service and provide the order number and prior contact details. For a third-party seller order, use the seller-contact and marketplace resolution options shown in the order.",
     verifiedAt: "2026-10-30", verificationStatus: "Verified",
@@ -311,7 +314,108 @@ const baseCompanies: GlobalCompany[] = [
   }
 ];
 
-export const globalCompanies: GlobalCompany[] = [...baseCompanies, ...priorityCompanies];
+const globalSeoExpansionCompanies: GlobalCompany[] = [
+  {
+    slug: "walmart", name: "Walmart", country: "us", category: "e-commerce", logoText: "WMT",
+    aliases: ["Walmart customer service", "Walmart.com support", "Walmart refund"], regions: ["United States"], supportTypes: ["phone", "chat", "orders", "returns", "refunds", "delivery"],
+    summary: "Official Walmart US help for online orders, store purchases, delivery problems, returns, refunds, cancellations and account support.",
+    officialWebsite: "https://www.walmart.com/", supportWebsite: "https://www.walmart.com/help/", helpCenter: "https://www.walmart.com/help/", phone: "1-800-925-6278", liveChat: "https://www.walmart.com/help?chatBot=open",
+    refundCancellation: "Use Purchase History to request an eligible cancellation, return or refund. The option and timing shown by Walmart depend on the order status, item and fulfillment method.",
+    replacement: "Open Purchase History and select the item to see the available return or replacement route. Do not send an item to an address supplied outside Walmart's official flow.",
+    deliveryTracking: "Check tracking in Purchase History. If an order is marked delivered but is missing, follow Walmart's Order Not Received steps and use official help with the order number.",
+    billingPayment: "Review the affected order in Purchase History for charges, adjustments and refund status. Keep the order number and payment method ready for support.",
+    complaintSteps: ["Sign in and open Purchase History.", "Select the affected order and the issue-specific help option.", "Use Walmart Help chat or the officially published phone number if self-service does not resolve it.", "Save the case, chat transcript and requested resolution."],
+    escalation: "Reconnect through Walmart Help with the order number and prior case details. Explain the unresolved issue, evidence already supplied and the specific remedy requested.",
+    verifiedAt: "2026-11-01", verificationStatus: "Verified",
+    sourceLinks: [{ label: "Walmart Help", url: "https://www.walmart.com/help/" }, { label: "Walmart corporate contact", url: "https://corporate.walmart.com/about/contact" }, { label: "Order not received", url: "https://www.walmart.com/help/article/order-not-received/af24f9d61b5143d9973f95c9d5bc3140" }, { label: "Walmart refunds", url: "https://www.walmart.com/help/article/refunds/a86a0400e237444cb9a5f3c3ce500d1b" }],
+    commonIssues: ["Refund not received", "Order delivered but missing", "Cancel an order", "Return or replacement", "Account and payment issue"],
+    faqs: [{ question: "How do I contact Walmart customer service?", answer: "Use Walmart Help or the customer-service number published on Walmart's corporate contact page: 1-800-925-6278." }, { question: "What should I do when Walmart says delivered but the order is missing?", answer: "Check Purchase History and follow Walmart's official Order Not Received steps before contacting support with the order number." }, { question: "Where can I check a Walmart refund?", answer: "Open Purchase History and the affected order. Walmart's refund guide explains that timing varies by return and payment method." }]
+  },
+  {
+    slug: "ebay", name: "eBay", country: "us", category: "e-commerce", logoText: "EBAY",
+    aliases: ["eBay customer service", "eBay buyer support", "eBay refund"], regions: ["United States"], supportTypes: ["contact flow", "returns", "refunds", "item not received", "buyer protection"],
+    summary: "Official eBay US help for purchases, returns, refunds, items not received, account issues and case escalation.",
+    officialWebsite: "https://www.ebay.com/", supportWebsite: "https://www.ebay.com/help/-/contact-ebay/contact-ebay?id=4379", helpCenter: "https://www.ebay.com/help/home",
+    refundCancellation: "Open Purchase history and choose the order-specific return, cancellation or refund route. Available remedies and deadlines depend on the listing, seller response and eBay case status.",
+    replacement: "Contact the seller from the order when an item is wrong, damaged or incomplete. If it is not resolved, use the return or eBay Money Back Guarantee route offered for that purchase.",
+    deliveryTracking: "Check the order's delivery details in Purchase history. If the estimated delivery date has passed, open an Item Not Received request from the order and follow the response deadline shown by eBay.",
+    complaintSteps: ["Sign in and open Purchase history.", "Select the affected transaction and the matching help route.", "Message the seller or open the available request with evidence.", "Use eBay's case flow before the deadline shown on the request."],
+    escalation: "Use the existing order request or case in eBay Help. Keep communication on eBay and provide the order number, tracking and evidence already submitted.",
+    verifiedAt: "2026-11-01", verificationStatus: "Verified",
+    sourceLinks: [{ label: "Contact eBay", url: "https://www.ebay.com/help/-/contact-ebay/contact-ebay?id=4379" }, { label: "eBay returns and refunds", url: "https://www.ebay.com/help/returns-refunds" }, { label: "Item not received", url: "https://www.ebay.com/help/buying/returns-refunds/item-not-received?id=4042" }],
+    commonIssues: ["Item not received", "Return request", "Refund status", "Seller not responding", "Account access"],
+    faqs: [{ question: "Does eBay publish one general customer-service phone number here?", answer: "No static general number is listed on this page because eBay routes contact through its signed-in, issue-specific Contact eBay flow." }, { question: "How do I report an eBay item not received?", answer: "Open Purchase history, select the order and use the Item Not Received request after the estimated delivery date has passed." }, { question: "How do I escalate an unresolved eBay purchase?", answer: "Open the existing request or case and use the escalation option offered by eBay before the displayed deadline." }]
+  },
+  {
+    slug: "fedex", name: "FedEx", country: "us", category: "courier-delivery", logoText: "FDX",
+    aliases: ["FedEx customer service", "FedEx tracking support", "FedEx claim"], regions: ["United States"], supportTypes: ["phone", "tracking", "delivery", "claims", "virtual support"],
+    summary: "Official FedEx US help for shipment tracking, delivery exceptions, packages marked delivered, missing shipments and claims.",
+    officialWebsite: "https://www.fedex.com/en-us/home.html", supportWebsite: "https://www.fedex.com/en-us/customer-support.html", helpCenter: "https://www.fedex.com/en-us/customer-support.html", phone: "1-800-463-3339",
+    deliveryTracking: "Track the shipment on FedEx.com. If it says delivered but is missing, follow FedEx's delivered-package checks and use the official support or claims route with the tracking number.",
+    complaintSteps: ["Check the latest tracking details and delivery photo or notes when available.", "Use FedEx Customer Support for the specific shipment issue.", "If loss or damage may qualify, use the official claims route.", "Keep the tracking number, case or claim number and evidence."],
+    escalation: "Follow up through FedEx Customer Support using the tracking and existing case or claim number. Claims have shipment-specific eligibility and documentation requirements.",
+    verifiedAt: "2026-11-01", verificationStatus: "Verified",
+    sourceLinks: [{ label: "FedEx Customer Support", url: "https://www.fedex.com/en-us/customer-support.html" }, { label: "Contact FedEx", url: "https://www.fedex.com/en-us/customer-support/contact.html" }, { label: "Delivered but missing package", url: "https://www.fedex.com/en-us/customer-support/faqs/receiving/tracking-questions/fedex-says-delivered-but-no-package.html" }, { label: "FedEx claims", url: "https://www.fedex.com/en-us/customer-support/claims.html" }],
+    commonIssues: ["Tracking not updating", "Package marked delivered but missing", "Delayed shipment", "Lost or damaged package", "File a claim"],
+    faqs: [{ question: "What is the official FedEx US customer-service number?", answer: "FedEx's official US contact page lists 1-800-463-3339 for general customer support." }, { question: "What should I do if FedEx says delivered but no package arrived?", answer: "Follow FedEx's official delivered-package checks, then contact support with the tracking number if it remains missing." }, { question: "Where do I file a FedEx claim?", answer: "Use the official FedEx claims page and follow the shipment-specific eligibility and evidence requirements." }]
+  },
+  {
+    slug: "ups", name: "UPS", country: "us", category: "courier-delivery", logoText: "UPS",
+    aliases: ["UPS customer service", "UPS tracking support", "UPS claim"], regions: ["United States"], supportTypes: ["phone", "tracking", "delivery", "claims"],
+    summary: "Official UPS US support for tracking, delivery changes, missing or damaged packages and shipment claims.",
+    officialWebsite: "https://www.ups.com/us/en/home", supportWebsite: "https://www.ups.com/us/en/support/contact-us", helpCenter: "https://www.ups.com/us/en/support", phone: "1-800-742-5877",
+    deliveryTracking: "Use UPS tracking for the latest scan and delivery details. For a missing or damaged shipment, follow the official support and claim route available for the tracking number.",
+    complaintSteps: ["Check UPS tracking and delivery details.", "Use the issue-specific option on UPS Support or Contact Us.", "Start a claim when the shipment and requester are eligible.", "Save the tracking, support and claim references."],
+    escalation: "Follow up through UPS Contact Us with the tracking number and any existing claim reference. Some claims must be started by the shipper, so follow the eligibility shown in the official flow.",
+    verifiedAt: "2026-11-01", verificationStatus: "Verified",
+    sourceLinks: [{ label: "UPS Contact Us", url: "https://www.ups.com/us/en/support/contact-us" }, { label: "File a UPS claim", url: "https://www.ups.com/us/en/support/file-a-claim" }],
+    commonIssues: ["Tracking not updating", "Package marked delivered but missing", "Delivery change", "Lost package", "Damaged shipment claim"],
+    faqs: [{ question: "What is the official UPS US customer-service number?", answer: "UPS's official US Contact Us page lists 1-800-742-5877." }, { question: "How do I report a missing UPS package?", answer: "Check tracking first, then use UPS Support or the official claim route when the shipment is eligible." }, { question: "Who can file a UPS claim?", answer: "Eligibility depends on the shipment and account relationship. Follow the official claim flow; in some cases the shipper must start the claim." }]
+  },
+  {
+    slug: "dhl-express", name: "DHL Express", country: "us", category: "courier-delivery", logoText: "DHL",
+    aliases: ["DHL customer service", "DHL Express tracking", "DHL support"], regions: ["United States"], supportTypes: ["phone", "chat", "WhatsApp", "tracking", "delivery"],
+    summary: "Official DHL Express US help for international express tracking, delivery questions, shipment support, returns and contact options.",
+    officialWebsite: "https://www.dhl.com/us-en/home.html", supportWebsite: "https://www.dhl.com/us-en/home/express/help-and-support/contact-dhl-express.html", helpCenter: "https://www.dhl.com/us-en/home/express/help-and-support.html", phone: "1-800-225-5345", whatsapp: "+1-480-418-5011", liveChat: "https://www.dhl.com/us-en/home/express/help-and-support/contact-dhl-express.html",
+    deliveryTracking: "Track the shipment through DHL Express and use the official contact route for a delivery exception or missing update. Keep the waybill number ready.",
+    complaintSteps: ["Check tracking with the DHL Express waybill number.", "Use the official phone, chat or WhatsApp option published for the US.", "Describe the latest scan, delivery issue and requested action.", "Save the case reference and follow up through the same official channel."],
+    escalation: "Reconnect through DHL Express contact support with the waybill and prior case reference. Shipment investigations and claims depend on the sender, service and shipment documents.",
+    verifiedAt: "2026-11-01", verificationStatus: "Verified",
+    sourceLinks: [{ label: "Contact DHL Express US", url: "https://www.dhl.com/us-en/home/express/help-and-support/contact-dhl-express.html" }, { label: "DHL Express shipping FAQ", url: "https://www.dhl.com/us-en/home/ship/shipping-faq.html" }, { label: "DHL sending and returns FAQ", url: "https://www.dhl.com/us-en/home/express/help-and-support/frequently-asked-questions/sending-and-returns.html" }],
+    commonIssues: ["Tracking not updating", "International delivery delay", "Delivery exception", "Change delivery", "Return shipment"],
+    faqs: [{ question: "What is the official DHL Express US phone number?", answer: "DHL's official US contact page lists 1-800-225-5345 for DHL Express support." }, { question: "Does DHL Express US offer WhatsApp support?", answer: "The official DHL Express US contact page publishes WhatsApp support at +1-480-418-5011." }, { question: "What do I need before contacting DHL?", answer: "Keep the DHL Express waybill number, latest tracking status and a clear description of the requested action ready." }]
+  },
+  {
+    slug: "airbnb", name: "Airbnb", country: "us", category: "travel", logoText: "ABNB",
+    aliases: ["Airbnb customer service", "Airbnb refund", "Airbnb support"], regions: ["United States"], supportTypes: ["phone", "message", "reservations", "refunds", "Resolution Center"],
+    summary: "Official Airbnb US help for reservations, cancellations, refunds, host or guest communication, safety concerns and Resolution Center requests.",
+    officialWebsite: "https://www.airbnb.com/", supportWebsite: "https://www.airbnb.com/help/article/1542", helpCenter: "https://www.airbnb.com/help", phone: "+1-415-800-5959", liveChat: "https://www.airbnb.com/help/article/1542",
+    refundCancellation: "Open the reservation to review the applicable cancellation terms and refund status. Eligibility depends on the reservation, cancellation policy and documented issue; use Airbnb's official support or Resolution Center route.",
+    billingPayment: "Review the reservation receipt and transaction in your Airbnb account. Use the reservation-specific support flow for duplicate charges, payment problems or refund status.",
+    complaintSteps: ["Open the affected reservation in the Airbnb account.", "Message the host or guest in Airbnb when appropriate and keep the record on-platform.", "Use Contact Airbnb Support or the Resolution Center for the matching issue.", "Save the support case and upload evidence only through official Airbnb channels."],
+    escalation: "Return to the existing Airbnb support case with the reservation code, prior messages and requested resolution. For urgent safety issues, use the urgent support option shown by Airbnb.",
+    verifiedAt: "2026-11-01", verificationStatus: "Verified",
+    sourceLinks: [{ label: "Contact Airbnb Support", url: "https://www.airbnb.com/help/article/1542" }, { label: "Airbnb Resolution Center", url: "https://www.airbnb.com/help/article/248" }, { label: "Airbnb refund timing", url: "https://www.airbnb.com/help/article/311" }, { label: "Airbnb cancellation policy help", url: "https://www.airbnb.com/help/article/544" }],
+    commonIssues: ["Reservation cancellation", "Refund not received", "Host not responding", "Payment issue", "Property or safety concern"],
+    faqs: [{ question: "How do I contact Airbnb customer service?", answer: "Use Contact Airbnb Support from the official Help Center. Airbnb also lists +1-415-800-5959 in its official contact article." }, { question: "Where can I request money through Airbnb?", answer: "Use Airbnb's Resolution Center for eligible reservation-related money requests and keep communication on the platform." }, { question: "How do I check an Airbnb refund?", answer: "Open the reservation and review the refund details. Airbnb's official refund-timing article explains that timing varies by payment method." }]
+  },
+  {
+    slug: "booking-com", name: "Booking.com", country: "us", category: "travel", logoText: "BKG",
+    aliases: ["Booking.com customer service", "Booking.com refund", "Booking support"], regions: ["United States"], supportTypes: ["message", "booking-specific phone", "cancellation", "refunds", "property support"],
+    summary: "Official Booking.com help for reservations, cancellations, refunds, property communication, payment questions and booking-specific support.",
+    officialWebsite: "https://www.booking.com/", supportWebsite: "https://www.booking.com/customer-service.html", helpCenter: "https://www.booking.com/customer-service.html",
+    refundCancellation: "Open the booking confirmation or Booking.com account to review the reservation's cancellation and refund terms. Fees and eligibility depend on the property's policy and booking conditions.",
+    billingPayment: "Use the affected reservation and official Customer Service route for payment or refund questions. Keep the booking number and PIN private and share them only through Booking.com's official flow.",
+    complaintSteps: ["Open the reservation in the Booking.com account or confirmation.", "Contact the property through Booking.com when the issue concerns the stay or property.", "Use Booking.com Customer Service for unresolved reservation, payment or refund issues.", "Save messages and the case reference without posting the booking PIN publicly."],
+    escalation: "Continue through the existing Booking.com reservation and support case. Provide the booking number through the secure official flow, prior messages and the specific resolution requested.",
+    verifiedAt: "2026-11-01", verificationStatus: "Verified",
+    sourceLinks: [{ label: "Booking.com Customer Service", url: "https://www.booking.com/customer-service.html" }, { label: "Booking.com terms", url: "https://www.booking.com/content/terms.en-gb.html" }],
+    commonIssues: ["Cancel a booking", "Refund not received", "Property not responding", "Payment question", "Booking confirmation issue"],
+    faqs: [{ question: "Does Booking.com use one public phone number for every reservation?", answer: "Booking.com routes support through the reservation and Customer Service page, where booking-specific local or international call options may be shown." }, { question: "How do I cancel a Booking.com reservation?", answer: "Open the booking confirmation or account and use the cancellation option shown for that reservation. The property's terms determine fees and eligibility." }, { question: "How do I follow up on a Booking.com refund?", answer: "Use the affected reservation and official Customer Service route with the existing case details; timing depends on the reservation and payment flow." }]
+  }
+];
+
+export const globalCompanies: GlobalCompany[] = [...baseCompanies, ...priorityCompanies, ...globalSeoExpansionCompanies];
 
 export const publishedCountryCodes = [...new Set(globalCompanies.map((company) => company.country))];
 export const publishedCountries = publishedCountryCodes
