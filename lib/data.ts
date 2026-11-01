@@ -199,7 +199,7 @@ export const guides: Guide[] = [
   {
     slug: "how-to-request-a-refund", title: "How to Request a Refund", category: "refund", readTime: "6 min", updatedAt: "2026-10-29",
     description: "Check eligibility, document the transaction and send a clear refund request through the official company channel.",
-    keywords: ["how to request a refund", "refund complaint", "refund not received"],
+    keywords: ["how to request a refund", "refund complaint", "return request rejected"],
     sections: [
       { heading: "Check the applicable refund policy", body: "Review the policy for the product, service, fare or subscription and note any deadline, return requirement or fee." },
       { heading: "Use the original order or account", body: "Start the request from the signed-in purchase record where possible so the company can verify the transaction." },
@@ -226,7 +226,7 @@ export const guides: Guide[] = [
   {
     slug: "how-to-escalate-customer-complaint", title: "How to Escalate a Customer Complaint", category: "escalation", readTime: "7 min", updatedAt: "2026-10-29",
     description: "Escalate an unresolved customer complaint with a case history, clear remedy and the correct country or industry route.",
-    keywords: ["how to escalate a customer complaint", "complaint escalation", "customer support not responding"],
+    keywords: ["how to escalate a customer complaint", "complaint escalation", "formal complaint escalation"],
     sections: [
       { heading: "Complete first-line support", body: "Give the company a fair opportunity to resolve the issue and keep the original case number and response." },
       { heading: "Use the formal grievance route", body: "Look for complaints, grievance, escalation or appeals on the official website. Include the earlier case number so the history is visible." },
@@ -266,7 +266,7 @@ export const guides: Guide[] = [
   {
     slug: "resolve-billing-dispute", title: "How to Resolve a Billing Dispute", category: "billing", readTime: "7 min", updatedAt: "2026-10-29",
     description: "Document an incorrect charge, contact the biller and use the appropriate bank or service complaint route without exposing credentials.",
-    keywords: ["how to resolve a billing issue", "billing dispute help", "incorrect charge complaint"],
+    keywords: ["billing dispute", "how to resolve a billing issue", "billing dispute help", "incorrect charge complaint"],
     sections: [
       { heading: "Identify the disputed charge", body: "Record the date, amount, merchant or service, invoice line and why it appears incorrect." },
       { heading: "Check for a simple explanation", body: "Review credits, taxes, renewal terms, partial refunds, pending authorisations and household purchases before raising a dispute." },
@@ -350,7 +350,7 @@ export const guides: Guide[] = [
   {
     slug: "duplicate-charge", title: "How to Dispute a Duplicate Charge", category: "billing", readTime: "7 min", updatedAt: "2026-10-30",
     description: "Compare transaction states, contact the merchant and dispute a genuine duplicate charge through the official payment-provider route.",
-    keywords: ["duplicate charge", "charged twice", "duplicate card transaction", "billing dispute"],
+    keywords: ["duplicate charge", "charged twice", "duplicate card transaction", "charged twice complaint"],
     sections: [
       { heading: "Compare the two transaction records", body: "Check dates, amounts, merchant names and whether one entry is only a pending authorization rather than a settled duplicate." },
       { heading: "Check the merchant account", body: "Confirm whether two orders, subscriptions or invoices were created. Cancel or refund the extra order through the merchant when possible." },
