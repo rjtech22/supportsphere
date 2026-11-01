@@ -107,6 +107,7 @@ export const categoryGuideSlugs: Record<string, string[]> = {
 export const countryCategoryDetails: Record<string, {
   title: string;
   paragraphs: string[];
+  sections?: Array<{ heading: string; body: string }>;
   guideSlugs: string[];
   officialSources: Array<{ label: string; url: string; note: string }>;
 }> = {
@@ -115,6 +116,12 @@ export const countryCategoryDetails: Record<string, {
     paragraphs: [
       "Start with the bank's authenticated app, official website, branch or published grievance channel. Record the transaction reference, date, amount, complaint number and the resolution requested, but never share a PIN, CVV, password or OTP.",
       "If the bank's own grievance process does not resolve an eligible complaint, review the current Reserve Bank of India Ombudsman eligibility and submission instructions before using the RBI Complaint Management System. ResolveNexa cannot decide eligibility or submit the complaint for you."
+    ],
+    sections: [
+      { heading: "Payment failed but money was deducted", body: "Check whether the transaction is pending, reversed or completed in the authenticated bank or payment app. Save the transaction reference and ask the merchant whether an order was created before raising a failed-transaction complaint with the bank." },
+      { heading: "Duplicate charge or billing dispute", body: "Compare the amount, merchant name, date and transaction status. Contact the merchant for an incorrect invoice or genuine duplicate, then use the bank's official dispute route if the settled charge remains unresolved." },
+      { heading: "Account access, card security or suspected fraud", body: "Use the bank's authenticated security or card-blocking channel immediately for an unrecognised transaction or suspected compromise. Do not submit passwords, PINs, CVVs or one-time codes in a complaint." },
+      { heading: "Escalating an unresolved bank complaint", body: "Keep the original complaint number and follow the bank's published grievance levels. Review RBI Ombudsman eligibility only after completing the steps and waiting periods stated by the official scheme." }
     ],
     guideSlugs: ["payment-failed-money-deducted", "duplicate-charge", "resolve-billing-dispute", "account-locked-support", "how-to-escalate-customer-complaint"],
     officialSources: [
