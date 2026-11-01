@@ -7,6 +7,7 @@ import { SearchAnalytics } from "@/components/SearchAnalytics";
 import { CountrySelector } from "@/components/CountrySelector";
 import { CountryDirectory } from "@/components/CountryDirectory";
 import { CompanyReviews } from "@/components/CompanyReviews";
+import { Breadcrumbs, type BreadcrumbItem } from "@/components/Breadcrumbs";
 import { GlobalCompanyCard } from "@/components/GlobalCompanyCard";
 import { LocalizedTemplateGenerator } from "@/components/LocalizedTemplateGenerator";
 import { TrackedLink } from "@/components/TrackedLink";
@@ -50,9 +51,27 @@ export function generateStaticParams() {
 
 function pathFrom(segments: string[]) { return segments.length ? `/${segments.join("/")}` : ""; }
 function ogLocale(locale: Locale) { return ({ en: "en_US", ta: "ta_IN", hi: "hi_IN", fr: "fr_FR" } as const)[locale]; }
-function meta(locale: Locale, path: string, title: string, description: string, keywords?: string[]): Metadata {
-  return { title: { absolute: title }, description, keywords, alternates: localizedAlternates(locale, path), other: { "content-language": locale }, openGraph: { title, description, url: localePath(locale, path), locale: ogLocale(locale), type: "website" }, twitter: { card: "summary_large_image", title, description } };
+function meta(locale: Locale, path: string, title: string, description: string, keywords?: string[], availableLocales: readonly Locale[] = locales): Metadata {
+  return { title: { absolute: title }, description, keywords, alternates: localizedAlternates(locale, path, availableLocales), other: { "content-language": locale }, openGraph: { title, description, url: localePath(locale, path), locale: ogLocale(locale), type: "website" }, twitter: { card: "summary_large_image", title, description } };
 }
+
+function companyPageTitle(locale: Locale, company: string, country: string) {
+  return locale === "en" ? `${company} Customer Care & Support — ${country}` : locale === "ta" ? `${company} வாடிக்கையாளர் சேவை மற்றும் ஆதரவு — ${country}` : locale === "hi" ? `${company} ग्राहक सेवा और सहायता — ${country}` : `Service client ${company} — ${country}`;
+}
+
+function localizedCompanySummary(locale: Locale, company: string, country: string, englishSummary: string) {
+  if (locale === "en") return englishSummary;
+  if (locale === "ta") return `${country} நாட்டிற்கான ${company} நிறுவனத்தின் சரிபார்க்கப்பட்ட அதிகாரப்பூர்வ ஆதரவு இணைப்புகளையும் கிடைக்கும் தொடர்பு வழிகளையும் கண்டறியுங்கள்.`;
+  if (locale === "hi") return `${country} में ${company} के सत्यापित आधिकारिक सहायता लिंक और उपलब्ध संपर्क माध्यम पाएँ।`;
+  return `Trouvez les liens d’assistance officiels vérifiés de ${company} pour ${country} et les moyens de contact disponibles.`;
+}
+
+const companySectionLabels = {
+  en: { common: "Common customer issues", refund: "Refund and cancellation information", replacement: "Replacement information", delivery: "Delivery and tracking help", billing: "Billing and payment support", warranty: "Warranty and repair information", relatedCompanies: "Related company support", countryDirectory: "Country support directory", categoryDirectory: "Category support directory" },
+  ta: { common: "பொதுவான வாடிக்கையாளர் பிரச்சினைகள்", refund: "பணத்திருப்பி மற்றும் ரத்து தகவல்", replacement: "மாற்றீட்டு தகவல்", delivery: "டெலிவரி மற்றும் டிராக்கிங் உதவி", billing: "பில்லிங் மற்றும் கட்டண உதவி", warranty: "உத்தரவாதம் மற்றும் பழுதுபார்ப்பு தகவல்", relatedCompanies: "தொடர்புடைய நிறுவன ஆதரவு", countryDirectory: "நாட்டு ஆதரவு அடைவு", categoryDirectory: "பிரிவு ஆதரவு அடைவு" },
+  hi: { common: "सामान्य ग्राहक समस्याएँ", refund: "रिफंड और रद्दीकरण जानकारी", replacement: "बदलने की जानकारी", delivery: "डिलीवरी और ट्रैकिंग सहायता", billing: "बिलिंग और भुगतान सहायता", warranty: "वारंटी और मरम्मत जानकारी", relatedCompanies: "संबंधित कंपनी सहायता", countryDirectory: "देश सहायता निर्देशिका", categoryDirectory: "श्रेणी सहायता निर्देशिका" },
+  fr: { common: "Problèmes fréquents", refund: "Informations sur les remboursements et annulations", replacement: "Informations sur le remplacement", delivery: "Aide à la livraison et au suivi", billing: "Assistance facturation et paiement", warranty: "Informations sur la garantie et la réparation", relatedCompanies: "Assistance d’entreprises associées", countryDirectory: "Annuaire d’assistance du pays", categoryDirectory: "Annuaire de la catégorie" }
+} as const;
 
 export async function generateMetadata({ params }: { params: Promise<PageParams> }): Promise<Metadata> {
   const p = await params; if (!isLocale(p.locale)) return {}; const locale = p.locale; const d = getDictionary(locale); const s = p.segments || []; const path = pathFrom(s); const allCompanies = await getPublishedCompanies();
@@ -68,12 +87,15 @@ export async function generateMetadata({ params }: { params: Promise<PageParams>
       const keywords = [`${company.name} customer service`, `${company.name} customer support`, `${company.name} help center`, country];
       if (hasVerifiedPhone) keywords.push(`${company.name} contact number`);
       const channelSummary = hasVerifiedPhone ? "verified phone information and official support links" : "verified official support links and available contact channels";
-      const companyTitle = locale === "en" ? `${company.name} Customer Care & Support — ${country} | ResolveNexa` : locale === "ta" ? `${company.name} வாடிக்கையாளர் சேவை மற்றும் ஆதரவு — ${country} | ResolveNexa` : locale === "hi" ? `${company.name} ग्राहक सेवा और सहायता — ${country} | ResolveNexa` : `Service client ${company.name} — ${country} | ResolveNexa`;
-      const companyDescription = locale === "en" ? `${company.summary} Find ${channelSummary}, refund, warranty and complaint escalation guidance.` : locale === "ta" ? `${country} நாட்டிற்கான ${company.name} நிறுவனத்தின் சரிபார்க்கப்பட்ட அதிகாரப்பூர்வ ஆதரவு இணைப்புகள், கிடைக்கும் தொடர்பு வழிகள், பணத்திருப்பி, உத்தரவாதம் மற்றும் புகார் மேல் முறையீட்டு உதவியைப் பெறுங்கள்.` : locale === "hi" ? `${country} में ${company.name} के सत्यापित आधिकारिक सहायता लिंक, उपलब्ध संपर्क माध्यम, रिफंड, वारंटी और शिकायत आगे बढ़ाने की जानकारी पाएँ।` : `Trouvez les liens d’assistance officiels vérifiés de ${company.name} pour ${country}, les moyens de contact disponibles et des conseils pour les remboursements, garanties et réclamations.`;
-      return meta(locale, path, companyTitle, companyDescription, keywords);
+      const guidance = [company.refundCancellation && "refund or cancellation help", company.deliveryTracking && "delivery or tracking help", company.billingPayment && "billing or payment help", (company.warranty || company.replacement) && "warranty or replacement help", company.complaintSteps.length && "complaint escalation guidance"].filter(Boolean).join(", ");
+      const companyTitle = `${companyPageTitle(locale, company.name, country)} | ResolveNexa`;
+      const companyDescription = locale === "en" ? `${company.summary} Find ${channelSummary}${guidance ? ` and ${guidance}` : ""}.` : localizedCompanySummary(locale, company.name, country, company.summary);
+      const result = meta(locale, path, companyTitle, companyDescription, locale === "en" ? keywords : undefined, locale === "en" ? ["en"] : []);
+      if (locale !== "en") result.robots = { index: false, follow: true };
+      return result;
     }
   }
-  if (s[0] === "guides") { const guide = s[1] ? d.guides.items[s[1]] : null; const original = s[1] ? guides.find((item) => item.slug === s[1]) : null; return meta(locale, path, guide ? `${guide.title} | ResolveNexa` : `${d.guides.title} | ResolveNexa`, guide?.description || d.guides.intro, original?.keywords); }
+  if (s[0] === "guides") { const guide = s[1] ? d.guides.items[s[1]] : null; const original = s[1] ? guides.find((item) => item.slug === s[1]) : null; const result = meta(locale, path, guide ? `${guide.title} | ResolveNexa` : `${d.guides.title} | ResolveNexa`, guide?.description || d.guides.intro, locale === "en" ? original?.keywords : undefined, locale === "en" ? ["en"] : []); if (locale !== "en") result.robots = { index: false, follow: true }; return result; }
   if (s.join("/") === "tools/complaint-letter") return meta(locale, path, d.generator.seoTitle, d.generator.seoDescription, ["free complaint letter generator", "customer complaint email template", "refund request email template", "billing dispute letter"]);
   if (staticNames.includes(s[0] as typeof staticNames[number])) { const key = s[0] === "privacy-policy" ? "privacy" : s[0] as keyof typeof d.static; const [title, description] = d.static[key]; return meta(locale, path, `${title} | ResolveNexa`, description); }
   if (s[0] === "search") { const result = meta(locale, path, `${d.nav.search} | ResolveNexa`, d.home.searchPlaceholder); result.robots = { index: false, follow: true }; return result; }
@@ -124,7 +146,7 @@ async function Home({ locale }: { locale: Locale }) {
 
 async function Country({ locale, code }: { locale: Locale; code: string }) {
   const d = getDictionary(locale); const country = getCountry(code); if (!country) notFound(); const countryName = d.countries[code] || country.name; const companies = (await getPublishedCompanies()).filter((item) => item.country === code);
-  return <><Hero crumbs={[countryName]} eyebrow={`${country.flag} · ${countryName}`} title={t(d.directory.title, { country: countryName })} text={t(d.directory.intro, { country: countryName })}><div className="country-hero-tools"><CountrySelector locale={locale} value={code} /><SearchBox locale={locale} compact country={code} /></div></Hero><section className="section"><div className="shell"><SectionHead eyebrow={d.directory.browseCompanies} title={d.directory.verifiedGuides} text={`${companies.length} ${t(d.directory.published, { country: countryName })}`} />{companies.length ? <div className="company-grid">{companies.map((company) => <GlobalCompanyCard locale={locale} company={company} key={company.slug} />)}</div> : <div className="content-card unsupported-country"><h2>No verified company support data yet</h2><p>ResolveNexa supports {countryName} in the global country catalog, but no country-specific company contact information has been verified. We will not reuse another country&apos;s phone numbers or policies.</p><Link className="button small" href={`${localePath(locale, "/search")}?country=${code}`}>Search global guides</Link></div>}</div></section>{companies.length > 0 && <section className="section soft"><div className="shell"><SectionHead eyebrow={d.directory.browseCategory} title={t(d.directory.categoryTitle, { country: countryName })} /><div className="category-grid">{globalCategories.filter((category) => companies.some((company) => company.category === category.slug)).map((category) => { const item = d.categories[category.slug] || category; return <Link className="category-card" href={localePath(locale, `/${code}/categories/${category.slug}`)} key={category.slug}><span className="category-icon blue">{category.icon}</span><span><b>{item.name}</b><small>{item.description}</small></span><ArrowRight /></Link>; })}</div></div></section>}<section className="section"><div className="shell"><SectionHead eyebrow={d.directory.guidance} title={d.directory.guideTitle} /><GuideCards locale={locale} limit={3} /></div></section><section className="section soft"><div className="shell faq-wrap"><span className="eyebrow">FAQ</span><h2>{t(d.directory.faqTitle, { country: countryName })}</h2><Faqs items={d.faqs.slice(0, 3)} /></div></section></>;
+  return <><Hero locale={locale} currentPath={`/${code}`} crumbs={[{ label: countryName }]} eyebrow={`${country.flag} · ${countryName}`} title={t(d.directory.title, { country: countryName })} text={t(d.directory.intro, { country: countryName })}><div className="country-hero-tools"><CountrySelector locale={locale} value={code} /><SearchBox locale={locale} compact country={code} /></div></Hero><section className="section"><div className="shell"><SectionHead eyebrow={d.directory.browseCompanies} title={d.directory.verifiedGuides} text={`${companies.length} ${t(d.directory.published, { country: countryName })}`} />{companies.length ? <div className="company-grid">{companies.map((company) => <GlobalCompanyCard locale={locale} company={company} key={company.slug} />)}</div> : <div className="content-card unsupported-country"><h2>No verified company support data yet</h2><p>ResolveNexa supports {countryName} in the global country catalog, but no country-specific company contact information has been verified. We will not reuse another country&apos;s phone numbers or policies.</p><Link className="button small" href={`${localePath(locale, "/search")}?country=${code}`}>Search global guides</Link></div>}</div></section>{companies.length > 0 && <section className="section soft"><div className="shell"><SectionHead eyebrow={d.directory.browseCategory} title={t(d.directory.categoryTitle, { country: countryName })} /><div className="category-grid">{globalCategories.filter((category) => companies.some((company) => company.category === category.slug)).map((category) => { const item = d.categories[category.slug] || category; return <Link className="category-card" href={localePath(locale, `/${code}/categories/${category.slug}`)} key={category.slug}><span className="category-icon blue">{category.icon}</span><span><b>{item.name}</b><small>{item.description}</small></span><ArrowRight /></Link>; })}</div></div></section>}<section className="section"><div className="shell"><SectionHead eyebrow={d.directory.guidance} title={d.directory.guideTitle} /><GuideCards locale={locale} limit={3} /></div></section><section className="section soft"><div className="shell faq-wrap"><span className="eyebrow">FAQ</span><h2>{t(d.directory.faqTitle, { country: countryName })}</h2><Faqs items={d.faqs.slice(0, 3)} /></div></section></>;
 }
 
 async function Category({ locale, countryCode, slug }: { locale: Locale; countryCode: string; slug: string }) {
@@ -132,7 +154,7 @@ async function Category({ locale, countryCode, slug }: { locale: Locale; country
   const faq: [string, string][] = seo?.faqs || softwareSeo?.faqs || [[t(d.category.faqTitle, { category: cat.name }), d.company.escalationText], [d.company.complaintTitle, d.company.complaintSteps.join(" ")]];
   const title = seo ? `${seo.title} in ${countryName}` : `${softwareSeo?.title || cat.name} — ${countryName}`;
   const intro = seo ? `${seo.intro} Browse verified company support options available for ${countryName}.` : softwareSeo?.intro || cat.description;
-  return <><Hero crumbs={[countryName, cat.name]} eyebrow={countryName} title={title} text={intro} /><section className="section"><div className="shell"><SectionHead eyebrow={d.category.directory} title={t(d.category.listings, { category: cat.name })} /><div className="company-grid">{items.map((company) => <GlobalCompanyCard locale={locale} company={company} key={company.slug} />)}</div>{!items.length && <div className="content-card"><h2>{d.category.emptyTitle}</h2><p>{d.category.emptyText}</p></div>}</div></section>{detail && <section className="section soft"><article className="shell prose-page"><h2>{detail.title}</h2>{detail.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}{detail.sections?.map((section) => <section key={section.heading}><h2>{section.heading}</h2><p>{section.body}</p></section>)}<h2>Practical banking issue guides</h2><ul>{detail.guideSlugs.map((guideSlug) => { const guide = d.guides.items[guideSlug]; return guide ? <li key={guideSlug}><Link href={localePath(locale, `/guides/${guideSlug}`)}>{guide.title}</Link></li> : null; })}</ul><h2>Official escalation sources</h2>{detail.officialSources.map((source) => <p key={source.url}><a href={source.url} target="_blank" rel="noopener noreferrer">{source.label} <ExternalLink size={14} /></a><br /><small>{source.note}</small></p>)}</article></section>}<section className="section soft"><div className="shell"><SectionHead eyebrow={d.category.relevant} title={t(d.category.resolve, { category: cat.name })} /><GuideCards locale={locale} slugs={categoryGuideSlugs[slug]} limit={3} /></div></section><section className="section"><div className="shell faq-wrap"><h2>{t(d.category.faqTitle, { category: cat.name })}</h2><Faqs items={faq} /></div></section></>;
+  return <><Hero locale={locale} currentPath={`/${countryCode}/categories/${slug}`} crumbs={[{ label: countryName, href: localePath(locale, `/${countryCode}`) }, { label: cat.name }]} eyebrow={countryName} title={title} text={intro} /><section className="section"><div className="shell"><SectionHead eyebrow={d.category.directory} title={t(d.category.listings, { category: cat.name })} /><div className="company-grid">{items.map((company) => <GlobalCompanyCard locale={locale} company={company} key={company.slug} />)}</div>{!items.length && <div className="content-card"><h2>{d.category.emptyTitle}</h2><p>{d.category.emptyText}</p></div>}</div></section>{detail && <section className="section soft"><article className="shell prose-page"><h2>{detail.title}</h2>{detail.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}{detail.sections?.map((section) => <section key={section.heading}><h2>{section.heading}</h2><p>{section.body}</p></section>)}<h2>Practical banking issue guides</h2><ul>{detail.guideSlugs.map((guideSlug) => { const guide = d.guides.items[guideSlug]; return guide ? <li key={guideSlug}><Link href={localePath(locale, `/guides/${guideSlug}`)}>{guide.title}</Link></li> : null; })}</ul><h2>Official escalation sources</h2>{detail.officialSources.map((source) => <p key={source.url}><a href={source.url} target="_blank" rel="noopener noreferrer">{source.label} <ExternalLink size={14} /></a><br /><small>{source.note}</small></p>)}</article></section>}<section className="section soft"><div className="shell"><SectionHead eyebrow={d.category.relevant} title={t(d.category.resolve, { category: cat.name })} /><GuideCards locale={locale} slugs={categoryGuideSlugs[slug]} limit={3} /></div></section><section className="section"><div className="shell faq-wrap"><h2>{t(d.category.faqTitle, { category: cat.name })}</h2><Faqs items={faq} /></div></section></>;
 }
 
 async function Company({ locale, countryCode, slug }: { locale: Locale; countryCode: string; slug: string }) {
@@ -145,6 +167,9 @@ async function Company({ locale, countryCode, slug }: { locale: Locale; countryC
   const countryName = d.countries[countryCode] || country.name;
   const cat = d.categories[company.category] || globalCategories.find((item) => item.slug === company.category);
   const path = `/${countryCode}/companies/${slug}`;
+  const pageTitle = companyPageTitle(locale, company.name, countryName);
+  const pageSummary = localizedCompanySummary(locale, company.name, countryName, company.summary);
+  const labels = companySectionLabels[locale];
   const relatedGuideSlugs = [
     ...(company.refundCancellation ? ["refund-not-received"] : []),
     ...(company.deliveryTracking ? ["package-delivered-not-received", "tracking-number-not-working"] : []),
@@ -166,8 +191,8 @@ async function Company({ locale, countryCode, slug }: { locale: Locale; countryC
   const articleLd = {
     "@context": "https://schema.org",
     "@type": "Article",
-    headline: `${company.name} Customer Care & Support — ${countryName}`,
-    description: company.summary,
+    headline: pageTitle,
+    description: pageSummary,
     dateModified: company.verifiedAt,
     inLanguage: d.htmlLang,
     mainEntityOfPage: `${siteConfig.url}${localePath(locale, path)}`
@@ -184,10 +209,12 @@ async function Company({ locale, countryCode, slug }: { locale: Locale; countryC
 
   return <>
     <Hero
-      crumbs={[countryName, cat?.name || company.category, company.name]}
+      locale={locale}
+      currentPath={path}
+      crumbs={[{ label: countryName, href: localePath(locale, `/${countryCode}`) }, { label: cat?.name || company.category, href: localePath(locale, `/${countryCode}/categories/${company.category}`) }, { label: company.name }]}
       eyebrow={`${company.verificationStatus} · ${d.company.lastVerified} ${company.verifiedAt}`}
-      title={`${company.name} Customer Care & Support — ${countryName}`}
-      text={company.summary}
+      title={pageTitle}
+      text={pageSummary}
     />
     <section className="section"><div className="shell">
       <div className="content-layout">
@@ -207,13 +234,13 @@ async function Company({ locale, countryCode, slug }: { locale: Locale; countryC
           <TrackedLink className="official-link" href={company.supportWebsite} eventName="official_support_click" params={{ country: countryCode, company: slug, locale }}><span>{d.company.openOfficial}<small>{new URL(company.supportWebsite).hostname}</small></span><ExternalLink /></TrackedLink>
           {company.liveChat && <TrackedLink className="official-link" href={company.liveChat} eventName="official_support_click" params={{ country: countryCode, company: slug, locale }}><span>Open official live chat</span><ExternalLink /></TrackedLink>}
           <div className="warning-box"><ShieldCheck /><span><b>{d.company.securityTitle}:</b> {d.company.securityText}</span></div>
-          <h2>Common customer issues</h2>
+          <h2>{labels.common}</h2>
           <div className="issue-list">{company.commonIssues.map((issue) => <span key={issue}>{issue}</span>)}</div>
-          {company.refundCancellation && <section id="refund-cancellation"><h2>Refund and cancellation information</h2><p>{company.refundCancellation}</p></section>}
-          {company.replacement && <section id="replacement"><h2>Replacement information</h2><p>{company.replacement}</p></section>}
-          {company.deliveryTracking && <section id="delivery-tracking"><h2>Delivery and tracking help</h2><p>{company.deliveryTracking}</p></section>}
-          {company.billingPayment && <section id="billing-payment"><h2>Billing and payment support</h2><p>{company.billingPayment}</p></section>}
-          {company.warranty && <section id="warranty-repair"><h2>Warranty and repair information</h2><p>{company.warranty}</p></section>}
+          {company.refundCancellation && <section id="refund-cancellation"><h2>{labels.refund}</h2><p>{company.refundCancellation}</p></section>}
+          {company.replacement && <section id="replacement"><h2>{labels.replacement}</h2><p>{company.replacement}</p></section>}
+          {company.deliveryTracking && <section id="delivery-tracking"><h2>{labels.delivery}</h2><p>{company.deliveryTracking}</p></section>}
+          {company.billingPayment && <section id="billing-payment"><h2>{labels.billing}</h2><p>{company.billingPayment}</p></section>}
+          {company.warranty && <section id="warranty-repair"><h2>{labels.warranty}</h2><p>{company.warranty}</p></section>}
           <section id="complaint-escalation"><h2>{d.company.complaintTitle}</h2>
           <ol>{company.complaintSteps.map((step) => <li key={step}>{step}</li>)}</ol>
           <h2>{d.company.escalationTitle}</h2>
@@ -224,8 +251,9 @@ async function Company({ locale, countryCode, slug }: { locale: Locale; countryC
         </article>
         <aside>
           <div className="sidebar-card"><h3>{d.company.verificationTitle}</h3><p><b>{company.verificationStatus}</b><br />Last verified: {company.verifiedAt}</p><p>{d.company.verificationText}</p></div>
+          <div className="sidebar-card"><h3>{labels.countryDirectory}</h3><Link href={localePath(locale, `/${countryCode}`)}>{countryName}</Link><h3>{labels.categoryDirectory}</h3><Link href={localePath(locale, `/${countryCode}/categories/${company.category}`)}>{cat?.name || company.category}</Link></div>
           <div className="sidebar-card"><h3>{d.company.relatedGuides}</h3>{relatedGuideSlugs.map((guideSlug) => { const guide = d.guides.items[guideSlug]; return guide ? <Link key={guideSlug} href={localePath(locale, `/guides/${guideSlug}`)}>{guide.title}</Link> : null; })}</div>
-          {relatedCompanies.length > 0 && <div className="sidebar-card"><h3>Related company support</h3>{relatedCompanies.map((item) => <Link key={`${item.country}-${item.slug}`} href={localePath(locale, `/${item.country}/companies/${item.slug}`)}>{item.name}</Link>)}</div>}
+          {relatedCompanies.length > 0 && <div className="sidebar-card"><h3>{labels.relatedCompanies}</h3>{relatedCompanies.map((item) => <Link key={`${item.country}-${item.slug}`} href={localePath(locale, `/${item.country}/companies/${item.slug}`)}>{item.name}</Link>)}</div>}
         </aside>
       </div>
       <CompanyReviews companySlug={company.slug} companyName={company.name} companyCountryCode={countryCode} locale={locale} />
@@ -243,9 +271,9 @@ function Generator({ locale }: { locale: Locale }) {
     hi: { title: "इस शिकायत टूल से तैयार किए जा सकने वाले संदेश", items: ["योग्य या लंबित रिफंड के लिए अनुरोध ईमेल", "अनुत्तरित सहायता मामले के लिए फॉलो-अप ईमेल", "मरम्मत या बदलने के लिए वारंटी दावा पत्र", "गलत या दोहरे शुल्क के लिए बिलिंग विवाद पत्र"] },
     fr: { title: "Messages que cet outil de réclamation peut vous aider à rédiger", items: ["E-mail de demande pour un remboursement admissible ou en attente", "E-mail de relance pour un dossier d’assistance sans réponse", "Lettre de garantie pour une réparation ou un remplacement", "Lettre de contestation d’une facturation incorrecte ou en double"] }
   } as const)[locale];
-  return <><Hero crumbs={[d.generator.h1]} eyebrow={d.generator.eyebrow} title={d.generator.h1} text={d.generator.intro} /><section className="section"><div className="shell"><LocalizedTemplateGenerator locale={locale} /></div></section><section className="section soft"><div className="shell prose-page"><h2>{d.generator.howTitle}</h2><p>{d.generator.howText}</p><h2>{d.generator.whenTitle}</h2><p>{d.generator.whenText}</p><h2>{useCases.title}</h2><ul>{useCases.items.map((item) => <li key={item}>{item}</li>)}</ul><h2>{d.generator.includeTitle}</h2><ul>{d.generator.includeItems.map((item) => <li key={item}>{item}</li>)}</ul></div></section></>;
+  return <><Hero locale={locale} currentPath="/tools/complaint-letter" crumbs={[{ label: d.generator.h1 }]} eyebrow={d.generator.eyebrow} title={d.generator.h1} text={d.generator.intro} /><section className="section"><div className="shell"><LocalizedTemplateGenerator locale={locale} /></div></section><section className="section soft"><div className="shell prose-page"><h2>{d.generator.howTitle}</h2><p>{d.generator.howText}</p><h2>{d.generator.whenTitle}</h2><p>{d.generator.whenText}</p><h2>{useCases.title}</h2><ul>{useCases.items.map((item) => <li key={item}>{item}</li>)}</ul><h2>{d.generator.includeTitle}</h2><ul>{d.generator.includeItems.map((item) => <li key={item}>{item}</li>)}</ul></div></section></>;
 }
-function Guides({ locale }: { locale: Locale }) { const d = getDictionary(locale); return <><Hero crumbs={[d.guides.title]} eyebrow={d.nav.guides} title={d.guides.title} text={d.guides.intro} /><section className="section"><div className="shell"><GuideCards locale={locale} /></div></section></>; }
+function Guides({ locale }: { locale: Locale }) { const d = getDictionary(locale); return <><Hero locale={locale} currentPath="/guides" crumbs={[{ label: d.guides.title }]} eyebrow={d.nav.guides} title={d.guides.title} text={d.guides.intro} /><section className="section"><div className="shell"><GuideCards locale={locale} /></div></section></>; }
 function Guide({ locale, slug }: { locale: Locale; slug: string }) {
   const d = getDictionary(locale); const guide = d.guides.items[slug]; const original = guides.find((item) => item.slug === slug); if (!guide || !original) notFound();
   const relatedGuides = guides.filter((item) => item.slug !== slug && (item.category === original.category || item.keywords.some((keyword) => original.keywords.includes(keyword)))).slice(0, 3);
@@ -267,7 +295,8 @@ function Guide({ locale, slug }: { locale: Locale; slug: string }) {
   ] : [];
   const articleLd = { "@context": "https://schema.org", "@type": "Article", headline: guide.title, description: guide.description, dateModified: original.updatedAt, inLanguage: d.htmlLang, mainEntityOfPage: `${siteConfig.url}${localePath(locale, `/guides/${slug}`)}` };
   const faqLd = { "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faq.map(([question, answer]) => ({ "@type": "Question", name: question, acceptedAnswer: { "@type": "Answer", text: answer } })) };
-  return <><Hero crumbs={[d.guides.title, guide.title]} eyebrow={`${d.guides.updated} ${original.updatedAt} · ${original.readTime}`} title={guide.title} text={guide.description} />
+  const categoryDirectoryLinks = [...new Map(relatedCompanies.filter((company) => companyCategories.includes(company.category)).map((company) => [`${company.country}:${company.category}`, { label: `${d.countries[company.country]} · ${(d.categories[company.category] || globalCategories.find((item) => item.slug === company.category))?.name || company.category}`, href: localePath(locale, `/${company.country}/categories/${company.category}`) }])).values()].slice(0, 4);
+  return <><Hero locale={locale} currentPath={`/guides/${slug}`} crumbs={[{ label: d.guides.title, href: localePath(locale, "/guides") }, { label: guide.title }]} eyebrow={`${d.guides.updated} ${original.updatedAt} · ${original.readTime}`} title={guide.title} text={guide.description} />
     <section className="section"><article className="shell prose-page">
       {locale === "en" ? <>{original.sections.map((section) => <section key={section.heading}><h2>{section.heading}</h2><p>{section.body}</p>{section.bullets && <ul>{section.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}</ul>}</section>)}{original.example && <div className="warning-box"><FileText /><span><b>{relatedLabels.example}:</b> {original.example}</span></div>}</> : <><h2>{d.company.complaintTitle}</h2><ol>{d.company.complaintSteps.map((step) => <li key={step}>{step}</li>)}</ol><h2>{d.company.escalationTitle}</h2><p>{d.company.escalationText}</p></>}
       {locale === "en" && original.officialSources?.length ? <section><h2>Official reference examples</h2><p>These sources are country-specific examples. Check the rules and official process that apply to your own purchase and location.</p>{original.officialSources.map((source) => <p key={source.url}><a href={source.url} target="_blank" rel="noopener noreferrer">{source.label} <ExternalLink size={14} /></a><br /><small>{source.note}</small></p>)}</section> : null}
@@ -277,6 +306,7 @@ function Guide({ locale, slug }: { locale: Locale; slug: string }) {
       <Link className="button" href={localePath(locale, "/tools/complaint-letter")}>{d.generator.h1}</Link>
     </article></section>
     <section className="section soft"><div className="shell"><SectionHead eyebrow={d.guides.related} title={relatedLabels.guides} /><div className="guide-grid">{relatedGuides.map((item) => { const copy = d.guides.items[item.slug]; return copy && <article className="guide-card" key={item.slug}><span className="guide-icon"><FileText /></span><div><h3><Link href={localePath(locale, `/guides/${item.slug}`)}>{copy.title}</Link></h3><p>{copy.description}</p><Link className="inline-link" href={localePath(locale, `/guides/${item.slug}`)}>{d.guides.read} <ArrowRight /></Link></div></article>; })}</div></div></section>
+    {categoryDirectoryLinks.length > 0 && <section className="section"><div className="shell"><SectionHead eyebrow={relatedLabels.directory} title={d.home.categoryTitle} /><div className="sidebar-card">{categoryDirectoryLinks.map((item) => <Link href={item.href} key={item.href}>{item.label}</Link>)}</div></div></section>}
     <section className="section"><div className="shell"><SectionHead eyebrow={relatedLabels.directory} title={relatedLabels.companies} text={relatedLabels.note} /><div className="company-grid">{relatedCompanies.map((company) => <GlobalCompanyCard locale={locale} company={company} key={`${company.country}-${company.slug}`} />)}</div></div></section>
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleLd) }} /><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} /></>;
 }
@@ -304,7 +334,7 @@ async function Search({ locale, query, country, category, support }: { locale: L
   const guideResults = Object.entries(d.guides.items).filter(([, guide]) => !terms.length || terms.some((term) => `${guide.title} ${guide.description}`.toLowerCase().includes(term))).slice(0, 6);
   const intentTargets = findKeywordTargets(query);
   const analyticsResultCount = new Set([...results.map((item) => `company:${item.country}:${item.slug}`), ...guideResults.map(([slug]) => `guide:${slug}`), ...intentTargets.map((item) => `intent:${item.targetPage}`)]).size;
-  return <><SearchAnalytics query={query} resultCount={analyticsResultCount} /><Hero crumbs={[d.nav.search]} eyebrow="Global directory" title="Search company support worldwide" text="Search verified company pages, complaint guides and support tools. Use filters only when you need to narrow the results." />
+  return <><SearchAnalytics query={query} resultCount={analyticsResultCount} /><Hero locale={locale} currentPath="/search" crumbs={[{ label: d.nav.search }]} eyebrow="Global directory" title="Search company support worldwide" text="Search verified company pages, complaint guides and support tools. Use filters only when you need to narrow the results." />
     <section className="section"><div className="shell">
       <form className="search-filters" action={localePath(locale, "/search")} method="get"><input name="q" defaultValue={query} aria-label="Company or customer issue" placeholder="Company or issue — refund, delivery, warranty…" /><input name="country" list="search-country-list" defaultValue={countryCode} aria-label="Country filter" placeholder="All countries" autoComplete="off" /><datalist id="search-country-list">{countries.map((item) => <option key={item.code} value={item.code}>{item.flag} {d.countries[item.code] || item.name}</option>)}</datalist><select name="category" defaultValue={category} aria-label="Category filter"><option value="">All categories</option>{globalCategories.map((item) => <option key={item.slug} value={item.slug}>{(d.categories[item.slug] || item).name}</option>)}</select><select name="support" defaultValue={support} aria-label="Support type filter"><option value="">All support types</option><option value="phone">Verified phone</option><option value="refund">Refund & cancellation</option><option value="warranty">Warranty & repair</option><option value="complaint">Complaint escalation</option></select><button className="button" type="submit">Search</button></form>
       <p className="search-summary">{results.length} verified company {results.length === 1 ? "result" : "results"}{query ? ` for “${query}”` : ""}</p>
@@ -314,9 +344,9 @@ async function Search({ locale, query, country, category, support }: { locale: L
       <section className="result-section"><SectionHead eyebrow="Complaint tool" title="Create a professional complaint message" /><Link href={localePath(locale, "/tools/complaint-letter")} className="tool-card"><span><FileText /></span><h3>{d.generator.h1}</h3><p>{d.generator.seoDescription}</p><b>{d.home.openTool} <ArrowRight size={15} /></b></Link></section>
     </div></section></>;
 }
-function Static({ locale, name }: { locale: Locale; name: typeof staticNames[number] }) { const d = getDictionary(locale); const key = name === "privacy-policy" ? "privacy" : name as keyof typeof d.static; const [title, body] = d.static[key]; return <><Hero crumbs={[title]} eyebrow="ResolveNexa" title={title} text={body} /><section className="section"><div className="shell prose-page"><p>{body}</p><p>{d.footer.safetyText}</p></div></section></>; }
+function Static({ locale, name }: { locale: Locale; name: typeof staticNames[number] }) { const d = getDictionary(locale); const key = name === "privacy-policy" ? "privacy" : name as keyof typeof d.static; const [title, body] = d.static[key]; return <><Hero locale={locale} currentPath={`/${name}`} crumbs={[{ label: title }]} eyebrow="ResolveNexa" title={title} text={body} /><section className="section"><div className="shell prose-page"><p>{body}</p><p>{d.footer.safetyText}</p></div></section></>; }
 
-function Hero({ crumbs, eyebrow, title, text, children }: { crumbs: string[]; eyebrow: string; title: string; text: string; children?: React.ReactNode }) { return <section className="page-hero"><div className="shell"><nav className="breadcrumbs" aria-label="Breadcrumb"><span>ResolveNexa</span>{crumbs.map((crumb) => <span key={crumb}>{crumb}</span>)}</nav><span className="eyebrow">{eyebrow}</span><h1>{title}</h1><p>{text}</p>{children}</div></section>; }
+function Hero({ locale, currentPath, crumbs, eyebrow, title, text, children }: { locale: Locale; currentPath: string; crumbs: BreadcrumbItem[]; eyebrow: string; title: string; text: string; children?: React.ReactNode }) { return <section className="page-hero"><div className="shell"><Breadcrumbs locale={locale} items={crumbs} currentPath={currentPath} /><span className="eyebrow">{eyebrow}</span><h1>{title}</h1><p>{text}</p>{children}</div></section>; }
 function SectionHead({ eyebrow, title, text }: { eyebrow: string; title: string; text?: string }) { return <div className="section-head"><div><span className="eyebrow">{eyebrow}</span><h2>{title}</h2>{text && <p className="section-note">{text}</p>}</div></div>; }
 function Faqs({ items }: { items: [string, string][] }) { return <div>{items.map(([q, a]) => <details key={q}><summary>{q}</summary><p>{a}</p></details>)}</div>; }
 function Info({ label, value, muted = false }: { label: string; value: string; muted?: boolean }) { return <div className="info-row"><span>{label}</span><b className={muted ? "support-unverified" : ""}>{value}</b></div>; }

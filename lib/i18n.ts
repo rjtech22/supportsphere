@@ -197,6 +197,13 @@ dictionaries.fr = {
   footer: { tagline: "Trouvez de l’aide et résolvez vos problèmes dans cinq pays.", explore: "Explorer", company: "Entreprise", safety: "Sécurité", safetyText: "Ne communiquez jamais un code OTP, un PIN, un CVV ou un mot de passe.", independent: "Indépendant. Sans affiliation avec les entreprises citées.", contact: "Contact", privacy: "Confidentialité", terms: "Conditions", disclaimer: "Avertissement" }
 };
 
+Object.assign(dictionaries.ta.home, { countries: "உலகளாவிய நாடுகள் அடைவு", markets: "உலகளாவிய உதவி" });
+dictionaries.ta.footer.tagline = "சரிபார்க்கப்பட்ட தகவல் கிடைக்கும் இடங்களில் ஆதரவு வழிகளையும் உலகளாவிய பிரச்சினை தீர்வு உதவியையும் கண்டறியுங்கள்.";
+Object.assign(dictionaries.hi.home, { countries: "विश्वव्यापी देश निर्देशिका", markets: "विश्वव्यापी सहायता" });
+dictionaries.hi.footer.tagline = "जहाँ सत्यापित जानकारी उपलब्ध है वहाँ सहायता मार्ग और विश्वव्यापी समस्या-समाधान मार्गदर्शन पाएँ।";
+Object.assign(dictionaries.fr.home, { countries: "Annuaire mondial des pays", markets: "Assistance mondiale" });
+dictionaries.fr.footer.tagline = "Trouvez des canaux vérifiés lorsqu’ils sont disponibles et des conseils de résolution dans le monde entier.";
+
 export function isLocale(value: string): value is Locale { return locales.includes(value as Locale); }
 const isoCountryNames = Object.fromEntries(allCountries.map((country) => [country.code, country.name]));
 export function getDictionary(locale: string): Dictionary {
@@ -205,10 +212,11 @@ export function getDictionary(locale: string): Dictionary {
 }
 export function t(template: string, values: Record<string, string>) { return Object.entries(values).reduce((result, [key, value]) => result.replaceAll(`{${key}}`, value), template); }
 export function localePath(locale: Locale, path = "") { const clean = path === "/" ? "" : path.startsWith("/") ? path : `/${path}`; return `/${locale}${clean}`; }
-export function languageAlternates(path: string): Record<string, string> {
+export function languageAlternates(path: string, availableLocales: readonly Locale[] = locales): Record<string, string> {
   const clean = path === "/" ? "" : path.startsWith("/") ? path : `/${path}`;
-  return Object.fromEntries([...locales.map((locale) => [locale, `${siteConfig.url}/${locale}${clean}`]), ["x-default", `${siteConfig.url}/en${clean}`]]);
+  return Object.fromEntries([...availableLocales.map((locale) => [locale, `${siteConfig.url}/${locale}${clean}`]), ["x-default", `${siteConfig.url}/en${clean}`]]);
 }
-export function localizedAlternates(locale: Locale, path: string): Metadata["alternates"] {
-  return { canonical: new URL(localePath(locale, path), `${siteConfig.url}/`), languages: languageAlternates(path) };
+export function localizedAlternates(locale: Locale, path: string, availableLocales: readonly Locale[] = locales): Metadata["alternates"] {
+  const canonical = new URL(localePath(locale, path), `${siteConfig.url}/`);
+  return availableLocales.length ? { canonical, languages: languageAlternates(path, availableLocales) } : { canonical };
 }
