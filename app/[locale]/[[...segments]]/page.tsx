@@ -17,6 +17,7 @@ import { getDictionary, isLocale, languageAlternates, localePath, localizedAlter
 import { siteConfig } from "@/lib/site";
 import { findKeywordTargets } from "@/lib/keyword-strategy";
 import { getPublishedCompanies, getPublishedCompany } from "@/lib/database-content";
+import { countryCategoryDetails } from "@/lib/seo-content";
 
 type PageParams = { locale: string; segments?: string[] };
 const staticNames = ["about", "contact", "privacy-policy", "terms", "disclaimer"] as const;
@@ -107,9 +108,9 @@ async function Country({ locale, code }: { locale: Locale; code: string }) {
 }
 
 async function Category({ locale, countryCode, slug }: { locale: Locale; countryCode: string; slug: string }) {
-  const d = getDictionary(locale); const country = getCountry(countryCode); const cat = d.categories[slug] || globalCategories.find((item) => item.slug === slug); if (!country || !cat) notFound(); const countryName = d.countries[countryCode] || country.name; const items = (await getPublishedCompanies()).filter((item) => item.country === countryCode && item.category === slug);
+  const d = getDictionary(locale); const country = getCountry(countryCode); const cat = d.categories[slug] || globalCategories.find((item) => item.slug === slug); if (!country || !cat) notFound(); const countryName = d.countries[countryCode] || country.name; const items = (await getPublishedCompanies()).filter((item) => item.country === countryCode && item.category === slug); const detail = locale === "en" ? countryCategoryDetails[`${countryCode}:${slug}`] : undefined;
   const faq: [string, string][] = [[t(d.category.faqTitle, { category: cat.name }), d.company.escalationText], [d.company.complaintTitle, d.company.complaintSteps.join(" ")]];
-  return <><Hero crumbs={[countryName, cat.name]} eyebrow={countryName} title={`${cat.name} — ${countryName}`} text={cat.description} /><section className="section"><div className="shell"><SectionHead eyebrow={d.category.directory} title={t(d.category.listings, { category: cat.name })} /><div className="company-grid">{items.map((company) => <GlobalCompanyCard locale={locale} company={company} key={company.slug} />)}</div>{!items.length && <div className="content-card"><h2>{d.category.emptyTitle}</h2><p>{d.category.emptyText}</p></div>}</div></section><section className="section soft"><div className="shell"><SectionHead eyebrow={d.category.relevant} title={t(d.category.resolve, { category: cat.name })} /><GuideCards locale={locale} limit={3} /></div></section><section className="section"><div className="shell faq-wrap"><h2>{t(d.category.faqTitle, { category: cat.name })}</h2><Faqs items={faq} /></div></section></>;
+  return <><Hero crumbs={[countryName, cat.name]} eyebrow={countryName} title={`${cat.name} — ${countryName}`} text={cat.description} /><section className="section"><div className="shell"><SectionHead eyebrow={d.category.directory} title={t(d.category.listings, { category: cat.name })} /><div className="company-grid">{items.map((company) => <GlobalCompanyCard locale={locale} company={company} key={company.slug} />)}</div>{!items.length && <div className="content-card"><h2>{d.category.emptyTitle}</h2><p>{d.category.emptyText}</p></div>}</div></section>{detail && <section className="section soft"><article className="shell prose-page"><h2>{detail.title}</h2>{detail.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}<h2>Practical banking issue guides</h2><ul>{detail.guideSlugs.map((guideSlug) => { const guide = d.guides.items[guideSlug]; return guide ? <li key={guideSlug}><Link href={localePath(locale, `/guides/${guideSlug}`)}>{guide.title}</Link></li> : null; })}</ul><h2>Official escalation sources</h2>{detail.officialSources.map((source) => <p key={source.url}><a href={source.url} target="_blank" rel="noopener noreferrer">{source.label} <ExternalLink size={14} /></a><br /><small>{source.note}</small></p>)}</article></section>}<section className="section soft"><div className="shell"><SectionHead eyebrow={d.category.relevant} title={t(d.category.resolve, { category: cat.name })} /><GuideCards locale={locale} limit={3} /></div></section><section className="section"><div className="shell faq-wrap"><h2>{t(d.category.faqTitle, { category: cat.name })}</h2><Faqs items={faq} /></div></section></>;
 }
 
 async function Company({ locale, countryCode, slug }: { locale: Locale; countryCode: string; slug: string }) {
@@ -122,6 +123,13 @@ async function Company({ locale, countryCode, slug }: { locale: Locale; countryC
   const countryName = d.countries[countryCode] || country.name;
   const cat = d.categories[company.category] || globalCategories.find((item) => item.slug === company.category);
   const path = `/${countryCode}/companies/${slug}`;
+  const relatedGuideSlugs = [
+    ...(company.refundCancellation ? ["refund-not-received"] : []),
+    ...(company.deliveryTracking ? ["package-delivered-not-received", "tracking-number-not-working"] : []),
+    ...(company.billingPayment ? ["payment-failed-money-deducted"] : []),
+    ...(company.warranty || company.replacement ? ["request-warranty-replacement"] : []),
+    "customer-support-not-responding"
+  ].filter((guideSlug, index, list) => list.indexOf(guideSlug) === index).slice(0, 5);
   const genericFaq: [string, string][] = [
     [t(d.company.faqContact, { company: company.name }), t(d.company.faqContactAnswer, { date: company.verifiedAt })],
     [t(d.company.faqComplaint, { company: company.name }), d.company.faqComplaintAnswer],
@@ -194,7 +202,7 @@ async function Company({ locale, countryCode, slug }: { locale: Locale; countryC
         </article>
         <aside>
           <div className="sidebar-card"><h3>{d.company.verificationTitle}</h3><p><b>{company.verificationStatus}</b><br />Last verified: {company.verifiedAt}</p><p>{d.company.verificationText}</p></div>
-          <div className="sidebar-card"><h3>{d.company.relatedGuides}</h3>{Object.entries(d.guides.items).slice(0, 5).map(([guideSlug, guide]) => <Link key={guideSlug} href={localePath(locale, `/guides/${guideSlug}`)}>{guide.title}</Link>)}</div>
+          <div className="sidebar-card"><h3>{d.company.relatedGuides}</h3>{relatedGuideSlugs.map((guideSlug) => { const guide = d.guides.items[guideSlug]; return guide ? <Link key={guideSlug} href={localePath(locale, `/guides/${guideSlug}`)}>{guide.title}</Link> : null; })}</div>
           {relatedCompanies.length > 0 && <div className="sidebar-card"><h3>Related company support</h3>{relatedCompanies.map((item) => <Link key={`${item.country}-${item.slug}`} href={localePath(locale, `/${item.country}/companies/${item.slug}`)}>{item.name}</Link>)}</div>}
         </aside>
       </div>
@@ -224,11 +232,20 @@ function Guide({ locale, slug }: { locale: Locale; slug: string }) {
   const relatedLabels = ({ en: { guides: "Related support guides", companies: "Related verified company pages", note: "Choose the correct country page before using contact information.", directory: "Official support directories", example: "Example wording" }, ta: { guides: "தொடர்புடைய ஆதரவு வழிகாட்டிகள்", companies: "தொடர்புடைய சரிபார்க்கப்பட்ட நிறுவனப் பக்கங்கள்", note: "தொடர்பு தகவலைப் பயன்படுத்தும் முன் சரியான நாட்டுப் பக்கத்தைத் தேர்ந்தெடுக்கவும்.", directory: "அதிகாரப்பூர்வ ஆதரவு அடைவுகள்", example: "எடுத்துக்காட்டு வாசகம்" }, hi: { guides: "संबंधित सहायता मार्गदर्शिकाएँ", companies: "संबंधित सत्यापित कंपनी पेज", note: "संपर्क जानकारी उपयोग करने से पहले सही देश पेज चुनें।", directory: "आधिकारिक सहायता निर्देशिकाएँ", example: "उदाहरण शब्दावली" }, fr: { guides: "Guides d’assistance associés", companies: "Pages d’entreprises vérifiées associées", note: "Choisissez le bon pays avant d’utiliser les coordonnées.", directory: "Répertoires d’assistance officiels", example: "Formulation d’exemple" } } as const)[locale];
   const localizedFaq: [string, string][] = [[d.company.complaintTitle, d.company.complaintSteps.join(" ")], [d.company.escalationTitle, d.company.escalationText]];
   const faq = locale === "en" ? original.faqs : localizedFaq;
+  const contextualLinks = locale !== "en" ? [] : slug === "refund-not-received" ? [
+    { label: "Amazon US refund and order support", href: "/us/companies/amazon" },
+    { label: "India banking complaint help", href: "/in/categories/banking" }
+  ] : slug === "how-to-write-professional-complaint-email" ? [
+    { label: "Find the verified company support page", href: "/search" },
+    { label: "How to escalate a customer complaint", href: "/guides/how-to-escalate-customer-complaint" }
+  ] : [];
   const articleLd = { "@context": "https://schema.org", "@type": "Article", headline: guide.title, description: guide.description, dateModified: original.updatedAt, inLanguage: d.htmlLang, mainEntityOfPage: `${siteConfig.url}${localePath(locale, `/guides/${slug}`)}` };
   const faqLd = { "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faq.map(([question, answer]) => ({ "@type": "Question", name: question, acceptedAnswer: { "@type": "Answer", text: answer } })) };
   return <><Hero crumbs={[d.guides.title, guide.title]} eyebrow={`${d.guides.updated} ${original.updatedAt} · ${original.readTime}`} title={guide.title} text={guide.description} />
     <section className="section"><article className="shell prose-page">
       {locale === "en" ? <>{original.sections.map((section) => <section key={section.heading}><h2>{section.heading}</h2><p>{section.body}</p>{section.bullets && <ul>{section.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}</ul>}</section>)}{original.example && <div className="warning-box"><FileText /><span><b>{relatedLabels.example}:</b> {original.example}</span></div>}</> : <><h2>{d.company.complaintTitle}</h2><ol>{d.company.complaintSteps.map((step) => <li key={step}>{step}</li>)}</ol><h2>{d.company.escalationTitle}</h2><p>{d.company.escalationText}</p></>}
+      {locale === "en" && original.officialSources?.length ? <section><h2>Official reference examples</h2><p>These sources are country-specific examples. Check the rules and official process that apply to your own purchase and location.</p>{original.officialSources.map((source) => <p key={source.url}><a href={source.url} target="_blank" rel="noopener noreferrer">{source.label} <ExternalLink size={14} /></a><br /><small>{source.note}</small></p>)}</section> : null}
+      {contextualLinks.length > 0 && <section><h2>Useful next steps</h2><ul>{contextualLinks.map((item) => <li key={item.href}><Link href={localePath(locale, item.href)}>{item.label}</Link></li>)}</ul></section>}
       <div className="warning-box"><ShieldCheck /><span>{d.company.securityText}</span></div>
       <section className="faq-wrap"><h2>{guide.title} — FAQ</h2><Faqs items={faq} /></section>
       <Link className="button" href={localePath(locale, "/tools/complaint-letter")}>{d.generator.h1}</Link>

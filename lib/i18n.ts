@@ -205,10 +205,10 @@ export function getDictionary(locale: string): Dictionary {
 }
 export function t(template: string, values: Record<string, string>) { return Object.entries(values).reduce((result, [key, value]) => result.replaceAll(`{${key}}`, value), template); }
 export function localePath(locale: Locale, path = "") { const clean = path === "/" ? "" : path.startsWith("/") ? path : `/${path}`; return `/${locale}${clean}`; }
-export function languageAlternates(path: string) {
+export function languageAlternates(path: string): Record<string, string> {
   const clean = path === "/" ? "" : path.startsWith("/") ? path : `/${path}`;
   return Object.fromEntries([...locales.map((locale) => [locale, `${siteConfig.url}/${locale}${clean}`]), ["x-default", `${siteConfig.url}/en${clean}`]]);
 }
 export function localizedAlternates(locale: Locale, path: string): Metadata["alternates"] {
-  return { canonical: localePath(locale, path), languages: languageAlternates(path) };
+  return { canonical: new URL(localePath(locale, path), `${siteConfig.url}/`), languages: languageAlternates(path) };
 }

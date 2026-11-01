@@ -86,6 +86,26 @@ export const categorySeo: Record<string, { title: string; intro: string; faqs: A
   insurance: { title: "Insurance Customer Support", intro: "Find official policy servicing, claim and grievance routes. Use the insurer’s published complaint process and keep policy, claim and correspondence references.", keywords: ["insurance customer support", "insurance claim complaint", "policy grievance help"], faqs: [["What should an insurance complaint contain?", "Include the policy and claim references, dates, the decision or delay being challenged and the resolution requested."], ["Does ResolveNexa provide insurance advice?", "No. We provide general process guidance and links, not financial or legal advice."]] }
 };
 
+export const countryCategoryDetails: Record<string, {
+  title: string;
+  paragraphs: string[];
+  guideSlugs: string[];
+  officialSources: Array<{ label: string; url: string; note: string }>;
+}> = {
+  "in:banking": {
+    title: "Resolve a banking complaint in India",
+    paragraphs: [
+      "Start with the bank's authenticated app, official website, branch or published grievance channel. Record the transaction reference, date, amount, complaint number and the resolution requested, but never share a PIN, CVV, password or OTP.",
+      "If the bank's own grievance process does not resolve an eligible complaint, review the current Reserve Bank of India Ombudsman eligibility and submission instructions before using the RBI Complaint Management System. ResolveNexa cannot decide eligibility or submit the complaint for you."
+    ],
+    guideSlugs: ["payment-failed-money-deducted", "duplicate-charge", "resolve-billing-dispute", "account-locked-support", "how-to-escalate-customer-complaint"],
+    officialSources: [
+      { label: "RBI Complaint Management System", url: "https://cms.rbi.org.in/", note: "Official RBI portal for eligible complaints against covered regulated entities." },
+      { label: "RBI Integrated Ombudsman Scheme FAQs", url: "https://old.rbi.org.in/commonman/english/scripts/faqs.aspx?id=3407", note: "Official eligibility, filing and complaint-process guidance. Check the current version before acting." }
+    ]
+  }
+};
+
 export function companyKeywords(company: GlobalCompany) {
   return [`${company.name} customer support`, `${company.name} customer service contact`, `${company.name} complaint help`, `${company.name} refund help`, ...company.commonIssues.map((issue) => `${company.name} ${issue.toLowerCase()}`)];
 }

@@ -36,6 +36,7 @@ export type Guide = {
   updatedAt: string;
   keywords: string[];
   sections: { heading: string; body: string; bullets?: string[] }[];
+  officialSources?: Array<{ label: string; url: string; note: string }>;
   example?: string;
   faqs: Array<[string, string]>;
 };
@@ -180,7 +181,7 @@ export const guides: Guide[] = [
     faqs: [["How long should a complaint be?", "Keep it focused: the facts, evidence, previous case number and requested resolution are more useful than a long narrative."], ["Can ResolveNexa file the complaint for me?", "No. The tools help you prepare text, but you submit it to the company’s official channel."]]
   },
   {
-    slug: "how-to-write-professional-complaint-email", title: "How to Write a Professional Complaint Email", category: "email", readTime: "6 min", updatedAt: "2026-10-29",
+    slug: "how-to-write-professional-complaint-email", title: "How to Write a Professional Complaint Email", category: "email", readTime: "7 min", updatedAt: "2026-11-01",
     description: "Write a clear complaint email with a useful subject line, evidence, requested outcome and follow-up deadline.",
     keywords: ["how to write a complaint email", "professional complaint email", "customer service email"],
     sections: [
@@ -188,8 +189,10 @@ export const guides: Guide[] = [
       { heading: "Open with the essential facts", body: "State the purchase or service, date and problem in the first paragraph. Keep emotion separate from the facts." },
       { heading: "List evidence and previous contact", body: "Mention attachments and earlier case numbers. Do not attach identity documents or full financial details unless the verified official process specifically requires them." },
       { heading: "Ask for one clear outcome", body: "Request a realistic remedy and written confirmation. Add a reasonable follow-up date without making unsupported legal threats." },
-      { heading: "Write an escalation email when the first case is unresolved", body: "Use a subject such as Escalation request — case 1234. Summarise the original complaint, dates, promised action and the remedy still required. Send it only to an escalation address or form published by the company, and keep the original case reference in the thread." }
+      { heading: "Write an escalation email when the first case is unresolved", body: "Use a subject such as Escalation request — case 1234. Summarise the original complaint, dates, promised action and the remedy still required. Send it only to an escalation address or form published by the company, and keep the original case reference in the thread." },
+      { heading: "Keep a submission record", body: "Save the sent message, attachments and confirmation screen. If the company provides a case number, use that same reference for follow-ups instead of opening duplicate cases." }
     ],
+    officialSources: [{ label: "US FTC sample customer complaint letter", url: "https://consumer.ftc.gov/articles/sample-customer-complaint-letter", note: "A US government example of the facts, requested resolution and records that make a complaint easier to review. Requirements differ by country." }],
     example: "Subject: Refund pending — order 1234. I received confirmation on 10 October that a refund was initiated, but it has not reached the original payment method. Please confirm the refund reference and expected completion date.",
     faqs: [["Should a complaint email be firm or polite?", "Be calm and specific. A firm request can still be professional and evidence-based."], ["What should I avoid attaching?", "Do not send passwords, OTPs, full card numbers or unnecessary identity documents."]]
   },
@@ -288,14 +291,19 @@ export const guides: Guide[] = [
     faqs: [["Should I open many duplicate tickets?", "Usually no. Duplicate tickets can fragment the history; follow up the original case unless the channel instructs otherwise."], ["Can I use the free follow-up tool?", "Yes. It creates editable text in your browser without requiring payment or login."]]
   },
   {
-    slug: "refund-not-received", title: "Refund Not Received: What to Do", category: "refund", readTime: "7 min", updatedAt: "2026-10-30",
+    slug: "refund-not-received", title: "Refund Not Received: What to Do", category: "refund", readTime: "8 min", updatedAt: "2026-11-01",
     description: "Trace a missing refund with the merchant, refund reference and original payment provider without exposing sensitive account details.",
     keywords: ["refund not received", "refund pending", "refund status help", "processed refund missing"],
     sections: [
       { heading: "Confirm the merchant's refund status", body: "Open the original order or account and confirm whether the refund is requested, approved or processed. Save the date, amount and reference shown." },
       { heading: "Check the original payment method", body: "Refunds normally follow the original payment route unless the official policy says otherwise. Check the correct card, bank account, wallet or store balance." },
       { heading: "Request the refund reference", body: "If the merchant says the refund was processed, ask for the trace, retrieval or refund reference that the payment provider can use. Do not share an OTP, PIN or full card number." },
-      { heading: "Escalate through verified channels", body: "Follow up with the merchant case first. If the refund remains missing, contact the original payment provider through its authenticated app, website or number printed on the card." }
+      { heading: "Build a short refund timeline", body: "Record the purchase date, cancellation or return date, refund approval date, promised timeline, amount and every case reference. This separates a delayed merchant action from a payment-provider posting delay." },
+      { heading: "Escalate through verified channels", body: "Follow up with the merchant case first. If the refund remains missing, contact the original payment provider through its authenticated app, website or number printed on the card. Use a regulator or consumer body only when its official eligibility rules cover the issue." }
+    ],
+    officialSources: [
+      { label: "US FTC: returns, refunds and other resolutions", url: "https://consumer.ftc.gov/articles/solving-problems-business-returns-refunds-and-other-resolutions", note: "US consumer guidance on checking policies, keeping documents and asking the business for a clear resolution." },
+      { label: "GOV.UK: accepting returns and giving refunds", url: "https://www.gov.uk/accepting-returns-and-giving-refunds", note: "UK-specific statutory guidance. Do not apply its deadlines to purchases governed by another country." }
     ],
     example: "Example: Refund R-123 for order O-456 was marked processed on 18 October, but it is not visible on the original payment method. Please provide the refund trace reference and confirm the amount.",
     faqs: [["How long should a refund take?", "There is no universal period. Use the timeline shown by the merchant and payment provider for that transaction."], ["What if the merchant says the refund is complete?", "Ask for the official refund or trace reference, then contact the original payment provider through its verified channel."]]
