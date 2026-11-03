@@ -251,18 +251,37 @@ export const guides: Guide[] = [
     faqs: [["Who should I contact for a delayed retail order?", "Start with the seller’s official order support unless its policy directs you to the carrier."], ["What if tracking says delivered but nothing arrived?", "Check the carrier’s official delivered-but-missing steps, household members and approved safe places before reporting it."]]
   },
   {
-    slug: "request-warranty-replacement", title: "How to Request a Warranty Replacement", category: "warranty", readTime: "7 min", updatedAt: "2026-10-29",
-    description: "Prepare proof of purchase, product details and fault evidence for an official warranty repair or replacement request.",
-    keywords: ["how to request a warranty replacement", "warranty complaint", "product replacement request"],
+    slug: "request-warranty-replacement", title: "How to Request a Warranty Replacement", category: "warranty", readTime: "10 min", updatedAt: "2026-11-04",
+    description: "Prepare a warranty claim, compare repair and replacement options, and respond to a delayed or rejected claim using official support channels.",
+    keywords: ["how to request a warranty replacement", "warranty replacement request", "warranty claim", "warranty claim rejected", "warranty repair or replacement"],
     sections: [
-      { heading: "Check the warranty terms", body: "Confirm the warranty period, covered faults, exclusions and whether the seller or manufacturer handles the request." },
-      { heading: "Record product and purchase details", body: "Prepare the model, serial number, purchase date, invoice and a concise description of the fault." },
-      { heading: "Follow official diagnostics", body: "Complete safe troubleshooting requested by the manufacturer and record error codes or service outcomes." },
-      { heading: "Separate warranty and non-warranty replacements", body: "A damaged, incorrect or unwanted delivery may follow the seller’s return policy instead of the manufacturer warranty. Use the warranty route only for covered product faults; otherwise open the relevant return, delivery or order-support process." },
-      { heading: "Request the available remedy", body: "Ask for repair, replacement or another remedy supported by the warranty and applicable consumer rules. Keep shipment and service references." }
+      { heading: "Confirm which warranty process applies", body: "Start with the warranty terms supplied with the product or published on the seller or manufacturer’s official website. Check the product, country or region, purchase date, coverage period, covered faults, exclusions and who is responsible for handling the claim. A retailer plan, manufacturer warranty and third-party protection plan may use different claim routes." },
+      { heading: "Check whether the issue may be eligible", body: "Compare the fault and how it occurred with the written warranty terms. Do not assume that every failure, accidental damage or cosmetic issue qualifies. If the item arrived damaged, incorrect or unwanted, the seller’s delivery or return process may be more relevant than a manufacturer warranty claim." },
+      { heading: "Gather the documents and evidence", body: "Prepare enough information for support to identify the product, purchase and fault without sharing unnecessary personal data.", bullets: [
+        "Proof of purchase or the best available purchase record",
+        "Product name, model and serial number",
+        "Purchase date and the country or seller involved",
+        "A clear description of the fault and when it started",
+        "Photos, video, error messages or diagnostic results when relevant",
+        "Previous case, repair or service references"
+      ] },
+      { heading: "Complete safe troubleshooting first", body: "Use only the official troubleshooting or diagnostic steps for the exact product. Record any error code, test result or support instruction. Stop if a step could be unsafe, cause data loss or require opening a product that the warranty says should be serviced only by an authorised provider." },
+      { heading: "Understand repair versus replacement", body: "A replacement is not automatically available for every valid claim. The written warranty, product condition, service assessment and applicable consumer rules may determine whether the available remedy is diagnosis, repair, replacement, refund or another option. Ask support to explain the remedy offered and the next step in writing." },
+      { heading: "Submit the claim through an official channel", body: "Open the manufacturer, seller or plan provider’s verified support page and choose the warranty, repair or service route for the product. Give a concise timeline, attach only the evidence requested and state the outcome you are requesting. Save the case number, submission confirmation and any shipping or repair reference." },
+      { heading: "Send or hand over the product safely", body: "Do not ship a product to an address found in a comment, forum post or unsolicited message. Wait for official service instructions, confirm what accessories should be included and keep proof of handover or tracking. For devices, back up data and remove personal information when the official preparation instructions tell you to do so." },
+      { heading: "If the warranty claim is delayed", body: "Check any response or service estimate provided in the official case, then follow up in the same thread. Quote the case number, submission date, current product location and last update. Ask for the present status, the outstanding action and the next review date. Avoid opening duplicate cases unless the company instructs you to do so." },
+      { heading: "If the warranty claim is rejected", body: "Ask for the rejection reason in writing and the warranty term or evidence used for the decision. Compare it with the official terms, correct missing or inaccurate information and request the company’s review or appeal route. If the internal process remains unresolved, use the complaint escalation process that applies to the company, product and country; external rights and complaint bodies vary by location." }
     ],
-    example: "Example: Product model X, serial ending 4321, purchased on 2 May, has stopped powering on after official troubleshooting. Please confirm the warranty service or replacement process.",
-    faqs: [["Is an invoice always needed?", "Proof-of-purchase requirements vary; check the official warranty terms and prepare the best available purchase record."], ["Should I send the product to an address found in a comment?", "No. Use only an address or service route published by the official manufacturer or seller."]]
+    example: "Subject: Warranty replacement request — [product and case number]\n\nHello [company support team],\n\nI am requesting warranty support for [product and model], purchased on [date] from [seller]. The serial number is [serial number, only if this official channel requires it].\n\nThe issue began on [date]. The product now [brief description of the fault]. I completed the official troubleshooting steps [list the relevant steps or diagnostic result], but the issue remains. I have attached [proof of purchase and relevant evidence].\n\nPlease confirm whether the claim is eligible and whether the available remedy is repair, replacement or another option under the applicable warranty terms. If more information is required, please tell me exactly what is missing.\n\nMy existing case or repair reference is [reference, if any]. Please reply with the next step and a case reference for this request.\n\nThank you,\n[Name]",
+    faqs: [
+      ["Can I demand a replacement instead of a repair?", "Not in every case. The available remedy depends on the written warranty, service assessment and any consumer rules that apply to the purchase. Ask the official support team to explain the offered remedy."],
+      ["Is an invoice always required for a warranty claim?", "Proof-of-purchase requirements vary. Check the official warranty terms and prepare the best available purchase record, such as an invoice, receipt or order record accepted by that process."],
+      ["Should I contact the seller or the manufacturer?", "Follow the written terms for the purchase. The seller may handle delivery, return or retailer-plan issues, while the manufacturer may handle a product warranty. Some claims require one route before the other."],
+      ["What should I do if my warranty claim is rejected?", "Request the reason and relevant warranty term in writing. Correct missing evidence, use the company’s review or escalation route and keep the original case reference."],
+      ["How should I follow up on a delayed repair or replacement?", "Reply through the existing official case with the reference, submission date, last update and requested next action. Ask for the current status and the next review date."],
+      ["Should I send the product to an address found in a comment?", "No. Use only a service location, shipping label or handover route supplied through the verified official warranty process."],
+      ["What information should I avoid sharing publicly?", "Do not publish full serial numbers, invoices, addresses, account credentials or other personal information. Share required evidence only through the verified official support channel."]
+    ]
   },
   {
     slug: "resolve-billing-dispute", title: "How to Resolve a Billing Dispute", category: "billing", readTime: "7 min", updatedAt: "2026-10-29",

@@ -86,7 +86,7 @@ const guideEn = [
   ["How to Cancel an Online Order", "Check cancellation rules, use the official order page and save confirmation."],
   ["How to Escalate a Customer Complaint", "Escalate an unresolved complaint with a complete case history and clear remedy."],
   ["How to Complain About a Delayed Delivery", "Document tracking events and request a delivery investigation through the official channel."],
-  ["How to Request a Warranty Replacement", "Prepare proof of purchase, product details and the warranty issue before requesting service."],
+  ["How to Request a Warranty Replacement", "Prepare a warranty claim, compare repair and replacement options, and respond to a delayed or rejected claim through official support."],
   ["How to Resolve a Billing Dispute", "Check the statement, collect evidence and dispute the charge through an authenticated channel."],
   ["What to Do When Customer Support Does Not Respond", "Follow up with your reference, a concise timeline and the appropriate escalation route."],
   ["Refund Not Received: What to Do", "Trace a missing refund with the merchant, refund reference and original payment provider."],

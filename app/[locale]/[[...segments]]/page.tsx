@@ -292,13 +292,20 @@ function Guide({ locale, slug }: { locale: Locale; slug: string }) {
     { label: "How to escalate a customer complaint", href: "/guides/how-to-escalate-customer-complaint" },
     { label: "What to do when support does not respond", href: "/guides/customer-support-not-responding" },
     { label: "Refund not received help", href: "/guides/refund-not-received" }
+  ] : slug === "request-warranty-replacement" ? [
+    { label: "How to escalate a customer complaint", href: "/guides/how-to-escalate-customer-complaint" },
+    { label: "Write a professional complaint email", href: "/guides/how-to-write-professional-complaint-email" },
+    { label: "Dell US warranty and repair support", href: "/us/companies/dell" },
+    { label: "Apple US warranty and repair support", href: "/us/companies/apple" },
+    { label: "HP US warranty and repair support", href: "/us/companies/hp" },
+    { label: "Lenovo US warranty and repair support", href: "/us/companies/lenovo" }
   ] : [];
   const articleLd = { "@context": "https://schema.org", "@type": "Article", headline: guide.title, description: guide.description, dateModified: original.updatedAt, inLanguage: d.htmlLang, mainEntityOfPage: `${siteConfig.url}${localePath(locale, `/guides/${slug}`)}` };
   const faqLd = { "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faq.map(([question, answer]) => ({ "@type": "Question", name: question, acceptedAnswer: { "@type": "Answer", text: answer } })) };
   const categoryDirectoryLinks = [...new Map(relatedCompanies.filter((company) => companyCategories.includes(company.category)).map((company) => [`${company.country}:${company.category}`, { label: `${d.countries[company.country]} · ${(d.categories[company.category] || globalCategories.find((item) => item.slug === company.category))?.name || company.category}`, href: localePath(locale, `/${company.country}/categories/${company.category}`) }])).values()].slice(0, 4);
   return <><Hero locale={locale} currentPath={`/guides/${slug}`} crumbs={[{ label: d.guides.title, href: localePath(locale, "/guides") }, { label: guide.title }]} eyebrow={`${d.guides.updated} ${original.updatedAt} · ${original.readTime}`} title={guide.title} text={guide.description} />
     <section className="section"><article className="shell prose-page">
-      {locale === "en" ? <>{original.sections.map((section) => <section key={section.heading}><h2>{section.heading}</h2><p>{section.body}</p>{section.bullets && <ul>{section.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}</ul>}</section>)}{original.example && <div className="warning-box"><FileText /><span><b>{relatedLabels.example}:</b> {original.example}</span></div>}</> : <><h2>{d.company.complaintTitle}</h2><ol>{d.company.complaintSteps.map((step) => <li key={step}>{step}</li>)}</ol><h2>{d.company.escalationTitle}</h2><p>{d.company.escalationText}</p></>}
+      {locale === "en" ? <>{original.sections.map((section) => <section key={section.heading}><h2>{section.heading}</h2><p>{section.body}</p>{section.bullets && <ul>{section.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}</ul>}</section>)}{original.example && <div className="warning-box guide-example"><FileText /><span><b>{original.category === "warranty" ? "Warranty replacement request email template" : relatedLabels.example}:</b>{"\n"}{original.example}</span></div>}</> : <><h2>{d.company.complaintTitle}</h2><ol>{d.company.complaintSteps.map((step) => <li key={step}>{step}</li>)}</ol><h2>{d.company.escalationTitle}</h2><p>{d.company.escalationText}</p></>}
       {locale === "en" && original.officialSources?.length ? <section><h2>Official reference examples</h2><p>These sources are country-specific examples. Check the rules and official process that apply to your own purchase and location.</p>{original.officialSources.map((source) => <p key={source.url}><a href={source.url} target="_blank" rel="noopener noreferrer">{source.label} <ExternalLink size={14} /></a><br /><small>{source.note}</small></p>)}</section> : null}
       {contextualLinks.length > 0 && <section><h2>Useful next steps</h2><ul>{contextualLinks.map((item) => <li key={item.href}><Link href={localePath(locale, item.href)}>{item.label}</Link></li>)}</ul></section>}
       <div className="warning-box"><ShieldCheck /><span>{d.company.securityText}</span></div>

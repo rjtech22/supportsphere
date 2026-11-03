@@ -333,6 +333,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .meta-pill{background:#F3F7FC;border:1px solid var(--border-color);color:#334155}.info-row,.faq-wrap details,.data-row{border-color:var(--border-color)}
 .faq-wrap details{padding:16px 0}.faq-wrap summary{color:var(--text-primary)}.faq-wrap summary:hover{color:var(--link-color)}
 .warning-box{background:#FFF9E8;border:1px solid #F2D89B;border-radius:var(--radius-md);box-shadow:none}.config-box{background:var(--surface-soft);border-color:var(--border-color);color:#334155}
+.guide-example span{white-space:pre-line}
 .search-filters{background:var(--surface-bg);border:1px solid var(--border-color);border-radius:var(--radius-md);box-shadow:none}.search-filters input,.search-filters select,.report-form input,.report-form select,.report-form textarea,.letter-form input,.letter-form select,.letter-form textarea,.login-card input{background:var(--surface-bg);color:var(--text-primary);border:1px solid var(--border-strong);border-radius:8px}
 .secondary-button{background:var(--surface-bg);border-color:#7EA7D8;color:var(--link-color);border-radius:8px}.secondary-button:hover{background:var(--hover-bg)}
 .letter-layout{gap:24px}.letter-form.content-card{border:1px solid var(--border-color)}.letter-output{background:var(--surface-soft);border:1px solid var(--border-color);border-radius:var(--radius-md);box-shadow:none;color:var(--text-primary)}
