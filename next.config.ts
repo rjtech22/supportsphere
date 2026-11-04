@@ -3,6 +3,9 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
+  images: {
+    remotePatterns: [{ protocol: "https", hostname: "www.google.com", pathname: "/s2/favicons" }]
+  },
   async redirects() {
     return [
       { source: "/", destination: "/en", permanent: true },

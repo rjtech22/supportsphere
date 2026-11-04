@@ -38,6 +38,7 @@ export type Guide = {
   sections: { heading: string; body: string; bullets?: string[] }[];
   officialSources?: Array<{ label: string; url: string; note: string }>;
   example?: string;
+  templates?: Array<{ heading: string; body: string }>;
   faqs: Array<[string, string]>;
 };
 
@@ -225,17 +226,65 @@ export const guides: Guide[] = [
     faqs: [["Can an order always be cancelled before delivery?", "No. Eligibility depends on the seller, item and fulfilment stage shown in the official order flow."], ["Is cancelling a subscription the same as requesting a refund?", "No. Stopping renewal and requesting a refund are often separate actions."]]
   },
   {
-    slug: "how-to-escalate-customer-complaint", title: "How to Escalate a Customer Complaint", category: "escalation", readTime: "7 min", updatedAt: "2026-10-29",
-    description: "Escalate an unresolved customer complaint with a case history, clear remedy and the correct country or industry route.",
-    keywords: ["how to escalate a customer complaint", "complaint escalation", "formal complaint escalation"],
+    slug: "how-to-escalate-customer-complaint", title: "How to Escalate a Customer Complaint", category: "escalation", readTime: "12 min", updatedAt: "2026-11-04",
+    description: "Learn how to escalate an unresolved customer complaint, organize evidence, request senior review and write a clear complaint escalation email.",
+    keywords: ["how to escalate a customer complaint", "customer complaint escalation", "complaint escalation email", "customer service escalation process", "formal complaint escalation"],
     sections: [
-      { heading: "Complete first-line support", body: "Give the company a fair opportunity to resolve the issue and keep the original case number and response." },
-      { heading: "Use the formal grievance route", body: "Look for complaints, grievance, escalation or appeals on the official website. Include the earlier case number so the history is visible." },
-      { heading: "Create a short case timeline", body: "List the important dates, promises, responses and evidence. Avoid resending unrelated material." },
-      { heading: "Identify external escalation carefully", body: "The correct regulator, ombudsman or consumer body depends on country and sector. Use an official government or scheme website and check eligibility before filing." }
+      { heading: "When should you escalate a customer complaint?", body: "Escalation is appropriate when the normal support process has had a reasonable opportunity to work but the documented issue remains unresolved. Check the company’s official complaint policy and any published response period before moving to the next level.", bullets: [
+        "The published response period has passed without a meaningful update",
+        "Support repeatedly gives the same response without resolving the issue",
+        "The case was marked resolved even though the problem continues",
+        "A promised refund, repair, replacement or service has not been completed",
+        "The complaint was rejected without a clear explanation",
+        "The appropriate department cannot be reached through normal support channels"
+      ] },
+      { heading: "Complete the first-level support process", body: "Start through the company’s official website, app, email or verified phone route. Explain the problem clearly and request a complaint or case reference. Keep the date, channel, response and promised action. If a case already exists, preserve that history instead of opening duplicates unless the company tells you to start a new request." },
+      { heading: "Follow up on the existing complaint", body: "When the company’s published timeframe has passed, reply through the original case. Quote the reference number and explain what remains unresolved. Ask for the current status, reason for the delay, action still required and the next expected update. Keep the message factual and focused." },
+      { heading: "Request a supervisor or senior review", body: "If first-line support cannot resolve the issue, ask for a supervisor, complaints team or senior support review. Explain why the previous response did not address the evidence and state the outcome you are requesting. A senior review does not guarantee a particular result, but it gives the company another opportunity to examine the case." },
+      { heading: "Use the formal grievance or appeal route", body: "Check the company’s official website for Complaints, Grievance Redressal, Escalation Matrix, Customer Relations or Appeals. Follow the published process and include the original complaint number, previous responses and relevant evidence. Do not rely on contact details copied from unofficial directories or unverified social accounts." },
+      { heading: "Prepare a clear evidence file", body: "Organize only the information needed to understand and verify the complaint. Redact unrelated personal and financial details before sharing documents through the verified official channel.", bullets: [
+        "Invoice, receipt or order confirmation",
+        "Complaint, ticket or case reference number",
+        "Relevant emails, chat transcripts and written responses",
+        "Screenshots of the issue or account status",
+        "Payment or transaction proof when relevant",
+        "Warranty or service documents when applicable",
+        "A short timeline of complaints, promises and follow-ups",
+        "The specific resolution you are requesting"
+      ] },
+      { heading: "Write an effective complaint escalation email", body: "Use a clear subject line, the original reference, a short description of the issue, important contact dates, the response already received and the exact resolution requested. Avoid personal attacks, emotional language and unsupported legal threats. Never include passwords, OTPs, PINs or CVVs." },
+      { heading: "Consider an external complaint authority carefully", body: "If the internal complaint process remains unresolved, an official consumer body, regulator, ombudsman or dispute-resolution scheme may be available. The correct route depends on the country, company location, industry, dispute type, jurisdiction and eligibility rules. Confirm all requirements and deadlines on the authority’s official website before submitting documents.", bullets: [
+        "United States: check the relevant state consumer office, federal regulator or industry-specific body",
+        "India: check the National Consumer Helpline, appropriate consumer commission or sector regulator",
+        "United Kingdom: check Citizens Advice, an approved dispute-resolution scheme or the relevant ombudsman",
+        "Canada: check the provincial or territorial consumer protection office and any sector complaint body",
+        "Australia: check the state or territory fair trading agency and any specialist dispute-resolution scheme"
+      ] },
+      { heading: "If the company ignores the escalation", body: "Verify that the complaint used the correct official channel, check spam folders, retain the submission confirmation and review whether another internal appeal is available. If the matter is eligible, move to the appropriate official external route. For immediate fraud, unauthorized transaction or safety risks, use the relevant urgent official reporting channel rather than waiting for routine support." },
+      { heading: "Common escalation mistakes to avoid", body: "A consistent case history is easier for a company or authority to review.", bullets: [
+        "Opening multiple complaints without quoting the original reference",
+        "Providing incomplete or contradictory information",
+        "Sending unrelated documents or exposing unnecessary personal data",
+        "Using unofficial phone numbers, email addresses or social accounts",
+        "Making threats instead of explaining the facts and requested outcome",
+        "Assuming every company or country follows the same deadline",
+        "Submitting to an authority that does not cover the issue or industry"
+      ] }
     ],
-    example: "Example: Case 5678 was opened on 1 October and followed up on 8 and 15 October. The issue remains unresolved. I request a written review and the remedy described below.",
-    faqs: [["When should I escalate a complaint?", "Escalate when the published response period has passed or the first response does not address the documented issue."], ["Should I threaten legal action?", "Avoid unsupported threats. State the facts and use the applicable official escalation process."]]
+    templates: [
+      { heading: "Complaint escalation email template", body: "Subject: Request for escalation — unresolved complaint [reference number]\n\nDear Customer Relations Team,\n\nI am requesting an escalation of my unresolved complaint regarding [brief description of the issue].\n\nMy original complaint was submitted on [date] under reference number [reference number]. I contacted customer support on [dates], but the following issue remains unresolved:\n\n[Brief factual summary, including relevant order, service or transaction details.]\n\nI have attached the relevant supporting documents and earlier communication. Please review the existing complaint, explain its current status and confirm the appropriate action and next step.\n\nPlease confirm receipt of this escalation and provide a reference if a new case is created.\n\nRegards,\n[Name]\n[Registered email or contact details]" },
+      { heading: "Final follow-up before external escalation", body: "Subject: Follow-up on unresolved complaint [reference number]\n\nDear Customer Relations Team,\n\nI am following up on my complaint regarding [issue], reference number [reference number]. Despite my earlier communication on [dates], the issue remains unresolved.\n\nPlease provide a written update explaining the current status and action being taken. If the matter cannot be resolved internally, please share the applicable formal complaint or external dispute-resolution procedure.\n\nRegards,\n[Name]\n\nDo not describe this message as a legal notice unless it has actually been prepared and reviewed as one." }
+    ],
+    faqs: [
+      ["When should I escalate a customer complaint?", "Escalate when the company’s published response period has passed, the initial response does not address the evidence or the problem remains unresolved after reasonable follow-up."],
+      ["Can I escalate a complaint without a reference number?", "Yes. Provide the original order, transaction or service details and any previous communication, then ask the company to locate the case or create a reference."],
+      ["How do I find a company’s grievance or complaints team?", "Check the company’s official website for Complaints, Grievance, Escalation, Customer Relations or Appeals and follow the published instructions."],
+      ["What should I do if a company ignores my complaint?", "Keep the submission confirmation, follow up through the official channel and review the formal internal process. If eligible, use the appropriate official external complaint route."],
+      ["Can I escalate a complaint to a government authority?", "Sometimes. The correct authority depends on the country, industry and dispute. Confirm jurisdiction and eligibility on the authority’s official website before filing."],
+      ["What evidence should I provide?", "Provide relevant receipts, references, previous communication, screenshots and a concise timeline. Share only the information necessary to explain the issue."],
+      ["Can I escalate a rejected refund complaint?", "You can request a written explanation and review. Check the company’s published refund terms and any applicable official dispute-resolution process."],
+      ["Is there a time limit for an external consumer complaint?", "Time limits vary by country, industry and dispute type. Check the official authority’s current rules and do not assume internal follow-ups extend an external deadline."]
+    ]
   },
   {
     slug: "complain-about-delayed-delivery", title: "How to Complain About a Delayed Delivery", category: "delivery", readTime: "6 min", updatedAt: "2026-10-29",
