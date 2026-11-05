@@ -2,6 +2,18 @@
 
 Production-ready Next.js MVP for global customer-support discovery, complaint-resolution tools, SEO content, monetization placements and analytics.
 
+**Live website:** [ResolveNexa — Global Customer Support Directory](https://resolvenexa.vercel.app/en)
+
+ResolveNexa helps users find verified official company support channels, country-specific customer-care information and practical guides for refunds, delivery problems, billing disputes, warranty claims and complaint escalation. Contact details are published only when an official source is available.
+
+## Public resources
+
+- [Browse the global support directory](https://resolvenexa.vercel.app/en)
+- [Search verified companies and support issues](https://resolvenexa.vercel.app/en/search)
+- [Read customer-support and complaint guides](https://resolvenexa.vercel.app/en/guides)
+- [Use the free complaint-letter generator](https://resolvenexa.vercel.app/en/tools/complaint-letter)
+- [View the XML sitemap](https://resolvenexa.vercel.app/sitemap.xml)
+
 ## Local setup
 
 ```bash
