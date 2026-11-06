@@ -15,7 +15,7 @@ import { TrackedLink } from "@/components/TrackedLink";
 import { countries, companiesForCountry, getCountry, getGlobalCompany, globalCategories, globalCompanies, publishedCountries } from "@/lib/global-data";
 import { normalizeCountryCode } from "@/lib/country-catalog";
 import { guides } from "@/lib/data";
-import { getDictionary, isLocale, languageAlternates, localePath, localizedAlternates, locales, t, type Locale } from "@/lib/i18n";
+import { getDictionary, isLocale, localePath, localizedAlternates, locales, t, type Locale } from "@/lib/i18n";
 import { siteConfig } from "@/lib/site";
 import { findKeywordTargets } from "@/lib/keyword-strategy";
 import { getPublishedCompanies, getPublishedCompany } from "@/lib/database-content";
@@ -54,7 +54,8 @@ export function generateStaticParams() {
 function pathFrom(segments: string[]) { return segments.length ? `/${segments.join("/")}` : ""; }
 function ogLocale(locale: Locale) { return ({ en: "en_US", ta: "ta_IN", hi: "hi_IN", fr: "fr_FR" } as const)[locale]; }
 function meta(locale: Locale, path: string, title: string, description: string, keywords?: string[], availableLocales: readonly Locale[] = locales): Metadata {
-  return { title: { absolute: title }, description, keywords, alternates: localizedAlternates(locale, path, availableLocales), other: { "content-language": locale }, openGraph: { title, description, url: localePath(locale, path), locale: ogLocale(locale), type: "website" }, twitter: { card: "summary_large_image", title, description } };
+  const socialImage = `${siteConfig.url}/resolvenexa-logo.png`;
+  return { title: { absolute: title }, description, keywords, alternates: localizedAlternates(locale, path, availableLocales), other: { "content-language": locale }, openGraph: { title, description, url: localePath(locale, path), locale: ogLocale(locale), siteName: siteConfig.name, type: "website", images: [{ url: socialImage, width: 1536, height: 1536, alt: "ResolveNexa logo" }] }, twitter: { card: "summary_large_image", title, description, images: [socialImage] } };
 }
 
 function companyPageTitle(locale: Locale, company: string, country: string) {
@@ -77,7 +78,7 @@ const companySectionLabels = {
 
 export async function generateMetadata({ params }: { params: Promise<PageParams> }): Promise<Metadata> {
   const p = await params; if (!isLocale(p.locale)) return {}; const locale = p.locale; const d = getDictionary(locale); const s = p.segments || []; const path = pathFrom(s); const allCompanies = await getPublishedCompanies();
-  if (!s.length) return meta(locale, "", d.seo.homeTitle, d.seo.homeDescription);
+  if (!s.length) return meta(locale, "", d.seo.homeTitle, d.seo.homeDescription, undefined, []);
   if (s.length === 1 && getCountry(s[0])) { const entry = getCountry(s[0])!; const country = d.countries[s[0]] || entry.name; const seo = locale === "en" ? countrySeo[s[0] as keyof typeof countrySeo] : undefined; const result = meta(locale, path, `${seo?.seoTitle || t(d.directory.title, { country })} | ResolveNexa`, seo?.description || t(d.directory.intro, { country })); if (!allCompanies.some((item) => item.country === s[0])) result.robots = { index: false, follow: true }; return result; }
   if (s.length === 3 && s[1] === "categories") { const category = d.categories[s[2]] || globalCategories.find((item) => item.slug === s[2]); const seo = categorySeo[s[2]]; const softwareSeo = s[2] === "software-technology" && locale !== "en" ? localizedSoftwareSeo[locale] : undefined; const entry = getCountry(s[0]); const country = entry ? d.countries[s[0]] || entry.name : ""; if (category && country) { const categoryDescription = locale === "en" ? `${seo?.metaDescription || `Find verified ${category.name.toLowerCase()} support routes and practical issue guides`} in ${country}.` : softwareSeo ? t(softwareSeo.description, { country }) : locale === "ta" ? `${country} நாட்டில் ${category.name} நிறுவனங்களுக்கான சரிபார்க்கப்பட்ட ஆதரவு வழிகளையும் வழிகாட்டிகளையும் கண்டறியுங்கள்.` : locale === "hi" ? `${country} में ${category.name} कंपनियों के सत्यापित सहायता मार्ग और उपयोगी गाइड पाएँ।` : `Trouvez les services officiels vérifiés et les guides ${category.name} disponibles en ${country}.`; const categoryTitle = locale === "en" && seo ? `${seo.title} in ${country} | ResolveNexa` : `${softwareSeo?.title || category.name} — ${country} | ResolveNexa`; const result = meta(locale, path, categoryTitle, categoryDescription, locale === "en" ? seo?.keywords : undefined); if (!allCompanies.some((item) => item.country === s[0] && item.category === s[2])) result.robots = { index: false, follow: true }; return result; } }
   if (s.length === 3 && s[1] === "companies") {
@@ -99,7 +100,7 @@ export async function generateMetadata({ params }: { params: Promise<PageParams>
   }
   if (s[0] === "guides") { const guide = s[1] ? d.guides.items[s[1]] : null; const original = s[1] ? guides.find((item) => item.slug === s[1]) : null; const result = meta(locale, path, guide ? `${guide.title} | ResolveNexa` : `${d.guides.title} | ResolveNexa`, guide?.description || d.guides.intro, locale === "en" ? original?.keywords : undefined, locale === "en" ? ["en"] : []); if (locale !== "en") result.robots = { index: false, follow: true }; return result; }
   if (s.join("/") === "tools/complaint-letter") return meta(locale, path, d.generator.seoTitle, d.generator.seoDescription, ["free complaint letter generator", "customer complaint email template", "refund request email template", "billing dispute letter"]);
-  if (staticNames.includes(s[0] as typeof staticNames[number])) { const key = s[0] === "privacy-policy" ? "privacy" : s[0] as keyof typeof d.static; const [title, description] = d.static[key]; return meta(locale, path, `${title} | ResolveNexa`, description); }
+  if (staticNames.includes(s[0] as typeof staticNames[number])) { const key = s[0] === "privacy-policy" ? "privacy" : s[0] as keyof typeof d.static; const [title, description] = d.static[key]; const result = meta(locale, path, `${title} | ResolveNexa`, description, undefined, locale === "en" ? ["en"] : []); if (locale !== "en") result.robots = { index: false, follow: true }; return result; }
   if (s[0] === "search") { const result = meta(locale, path, `${d.nav.search} | ResolveNexa`, d.home.searchPlaceholder); result.robots = { index: false, follow: true }; return result; }
   return {};
 }

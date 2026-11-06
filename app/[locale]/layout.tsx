@@ -25,6 +25,7 @@ export function generateStaticParams() { return locales.map((locale) => ({ local
 export default async function LocaleLayout({ children, params }: { children: React.ReactNode; params: Promise<{ locale: string }> }) {
   const { locale } = await params; if (!isLocale(locale)) notFound();
   const adsense = process.env.NEXT_PUBLIC_ADSENSE_CLIENT;
+  const skipLabel = { en: "Skip to content", ta: "உள்ளடக்கத்திற்குச் செல்லவும்", hi: "मुख्य सामग्री पर जाएँ", fr: "Aller au contenu" }[locale];
   const organizationLd = { "@context": "https://schema.org", "@type": "Organization", name: siteConfig.name, url: siteConfig.url, logo: `${siteConfig.url}/resolvenexa-logo.png`, description: siteConfig.description };
-  return <html lang={locale} dir="ltr" suppressHydrationWarning><body><Header locale={locale} /><main>{children}</main><Footer locale={locale} /><Analytics /><RouteAnalytics /><ConsentManager /><AdSenseLoader client={adsense} /><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationLd) }} /></body></html>;
+  return <html lang={locale} dir="ltr" suppressHydrationWarning><body><a className="skip-link" href="#main-content">{skipLabel}</a><Header locale={locale} /><main id="main-content" tabIndex={-1}>{children}</main><Footer locale={locale} /><Analytics /><RouteAnalytics /><ConsentManager /><AdSenseLoader client={adsense} /><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationLd) }} /></body></html>;
 }

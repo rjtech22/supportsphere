@@ -4,7 +4,7 @@ export type AnalyticsEvent =
   | "no_result_search"
   | "organic_landing_view"
   | "guide_view"
-  | "category_click"
+  | "category_view"
   | "country_select"
   | "generator_use"
   | "generator_copy"

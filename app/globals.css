@@ -288,6 +288,7 @@ html{background:var(--page-bg);color-scheme:light}
 body{background:var(--page-bg);color:var(--text-primary);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
 a,button,input,select,textarea,summary{transition:color .16s,border-color .16s,background-color .16s,box-shadow .16s}
 a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid rgba(37,99,235,.24);outline-offset:2px}
+.skip-link{position:fixed;left:16px;top:12px;z-index:2000;padding:10px 14px;border-radius:8px;background:#0F172A;color:#fff;font-size:13px;font-weight:800;transform:translateY(-160%)}.skip-link:focus{transform:translateY(0)}
 .shell{width:min(1180px,calc(100% - 40px))}
 .header{background:rgba(255,255,255,.98);border-bottom:1px solid var(--border-color);box-shadow:none;backdrop-filter:blur(10px)}
 .nav{height:70px}.brand{color:var(--text-primary)}.desktop-nav{color:#334155}.desktop-nav a:hover{color:var(--link-color)}
@@ -343,6 +344,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .ad-placeholder,.ad-wrap,.empty{background:var(--page-bg);border-color:var(--border-strong);color:var(--text-secondary)}
 .consent-banner{background:var(--surface-bg);border:1px solid var(--border-color);border-radius:var(--radius-md);box-shadow:0 8px 24px rgba(15,23,42,.10)}
 .footer{background:var(--surface-bg);color:var(--text-secondary);border-top:1px solid var(--border-color);padding-top:48px}.footer-grid strong,.footer-brand{color:var(--text-primary)}.footer-grid>div>a:not(.brand){color:#334155}.footer-grid>div>a:not(.brand):hover{color:var(--link-color)}.footer-bottom{border-color:var(--border-color);color:var(--text-secondary)}
+.consent-settings{display:block;margin:8px 0 0;padding:0;border:0;background:transparent;color:#334155;font-size:11px;text-align:left;cursor:pointer}.consent-settings:hover{color:var(--link-color)}
 @media(max-width:900px){.hero-grid{gap:36px}.category-grid,.company-grid,.guide-grid{gap:0}.category-card,.company-card{border-right:0}.content-layout{gap:24px}}
 @media(max-width:600px){.shell{width:min(100% - 28px,1180px)}.hero{padding:52px 0}.hero h1{font-size:42px}.section{padding:54px 0}.category-grid,.company-grid,.guide-grid{display:block}.category-card,.company-card,.guide-card{width:100%;border-right:0}.issue-link-grid{display:block;border-left:0}.issue-link-item{width:100%;border-left:0;border-right:0}.content-card{padding:20px}.footer{padding-top:38px}}
 

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 
 type Choice = "granted" | "denied";
 const key = "resolvenexa-consent-v1";
+const openEvent = "resolvenexa:open-consent";
 
 function apply(choice: Choice) {
   const win = window as typeof window & { dataLayer?: unknown[]; gtag?: (...args: unknown[]) => void };
@@ -20,10 +21,17 @@ export function ConsentManager() {
   useEffect(() => {
     const saved = localStorage.getItem(key) as Choice | null;
     if (saved) apply(saved); else window.setTimeout(() => setOpen(true), 0);
+    const reopen = () => setOpen(true);
+    window.addEventListener(openEvent, reopen);
+    return () => window.removeEventListener(openEvent, reopen);
   }, []);
   function choose(choice: Choice) { localStorage.setItem(key, choice); apply(choice); setOpen(false); }
   if (!open) return null;
-  return <aside className="consent-banner" role="dialog" aria-label="Privacy choices" aria-live="polite"><div><b>Privacy choices</b><p>Allow analytics and advertising cookies to help us measure useful pages and support the site. You can continue with optional cookies disabled.</p></div><div className="consent-actions"><button className="secondary-button" onClick={() => choose("denied")}>Reject optional</button><button className="button small" onClick={() => choose("granted")}>Accept</button></div></aside>;
+  return <aside id="privacy-choices" className="consent-banner" role="dialog" aria-label="Privacy choices" aria-live="polite"><div><b>Privacy choices</b><p>Allow analytics and advertising cookies to help us measure useful pages and support the site. You can continue with optional cookies disabled.</p></div><div className="consent-actions"><button className="secondary-button" onClick={() => choose("denied")}>Reject optional</button><button className="button small" onClick={() => choose("granted")}>Accept</button></div></aside>;
+}
+
+export function ConsentSettingsButton({ label }: { label: string }) {
+  return <button type="button" className="consent-settings" aria-controls="privacy-choices" onClick={() => window.dispatchEvent(new Event(openEvent))}>{label}</button>;
 }
 
 export function AdSenseLoader({ client }: { client?: string }) {

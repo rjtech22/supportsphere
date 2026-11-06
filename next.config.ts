@@ -1,8 +1,12 @@
 import type { NextConfig } from "next";
 
+const seoBaseUrl = (process.env.NEXT_PUBLIC_SITE_URL || "https://resolvenexa.vercel.app").replace(/\/+$/, "");
+const localeHomeAlternates = ["en", "ta", "hi", "fr"].map((locale) => `<${seoBaseUrl}/${locale}>; rel="alternate"; hreflang="${locale}"`).concat(`<${seoBaseUrl}/en>; rel="alternate"; hreflang="x-default"`).join(", ");
+
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
+  trailingSlash: false,
   images: {
     remotePatterns: [{ protocol: "https", hostname: "www.google.com", pathname: "/s2/favicons" }]
   },
@@ -40,6 +44,10 @@ const nextConfig: NextConfig = {
   },
   async headers() {
     return [
+      {
+        source: "/:locale(en|ta|hi|fr)",
+        headers: [{ key: "Link", value: localeHomeAlternates }]
+      },
       {
         source: "/(.*)",
         headers: [
