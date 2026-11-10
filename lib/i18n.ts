@@ -81,7 +81,7 @@ const guideSlugs = ["how-to-contact-customer-support", "how-to-file-a-customer-c
 const guideEn = [
   ["How to Contact Customer Support", "Find the correct official support channel and prepare the details needed for a useful response."],
   ["How to File a Complaint Against a Company", "Use an evidence-first process, request a clear remedy and keep your case reference."],
-  ["How to Write a Professional Complaint Email", "Write a clear complaint email with facts, evidence and the outcome you want."],
+  ["Complaint Email Template: How to Write One", "Use a professional complaint email template with facts, evidence, a clear requested resolution and practical follow-up steps."],
   ["How to Request a Refund", "Check eligibility, document the payment and send a clear refund request."],
   ["How to Cancel an Online Order", "Check cancellation rules, use the official order page and save confirmation."],
   ["How to Escalate a Customer Complaint", "Learn how to escalate an unresolved complaint, organize evidence, request senior review and write a clear escalation email."],

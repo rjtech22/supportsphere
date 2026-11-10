@@ -59,6 +59,7 @@ function meta(locale: Locale, path: string, title: string, description: string, 
 }
 
 function companyPageTitle(locale: Locale, company: string, country: string) {
+  if (locale === "en" && company === "Amazon" && country === "United States") return "Amazon Customer Service & Support in the US";
   return locale === "en" ? `${company} Customer Care & Support — ${country}` : locale === "ta" ? `${company} வாடிக்கையாளர் சேவை மற்றும் ஆதரவு — ${country}` : locale === "hi" ? `${company} ग्राहक सेवा और सहायता — ${country}` : `Service client ${company} — ${country}`;
 }
 
@@ -90,7 +91,9 @@ export async function generateMetadata({ params }: { params: Promise<PageParams>
       const keywords = [`${company.name} customer service`, `${company.name} customer support`, `${company.name} help center`, country];
       if (hasVerifiedPhone) keywords.push(`${company.name} contact number`);
       const companyTitle = `${companyPageTitle(locale, company.name, country)} | ResolveNexa`;
-      const companyDescription = locale === "en"
+      const companyDescription = locale === "en" && company.slug === "amazon" && company.country === "us"
+        ? "Find official Amazon US customer service links and practical help for orders, missing packages, returns, refunds and unresolved support cases."
+        : locale === "en"
         ? `Find verified ${company.name} customer support in ${country}, official contact channels, common issue help and complaint guidance.`
         : localizedCompanySummary(locale, company.name, country, company.summary);
       const result = meta(locale, path, companyTitle, companyDescription, locale === "en" ? keywords : undefined, locale === "en" ? ["en"] : []);
@@ -279,7 +282,9 @@ async function Company({ locale, countryCode, slug }: { locale: Locale; countryC
           <section id="complaint-escalation"><h2>{d.company.complaintTitle}</h2>
           <ol>{company.complaintSteps.map((step) => <li key={step}>{step}</li>)}</ol>
           <h2>{d.company.escalationTitle}</h2>
-          <p>{company.escalation}</p></section>
+          <p>{company.escalation}</p>
+          {locale === "en" && company.country === "us" && company.slug === "amazon" && <p>If the order-linked support route does not resolve the problem, review <Link href={localePath(locale, "/guides/how-to-escalate-customer-complaint")}>how to escalate a customer complaint</Link> and use the <Link href={localePath(locale, "/guides/how-to-write-professional-complaint-email")}>complaint email guide</Link> to organise the case history and requested outcome.</p>}
+          </section>
           <h2>{d.company.sourcesTitle}</h2>
           {company.sourceLinks.map((source) => <TrackedLink className="official-link" href={source.url} eventName="official_support_click" params={{ country: countryCode, company: slug, locale }} key={source.url}><span>{source.label}<small>{new URL(source.url).hostname}<span className="source-meta">Verified {company.verifiedAt}</span></small></span><ExternalLink /></TrackedLink>)}
           <section className="faq-wrap"><h2>{company.name} {d.company.faqTitle}</h2><Faqs items={faq} /></section>

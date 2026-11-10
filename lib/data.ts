@@ -182,8 +182,8 @@ export const guides: Guide[] = [
     faqs: [["How long should a complaint be?", "Keep it focused: the facts, evidence, previous case number and requested resolution are more useful than a long narrative."], ["Can ResolveNexa file the complaint for me?", "No. The tools help you prepare text, but you submit it to the company’s official channel."]]
   },
   {
-    slug: "how-to-write-professional-complaint-email", title: "How to Write a Professional Complaint Email", category: "email", readTime: "7 min", updatedAt: "2026-11-01",
-    description: "Write a clear complaint email with a useful subject line, evidence, requested outcome and follow-up deadline.",
+    slug: "how-to-write-professional-complaint-email", title: "Complaint Email Template: How to Write One", category: "email", readTime: "7 min", updatedAt: "2026-11-11",
+    description: "Use a professional complaint email template with a clear subject line, evidence, requested resolution and practical follow-up steps.",
     keywords: ["how to write a complaint email", "professional complaint email", "customer service email"],
     sections: [
       { heading: "Use a searchable subject line", body: "Include the issue and reference, for example: Refund pending — order 1234. This helps the message reach the correct case." },
@@ -195,8 +195,9 @@ export const guides: Guide[] = [
       { heading: "Keep a submission record", body: "Save the sent message, attachments and confirmation screen. If the company provides a case number, use that same reference for follow-ups instead of opening duplicate cases." }
     ],
     officialSources: [{ label: "US FTC sample customer complaint letter", url: "https://consumer.ftc.gov/articles/sample-customer-complaint-letter", note: "A US government example of the facts, requested resolution and records that make a complaint easier to review. Requirements differ by country." }],
+    templates: [{ heading: "Professional complaint email template", body: "Subject: Complaint about [issue] — [order or case reference]\n\nDear Customer Support Team,\n\nI am writing about [product, service or transaction] dated [date]. The issue is [brief factual description].\n\nI previously contacted support on [date] using reference [case number, if available]. The issue remains unresolved because [brief explanation]. I have attached [relevant evidence] and removed unnecessary personal information.\n\nPlease [specific resolution requested] and confirm the next step in writing. If this request must be handled by another team, please route the existing case or tell me which verified official channel to use.\n\nRegards,\n[Name]\n[Registered contact detail, only if required]" }],
     example: "Subject: Refund pending — order 1234. I received confirmation on 10 October that a refund was initiated, but it has not reached the original payment method. Please confirm the refund reference and expected completion date.",
-    faqs: [["Should a complaint email be firm or polite?", "Be calm and specific. A firm request can still be professional and evidence-based."], ["What should I avoid attaching?", "Do not send passwords, OTPs, full card numbers or unnecessary identity documents."], ["What should the complaint email subject contain?", "Use the issue and a safe reference, such as Refund pending — order 1234 or Escalation request — case 5678."], ["When should I send a follow-up email?", "Use the response period published by the company or the date promised in the case. Reply in the same thread with the original reference instead of opening duplicate complaints."]]
+    faqs: [["Should a complaint email be firm or polite?", "Be calm and specific. A firm request can still be professional and evidence-based."], ["Can I copy the complaint email template?", "Yes. Replace every placeholder with accurate details from your own case, remove sections that do not apply and send it only through a verified official company channel."], ["What should I avoid attaching?", "Do not send passwords, OTPs, full card numbers or unnecessary identity documents."], ["What should the complaint email subject contain?", "Use the issue and a safe reference, such as Refund pending — order 1234 or Escalation request — case 5678."], ["When should I send a follow-up email?", "Use the response period published by the company or the date promised in the case. Reply in the same thread with the original reference instead of opening duplicate complaints."]]
   },
   {
     slug: "how-to-request-a-refund", title: "How to Request a Refund", category: "refund", readTime: "6 min", updatedAt: "2026-10-29",
@@ -226,8 +227,8 @@ export const guides: Guide[] = [
     faqs: [["Can an order always be cancelled before delivery?", "No. Eligibility depends on the seller, item and fulfilment stage shown in the official order flow."], ["Is cancelling a subscription the same as requesting a refund?", "No. Stopping renewal and requesting a refund are often separate actions."]]
   },
   {
-    slug: "how-to-escalate-customer-complaint", title: "How to Escalate a Customer Complaint", category: "escalation", readTime: "12 min", updatedAt: "2026-11-04",
-    description: "Learn how to escalate an unresolved customer complaint, organize evidence, request senior review and write a clear complaint escalation email.",
+    slug: "how-to-escalate-customer-complaint", title: "How to Escalate a Customer Complaint", category: "escalation", readTime: "12 min", updatedAt: "2026-11-11",
+    description: "Follow clear complaint escalation steps, organise evidence, request senior review and use an email template for an unresolved customer service issue.",
     keywords: ["how to escalate a customer complaint", "customer complaint escalation", "complaint escalation email", "customer service escalation process", "formal complaint escalation"],
     sections: [
       { heading: "When should you escalate a customer complaint?", body: "Escalation is appropriate when the normal support process has had a reasonable opportunity to work but the documented issue remains unresolved. Check the company’s official complaint policy and any published response period before moving to the next level.", bullets: [
@@ -277,6 +278,7 @@ export const guides: Guide[] = [
     ],
     faqs: [
       ["When should I escalate a customer complaint?", "Escalate when the company’s published response period has passed, the initial response does not address the evidence or the problem remains unresolved after reasonable follow-up."],
+      ["How do I write an escalation request in English?", "Use a clear subject, identify the original case, give a short factual timeline, explain what remains unresolved and request one specific next step. The template on this page provides editable English wording."],
       ["Can I escalate a complaint without a reference number?", "Yes. Provide the original order, transaction or service details and any previous communication, then ask the company to locate the case or create a reference."],
       ["How do I find a company’s grievance or complaints team?", "Check the company’s official website for Complaints, Grievance, Escalation, Customer Relations or Appeals and follow the published instructions."],
       ["What should I do if a company ignores my complaint?", "Keep the submission confirmation, follow up through the official channel and review the formal internal process. If eligible, use the appropriate official external complaint route."],
