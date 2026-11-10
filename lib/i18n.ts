@@ -84,7 +84,7 @@ const guideEn = [
   ["Complaint Email Template: How to Write One", "Use a professional complaint email template with facts, evidence, a clear requested resolution and practical follow-up steps."],
   ["How to Request a Refund", "Check eligibility, document the payment and send a clear refund request."],
   ["How to Cancel an Online Order", "Check cancellation rules, use the official order page and save confirmation."],
-  ["How to Escalate a Customer Complaint", "Learn how to escalate an unresolved complaint, organize evidence, request senior review and write a clear escalation email."],
+  ["How to Escalate a Customer Complaint", "Follow clear complaint escalation steps, organise evidence, request senior review and use an email template for an unresolved customer service issue."],
   ["How to Complain About a Delayed Delivery", "Document tracking events and request a delivery investigation through the official channel."],
   ["How to Request a Warranty Replacement", "Prepare a warranty claim, compare repair and replacement options, and respond to a delayed or rejected claim through official support."],
   ["How to Resolve a Billing Dispute", "Check the statement, collect evidence and dispute the charge through an authenticated channel."],
