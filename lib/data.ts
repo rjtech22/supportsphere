@@ -394,17 +394,20 @@ export const guides: Guide[] = [
     faqs: [["Should I contact the seller or carrier first?", "For a retail purchase, the seller is often the best first contact unless the official order page says otherwise."], ["Should I post my delivery address publicly?", "No. Share address details only inside the verified official support process when required."]]
   },
   {
-    slug: "tracking-number-not-working", title: "Tracking Number Not Working", category: "delivery", readTime: "6 min", updatedAt: "2026-10-30",
-    description: "Check the carrier, format and first scan before reporting an invalid or inactive parcel tracking number.",
-    keywords: ["tracking number not working", "invalid tracking number", "tracking not updating", "parcel tracking help"],
+    slug: "tracking-number-not-working", title: "Tracking Number Not Working? What to Check", category: "delivery", readTime: "7 min", updatedAt: "2026-11-15",
+    description: "Fix a tracking number that is invalid, inactive or not updating by checking the carrier, first scan, sender details and official support route.",
+    keywords: ["tracking number not working", "tracking support", "invalid tracking number", "tracking not updating", "parcel tracking help"],
     sections: [
       { heading: "Confirm the carrier and number", body: "Copy the tracking number from the official order or dispatch notice and open the carrier website linked by the seller." },
       { heading: "Allow for the first carrier scan", body: "A label can be created before the parcel is physically accepted. Check the seller's dispatch status and any stated activation period." },
       { heading: "Check for a replacement tracking number", body: "International hand-offs, returns or re-shipments can create a new reference. Review the signed-in order and official messages." },
-      { heading: "Report persistent tracking failure", body: "Contact the seller or carrier with the order, tracking reference and dispatch date. Ask whether the parcel was handed over and request a trace when appropriate." }
+      { heading: "Understand the status before opening a claim", body: "Label created, pre-shipment or pending can mean the sender created the reference before the carrier recorded a physical scan. A repeated depot scan or delivery exception is different from an invalid number, so quote the exact status when asking for help." },
+      { heading: "Contact the seller, sender or carrier", body: "For a retail purchase, start with the seller's signed-in order support when it controls replacement or refund decisions. For a shipment you sent, use the carrier's official support or claim route with the tracking number, dispatch date and proof of posting." },
+      { heading: "Report persistent tracking failure", body: "Ask the responsible party to confirm the carrier, hand-over date and active reference. If the parcel was accepted but scans remain missing, request the investigation or trace offered by the official support process and save the case number." }
     ],
+    officialSources: [{ label: "UPS US tracking and claims support", url: "https://www.ups.com/us/en/support/file-a-claim", note: "Official UPS guidance for starting and viewing eligible lost or damaged shipment claims." }, { label: "Royal Mail lost or delayed item help", url: "https://www.royalmail.com/help/lost-items-parcels-letters", note: "Official Royal Mail guidance for service-specific delivery aims and missing-item routes." }],
     example: "Example: Tracking T-123 has shown no valid result since the dispatch notice on 18 October. Please confirm the carrier, hand-over date and correct active tracking reference.",
-    faqs: [["Does a tracking number work immediately?", "Not always. A label may exist before the carrier records its first physical scan."], ["Can I use a third-party tracking website?", "Use the carrier or seller's official tracking link first to reduce phishing and incorrect-status risk."]]
+    faqs: [["Why does my tracking number say invalid?", "Check the carrier, copied characters and whether the sender issued a replacement reference. Also confirm that the parcel has reached its first carrier scan."], ["Does a tracking number work immediately?", "Not always. A label may exist before the carrier records its first physical scan."], ["Who should I contact when tracking is not updating?", "For a retail order, start with the seller's official order support. For a parcel you sent, use the carrier's official tracking or claim route with proof of posting."], ["Does no tracking update mean the parcel is lost?", "Not automatically. Check the exact status, dispatch confirmation and carrier guidance before requesting an investigation or eligible claim."], ["Can I use a third-party tracking website?", "Use the carrier or seller's official tracking link first to reduce phishing and incorrect-status risk."]]
   },
   {
     slug: "payment-failed-money-deducted", title: "Payment Failed but Money Was Deducted", category: "billing", readTime: "8 min", updatedAt: "2026-10-30",

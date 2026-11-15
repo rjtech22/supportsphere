@@ -60,8 +60,18 @@ function meta(locale: Locale, path: string, title: string, description: string, 
 
 function companyPageTitle(locale: Locale, company: string, country: string) {
   if (locale === "en" && company === "Amazon" && country === "United States") return "Amazon Customer Service & Support in the US";
+  if (locale === "en" && company === "LG India") return "LG India Customer Care, Warranty & Repair";
+  if (locale === "en" && company === "Royal Mail") return "Royal Mail Tracking & Missing Parcel Help";
+  if (locale === "en" && company === "UPS") return "UPS Customer Service, Tracking & Claims (US)";
   return locale === "en" ? `${company} Customer Care & Support — ${country}` : locale === "ta" ? `${company} வாடிக்கையாளர் சேவை மற்றும் ஆதரவு — ${country}` : locale === "hi" ? `${company} ग्राहक सेवा और सहायता — ${country}` : `Service client ${company} — ${country}`;
 }
+
+const clickFocusedCompanyDescriptions: Record<string, string> = {
+  "us:amazon": "Find official Amazon US customer service links and practical help for orders, missing packages, returns, refunds and unresolved support cases.",
+  "in:lg-india": "Find official LG India customer care, warranty terms, repair booking and service-request guidance for appliances and electronics.",
+  "gb:royal-mail": "Find official Royal Mail customer service, tracking and missing-parcel guidance, including the correct route for retail orders and claims.",
+  "us:ups": "Find official UPS US customer service, tracking and claim links for missing, delayed or damaged packages, plus claim follow-up guidance."
+};
 
 function localizedCompanySummary(locale: Locale, company: string, country: string, englishSummary: string) {
   if (locale === "en") return englishSummary;
@@ -91,10 +101,8 @@ export async function generateMetadata({ params }: { params: Promise<PageParams>
       const keywords = [`${company.name} customer service`, `${company.name} customer support`, `${company.name} help center`, country];
       if (hasVerifiedPhone) keywords.push(`${company.name} contact number`);
       const companyTitle = `${companyPageTitle(locale, company.name, country)} | ResolveNexa`;
-      const companyDescription = locale === "en" && company.slug === "amazon" && company.country === "us"
-        ? "Find official Amazon US customer service links and practical help for orders, missing packages, returns, refunds and unresolved support cases."
-        : locale === "en"
-        ? `Find verified ${company.name} customer support in ${country}, official contact channels, common issue help and complaint guidance.`
+      const companyDescription = locale === "en"
+        ? clickFocusedCompanyDescriptions[`${company.country}:${company.slug}`] || `Find verified ${company.name} customer support in ${country}, official contact channels, common issue help and complaint guidance.`
         : localizedCompanySummary(locale, company.name, country, company.summary);
       const result = meta(locale, path, companyTitle, companyDescription, locale === "en" ? keywords : undefined, locale === "en" ? ["en"] : []);
       if (locale !== "en") result.robots = { index: false, follow: true };
@@ -357,6 +365,11 @@ function Guide({ locale, slug }: { locale: Locale; slug: string }) {
     { label: "Write a professional complaint email", href: "/guides/how-to-write-professional-complaint-email" },
     { label: "How to request a refund", href: "/guides/how-to-request-a-refund" },
     { label: "How to request a warranty replacement", href: "/guides/request-warranty-replacement" }
+  ] : slug === "tracking-number-not-working" ? [
+    { label: "UPS US tracking and claim support", href: "/us/companies/ups" },
+    { label: "Royal Mail UK tracking and missing-item help", href: "/gb/companies/royal-mail" },
+    { label: "FedEx US tracking and delivery support", href: "/us/companies/fedex" },
+    { label: "DHL Express US tracking support", href: "/us/companies/dhl-express" }
   ] : [];
   const articleLd = { "@context": "https://schema.org", "@type": "Article", headline: guide.title, description: guide.description, dateModified: original.updatedAt, inLanguage: d.htmlLang, mainEntityOfPage: `${siteConfig.url}${localePath(locale, `/guides/${slug}`)}` };
   const faqLd = { "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faq.map(([question, answer]) => ({ "@type": "Question", name: question, acceptedAnswer: { "@type": "Answer", text: answer } })) };

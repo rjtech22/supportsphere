@@ -91,7 +91,7 @@ const guideEn = [
   ["What to Do When Customer Support Does Not Respond", "Follow up with your reference, a concise timeline and the appropriate escalation route."],
   ["Refund Not Received: What to Do", "Trace a missing refund with the merchant, refund reference and original payment provider."],
   ["Package Says Delivered but Not Received", "Check delivery evidence and safe locations before opening a missing-package case."],
-  ["Tracking Number Not Working", "Check the carrier, format and first scan before reporting an inactive tracking number."],
+  ["Tracking Number Not Working? What to Check", "Fix an invalid, inactive or non-updating tracking number by checking the carrier, first scan, sender details and official support route."],
   ["Payment Failed but Money Was Deducted", "Document the debit and raise the issue safely with the merchant and payment provider."],
   ["How to Dispute a Duplicate Charge", "Compare transaction states and dispute a genuine duplicate through official channels."],
   ["Account Locked: Safe Recovery Steps", "Recover a locked account through official identity and security channels."]
