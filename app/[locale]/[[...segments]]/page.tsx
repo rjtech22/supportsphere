@@ -63,6 +63,8 @@ function companyPageTitle(locale: Locale, company: string, country: string) {
   if (locale === "en" && company === "LG India") return "LG India Customer Care, Warranty & Repair";
   if (locale === "en" && company === "Royal Mail") return "Royal Mail Tracking & Missing Parcel Help";
   if (locale === "en" && company === "UPS") return "UPS Customer Service, Tracking & Claims (US)";
+  if (locale === "en" && company === "State Bank of India") return "SBI CRCF Complaint & Customer Care India";
+  if (locale === "en" && company === "IRCTC") return "IRCTC eQuery, Refund & TDR Support";
   return locale === "en" ? `${company} Customer Care & Support — ${country}` : locale === "ta" ? `${company} வாடிக்கையாளர் சேவை மற்றும் ஆதரவு — ${country}` : locale === "hi" ? `${company} ग्राहक सेवा और सहायता — ${country}` : `Service client ${company} — ${country}`;
 }
 
@@ -70,7 +72,9 @@ const clickFocusedCompanyDescriptions: Record<string, string> = {
   "us:amazon": "Find official Amazon US customer service links and practical help for orders, missing packages, returns, refunds and unresolved support cases.",
   "in:lg-india": "Find official LG India customer care, warranty terms, repair booking and service-request guidance for appliances and electronics.",
   "gb:royal-mail": "Find official Royal Mail customer service, tracking and missing-parcel guidance, including the correct route for retail orders and claims.",
-  "us:ups": "Find official UPS US customer service, tracking and claim links for missing, delayed or damaged packages, plus claim follow-up guidance."
+  "us:ups": "Find official UPS US customer service, tracking and claim links for missing, delayed or damaged packages, plus claim follow-up guidance.",
+  "in:sbi": "Use SBI's official CRCF complaint form, check complaint-status options and find verified customer-care routes for transaction, card and digital-banking issues.",
+  "in:irctc": "Open the official IRCTC eQuery route and find practical help for ticket queries, cancellations, TDR filing and pending railway-ticket refunds."
 };
 
 function localizedCompanySummary(locale: Locale, company: string, country: string, englishSummary: string) {
@@ -100,6 +104,8 @@ export async function generateMetadata({ params }: { params: Promise<PageParams>
       const hasVerifiedPhone = Boolean(company.phone || company.tollFree || company.technicalSupportPhone || company.salesSupportPhone);
       const keywords = [`${company.name} customer service`, `${company.name} customer support`, `${company.name} help center`, country];
       if (hasVerifiedPhone) keywords.push(`${company.name} contact number`);
+      if (company.country === "in" && company.slug === "sbi") keywords.push("SBI CRCF complaint", "SBI complaint status");
+      if (company.country === "in" && company.slug === "irctc") keywords.push("IRCTC eQuery", "IRCTC refund status", "IRCTC TDR support");
       const companyTitle = `${companyPageTitle(locale, company.name, country)} | ResolveNexa`;
       const companyDescription = locale === "en"
         ? clickFocusedCompanyDescriptions[`${company.country}:${company.slug}`] || `Find verified ${company.name} customer support in ${country}, official contact channels, common issue help and complaint guidance.`
