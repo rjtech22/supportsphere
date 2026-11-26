@@ -60,7 +60,8 @@ function meta(locale: Locale, path: string, title: string, description: string, 
 
 function companyPageTitle(locale: Locale, company: string, country: string) {
   if (locale === "en" && company === "Amazon" && country === "United States") return "Amazon Customer Service & Support in the US";
-  if (locale === "en" && company === "LG India") return "LG India Customer Care, Warranty & Repair";
+  if (locale === "en" && company === "LG India") return "LG Warranty India: Repair & Customer Care";
+  if (locale === "en" && company === "FedEx") return "FedEx Customer Service, Tracking & Claims (US)";
   if (locale === "en" && company === "Royal Mail") return "Royal Mail Tracking & Missing Parcel Help";
   if (locale === "en" && company === "UPS") return "UPS Customer Service, Tracking & Claims (US)";
   if (locale === "en" && company === "State Bank of India") return "SBI CRCF Complaint & Customer Care India";
@@ -70,7 +71,8 @@ function companyPageTitle(locale: Locale, company: string, country: string) {
 
 const clickFocusedCompanyDescriptions: Record<string, string> = {
   "us:amazon": "Find official Amazon US customer service links and practical help for orders, missing packages, returns, refunds and unresolved support cases.",
-  "in:lg-india": "Find official LG India customer care, warranty terms, repair booking and service-request guidance for appliances and electronics.",
+  "in:lg-india": "Check official LG warranty terms in India, book or track a repair, and find verified customer-care routes for appliance and electronics service.",
+  "us:fedex": "Find official FedEx US customer service, tracking help and claims guidance for delayed, missing, damaged or delivered-but-not-received packages.",
   "gb:royal-mail": "Find official Royal Mail customer service, tracking and missing-parcel guidance, including the correct route for retail orders and claims.",
   "us:ups": "Find official UPS US customer service, tracking and claim links for missing, delayed or damaged packages, plus claim follow-up guidance.",
   "in:sbi": "Use SBI's official CRCF complaint form, check complaint-status options and find verified customer-care routes for transaction, card and digital-banking issues.",
@@ -106,6 +108,8 @@ export async function generateMetadata({ params }: { params: Promise<PageParams>
       if (hasVerifiedPhone) keywords.push(`${company.name} contact number`);
       if (company.country === "in" && company.slug === "sbi") keywords.push("SBI CRCF complaint", "SBI complaint status");
       if (company.country === "in" && company.slug === "irctc") keywords.push("IRCTC eQuery", "IRCTC refund status", "IRCTC TDR support");
+      if (company.country === "in" && company.slug === "lg-india") keywords.push("LG warranty", "LG India warranty", "LG repair booking", "LG service status");
+      if (company.country === "us" && company.slug === "fedex") keywords.push("FedEx tracking questions", "FedEx package not delivered", "FedEx claim", "FedEx customer service number");
       const companyTitle = `${companyPageTitle(locale, company.name, country)} | ResolveNexa`;
       const companyDescription = locale === "en"
         ? clickFocusedCompanyDescriptions[`${company.country}:${company.slug}`] || `Find verified ${company.name} customer support in ${country}, official contact channels, common issue help and complaint guidance.`
