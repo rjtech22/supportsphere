@@ -12,6 +12,8 @@ import { GlobalCompanyCard } from "@/components/GlobalCompanyCard";
 import { CompanyLogo } from "@/components/CompanyLogo";
 import { LocalizedTemplateGenerator } from "@/components/LocalizedTemplateGenerator";
 import { TrackedLink } from "@/components/TrackedLink";
+import { AdSlot } from "@/components/AdSlot";
+import { ReportForm } from "@/components/ReportForm";
 import { countries, companiesForCountry, getCountry, getGlobalCompany, globalCategories, globalCompanies, publishedCountries } from "@/lib/global-data";
 import { normalizeCountryCode } from "@/lib/country-catalog";
 import { guides } from "@/lib/data";
@@ -311,6 +313,8 @@ async function Company({ locale, countryCode, slug }: { locale: Locale; countryC
           <h2>{d.company.sourcesTitle}</h2>
           {company.sourceLinks.map((source) => <TrackedLink className="official-link" href={source.url} eventName="official_support_click" params={{ country: countryCode, company: slug, locale }} key={source.url}><span>{source.label}<small>{new URL(source.url).hostname}<span className="source-meta">Verified {company.verifiedAt}</span></small></span><ExternalLink /></TrackedLink>)}
           <section className="faq-wrap"><h2>{company.name} {d.company.faqTitle}</h2><Faqs items={faq} /></section>
+          {locale === "en" && <ReportForm pageUrl={localePath(locale, `/${countryCode}/companies/${slug}`)} />}
+          {locale === "en" && <AdSlot slot={process.env.NEXT_PUBLIC_ADSENSE_SLOT_IN_ARTICLE} />}
         </article>
         <aside>
           <div className="sidebar-card"><h3>{d.company.verificationTitle}</h3><p><b>{company.verificationStatus}</b><br />Last verified: {company.verifiedAt}</p><p>{d.company.verificationText}</p></div>
@@ -397,6 +401,7 @@ function Guide({ locale, slug }: { locale: Locale; slug: string }) {
       <div className="warning-box"><ShieldCheck /><span>{d.company.securityText}</span></div>
       <section className="faq-wrap"><h2>{guide.title} — FAQ</h2><Faqs items={faq} /></section>
       <Link className="button" href={localePath(locale, "/tools/complaint-letter")}>{d.generator.h1}</Link>
+      {locale === "en" && <AdSlot slot={process.env.NEXT_PUBLIC_ADSENSE_SLOT_IN_ARTICLE} />}
     </article></section>
     <section className="section soft"><div className="shell"><SectionHead eyebrow={d.guides.related} title={relatedLabels.guides} /><div className="guide-grid">{relatedGuides.map((item) => { const copy = d.guides.items[item.slug]; return copy && <article className="guide-card" key={item.slug}><span className="guide-icon"><FileText /></span><div><h3><Link href={localePath(locale, `/guides/${item.slug}`)}>{copy.title}</Link></h3><p>{copy.description}</p><Link className="inline-link" href={localePath(locale, `/guides/${item.slug}`)}>{d.guides.read} <ArrowRight /></Link></div></article>; })}</div></div></section>
     {categoryDirectoryLinks.length > 0 && <section className="section"><div className="shell"><SectionHead eyebrow={relatedLabels.directory} title={d.home.categoryTitle} /><div className="sidebar-card">{categoryDirectoryLinks.map((item) => <Link href={item.href} key={item.href}>{item.label}</Link>)}</div></div></section>}
@@ -442,7 +447,7 @@ function Static({ locale, name }: { locale: Locale; name: typeof staticNames[num
   const key = name === "privacy-policy" ? "privacy" : name as keyof typeof d.static;
   const [title, body] = d.static[key];
   const englishPage = locale === "en" ? staticInfoPages[key as keyof typeof staticInfoPages] : undefined;
-  return <><Hero locale={locale} currentPath={`/${name}`} crumbs={[{ label: title }]} eyebrow="ResolveNexa" title={title} text={englishPage?.description || body} /><section className="section"><article className="shell prose-page">{englishPage ? englishPage.sections.map(([heading, text]) => <section key={heading}><h2>{heading}</h2><p>{text}</p></section>) : <><p>{body}</p><p>{d.footer.safetyText}</p></>}</article></section></>;
+  return <><Hero locale={locale} currentPath={`/${name}`} crumbs={[{ label: title }]} eyebrow="ResolveNexa" title={title} text={englishPage?.description || body} /><section className="section"><article className="shell prose-page">{englishPage ? englishPage.sections.map(([heading, text]) => <section key={heading}><h2>{heading}</h2><p>{text}</p></section>) : <><p>{body}</p><p>{d.footer.safetyText}</p></>}{locale === "en" && name === "contact" && <ReportForm pageUrl={localePath(locale, "/contact")} />}</article></section></>;
 }
 
 function Hero({ locale, currentPath, crumbs, eyebrow, title, text, children }: { locale: Locale; currentPath: string; crumbs: BreadcrumbItem[]; eyebrow: string; title: string; text: string; children?: React.ReactNode }) { return <section className="page-hero"><div className="shell"><Breadcrumbs locale={locale} items={crumbs} currentPath={currentPath} /><span className="eyebrow">{eyebrow}</span><h1>{title}</h1><p>{text}</p>{children}</div></section>; }

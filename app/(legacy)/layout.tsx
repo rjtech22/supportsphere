@@ -18,6 +18,7 @@ export const metadata: Metadata = {
 
 export default function LegacyLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const adsense = process.env.NEXT_PUBLIC_ADSENSE_CLIENT;
+  const adsenseEnabled = process.env.NEXT_PUBLIC_ADSENSE_ENABLED === "true" && process.env.NEXT_PUBLIC_GOOGLE_CERTIFIED_CMP_CONFIGURED === "true";
   const organizationLd = { "@context": "https://schema.org", "@type": "Organization", name: siteConfig.name, url: siteConfig.url, logo: `${siteConfig.url}/resolvenexa-logo.png`, description: siteConfig.description };
-  return <html lang="en" suppressHydrationWarning><body>{children}<Analytics /><RouteAnalytics /><ConsentManager /><AdSenseLoader client={adsense} /><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationLd) }} /></body></html>;
+  return <html lang="en" suppressHydrationWarning><body>{children}<Analytics /><RouteAnalytics /><ConsentManager /><AdSenseLoader client={adsense} enabled={adsenseEnabled} /><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationLd) }} /></body></html>;
 }

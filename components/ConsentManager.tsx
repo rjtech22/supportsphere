@@ -34,9 +34,9 @@ export function ConsentSettingsButton({ label }: { label: string }) {
   return <button type="button" className="consent-settings" aria-controls="privacy-choices" onClick={() => window.dispatchEvent(new Event(openEvent))}>{label}</button>;
 }
 
-export function AdSenseLoader({ client }: { client?: string }) {
+export function AdSenseLoader({ client, enabled = false }: { client?: string; enabled?: boolean }) {
   useEffect(() => {
-    if (!client) return;
+    if (!enabled || !/^ca-pub-\d{16}$/.test(client || "")) return;
     const load = (choice: Choice | null) => {
       if (choice !== "granted" || document.querySelector(`script[data-resolvenexa-ads]`)) return;
       const script = document.createElement("script"); script.async = true; script.crossOrigin = "anonymous";
@@ -47,6 +47,6 @@ export function AdSenseLoader({ client }: { client?: string }) {
     const listener = (event: Event) => load((event as CustomEvent<Choice>).detail);
     window.addEventListener("resolvenexa:consent", listener);
     return () => window.removeEventListener("resolvenexa:consent", listener);
-  }, [client]);
+  }, [client, enabled]);
   return null;
 }
