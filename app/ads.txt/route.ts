@@ -1,7 +1,8 @@
 const publisherPattern = /^pub-\d{16}$/;
+const verifiedPublisherId = "pub-1949642348561120";
 
 export function GET() {
-  const publisherId = process.env.ADSENSE_PUBLISHER_ID?.trim();
+  const publisherId = process.env.ADSENSE_PUBLISHER_ID?.trim() || verifiedPublisherId;
   if (!publisherId || !publisherPattern.test(publisherId)) {
     return new Response("AdSense publisher ID is not configured.\n", {
       status: 404,

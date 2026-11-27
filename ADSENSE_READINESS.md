@@ -23,7 +23,7 @@ NEXT_PUBLIC_GOOGLE_CERTIFIED_CMP_CONFIGURED=true
 NEXT_PUBLIC_ADSENSE_ENABLED=true
 ```
 
-`ADSENSE_PUBLISHER_ID` is server-only. The public client ID and slot IDs are expected in rendered ad markup. After deployment, verify `/ads.txt` returns the exact line supplied for the account.
+The verified account publisher ID is already published by the `/ads.txt` route. `ADSENSE_PUBLISHER_ID` remains an optional server-side override if the account changes. The public client ID and slot IDs are expected in rendered ad markup. After deployment, verify `/ads.txt` returns the exact line supplied for the account.
 
 ## Safety checks before enabling
 
