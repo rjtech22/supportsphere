@@ -51,6 +51,24 @@ const issueKeywords: KeywordResearchRow[] = [
   published("customer service escalation email", "complaint-tool", "/guides/how-to-write-professional-complaint-email", "How to Write a Professional Complaint Email")
 ];
 
+const priorityIndiaKeywords: KeywordResearchRow[] = [
+  published("Dell India warranty repair", "company-support", "/in/companies/dell", "Dell India Warranty & Repair Support", "primary", "in"),
+  published("HP warranty check India", "company-support", "/in/companies/hp", "HP India Warranty Check & Repair Support", "primary", "in"),
+  published("Lenovo warranty status India", "company-support", "/in/companies/lenovo", "Lenovo India Warranty & Repair Status", "primary", "in"),
+  published("Samsung repair status India", "company-support", "/in/companies/samsung", "Samsung India Repair Status & Support", "primary", "in"),
+  published("Apple India repair status", "company-support", "/in/companies/apple", "Apple India Repair Status & Support", "primary", "in"),
+  published("PhonePe money deducted transaction failed", "banking-payment", "/in/companies/phonepe", "PhonePe Failed Transaction Help", "primary", "in"),
+  published("Google Pay failed transaction complaint", "banking-payment", "/in/companies/google-pay", "Google Pay Failed Transaction Help", "primary", "in"),
+  published("Paytm refund pending", "refund-return", "/in/companies/paytm", "Paytm Pending Refund Help", "primary", "in"),
+  published("Airtel broadband complaint", "company-support", "/in/companies/airtel", "Airtel Broadband Complaint Support", "primary", "in"),
+  published("Jio complaint status", "company-support", "/in/companies/jio", "Jio Complaint Status & Support", "primary", "in"),
+  published("Flipkart refund not received", "refund-return", "/in/companies/flipkart", "Flipkart Refund Help", "primary", "in"),
+  published("Meesho return rejected", "refund-return", "/in/companies/meesho", "Meesho Return Help", "primary", "in"),
+  published("India Post tracking not updating", "delivery", "/in/companies/india-post", "India Post Tracking Help", "primary", "in"),
+  published("Amazon India return rejected", "refund-return", "/in/companies/amazon", "Amazon India Return Help", "primary", "in"),
+  published("bank complaint escalation India", "banking-payment", "/in/categories/banking", "Bank Complaint Escalation in India", "primary", "in")
+];
+
 const companyKeywords: KeywordResearchRow[] = globalCompanies.flatMap((company) => {
   const page = `/${company.country}/companies/${company.slug}`;
   const base = [
@@ -78,7 +96,7 @@ const companyKeywords: KeywordResearchRow[] = globalCompanies.flatMap((company) 
   return base;
 });
 
-export const keywordResearch: KeywordResearchRow[] = [...companyKeywords, ...issueKeywords];
+export const keywordResearch: KeywordResearchRow[] = [...companyKeywords, ...issueKeywords, ...priorityIndiaKeywords];
 
 export function findKeywordTargets(query: string, limit = 5) {
   const normalized = query.trim().toLowerCase();

@@ -68,6 +68,20 @@ function companyPageTitle(locale: Locale, company: string, country: string) {
   if (locale === "en" && company === "UPS") return "UPS Customer Service, Tracking & Claims (US)";
   if (locale === "en" && company === "State Bank of India") return "SBI CRCF Complaint & Customer Care India";
   if (locale === "en" && company === "IRCTC") return "IRCTC eQuery, Refund & TDR Support";
+  if (locale === "en" && company === "Dell India") return "Dell India Warranty & Repair Support";
+  if (locale === "en" && company === "HP India") return "HP Warranty Check & Repair Support India";
+  if (locale === "en" && company === "Lenovo India") return "Lenovo Warranty & Repair Status India";
+  if (locale === "en" && company === "Samsung India") return "Samsung Repair Status & Support India";
+  if (locale === "en" && company === "Apple India") return "Apple India Repair Status & Support";
+  if (locale === "en" && company === "PhonePe") return "PhonePe Failed Transaction & Payment Help";
+  if (locale === "en" && company === "Google Pay India") return "Google Pay Failed Transaction Help India";
+  if (locale === "en" && company === "Paytm") return "Paytm Refund Pending & Payment Support";
+  if (locale === "en" && company === "Airtel India") return "Airtel Broadband Complaint & Support India";
+  if (locale === "en" && company === "Jio") return "Jio Complaint Status & Customer Support";
+  if (locale === "en" && company === "Flipkart") return "Flipkart Refund Not Received Help India";
+  if (locale === "en" && company === "Meesho") return "Meesho Return Rejected & Refund Help";
+  if (locale === "en" && company === "India Post") return "India Post Tracking Not Updating Help";
+  if (locale === "en" && company === "Amazon India") return "Amazon India Return, Refund & Order Help";
   return locale === "en" ? `${company} Customer Care & Support — ${country}` : locale === "ta" ? `${company} வாடிக்கையாளர் சேவை மற்றும் ஆதரவு — ${country}` : locale === "hi" ? `${company} ग्राहक सेवा और सहायता — ${country}` : `Service client ${company} — ${country}`;
 }
 
@@ -78,7 +92,21 @@ const clickFocusedCompanyDescriptions: Record<string, string> = {
   "gb:royal-mail": "Find official Royal Mail customer service, tracking and missing-parcel guidance, including the correct route for retail orders and claims.",
   "us:ups": "Find official UPS US customer service, tracking and claim links for missing, delayed or damaged packages, plus claim follow-up guidance.",
   "in:sbi": "Use SBI's official CRCF complaint form, check complaint-status options and find verified customer-care routes for transaction, card and digital-banking issues.",
-  "in:irctc": "Open the official IRCTC eQuery route and find practical help for ticket queries, cancellations, TDR filing and pending railway-ticket refunds."
+  "in:irctc": "Open the official IRCTC eQuery route and find practical help for ticket queries, cancellations, TDR filing and pending railway-ticket refunds.",
+  "in:dell": "Use official Dell India warranty, diagnostics and service-request links to start a repair and follow an existing repair case.",
+  "in:hp": "Check an HP warranty in India, start an official repair and follow repair status using verified HP Support routes.",
+  "in:lenovo": "Check Lenovo warranty and repair status in India using official warranty-lookup and repair-tracking links.",
+  "in:samsung": "Find official Samsung India repair booking, repair-status tracking and authorised service-centre links.",
+  "in:apple": "Start an Apple India repair, find the Case or Repair ID and check current repair status through official Apple Support.",
+  "in:phonepe": "Find official PhonePe help when a transaction failed after money was deducted, including ticket and grievance follow-up steps.",
+  "in:google-pay": "Use verified Google Pay India support for a failed transaction complaint, ticket follow-up and payment-status help.",
+  "in:paytm": "Check a pending Paytm refund through official transaction support and follow up with the existing ticket reference.",
+  "in:airtel": "Use official Airtel India broadband complaint and escalation routes for outages, billing or connection issues.",
+  "in:jio": "Find official Jio complaint routes and use the service-request or complaint docket number to follow the case status.",
+  "in:flipkart": "Use Flipkart's official order-linked help when a refund is not received, a return is pending or an order issue remains unresolved.",
+  "in:meesho": "Use Meesho's official order-linked Help Centre when a return is rejected or a refund remains pending.",
+  "in:india-post": "Use official India Post tracking and complaint routes when tracking is not updating or an article is delayed.",
+  "in:amazon": "Use Amazon India's signed-in order support for rejected returns, missing refunds, delivery issues and unresolved order help."
 };
 
 function localizedCompanySummary(locale: Locale, company: string, country: string, englishSummary: string) {
@@ -99,7 +127,7 @@ export async function generateMetadata({ params }: { params: Promise<PageParams>
   const p = await params; if (!isLocale(p.locale)) return {}; const locale = p.locale; const d = getDictionary(locale); const s = p.segments || []; const path = pathFrom(s); const allCompanies = await getPublishedCompanies();
   if (!s.length) return meta(locale, "", d.seo.homeTitle, d.seo.homeDescription, undefined, []);
   if (s.length === 1 && getCountry(s[0])) { const entry = getCountry(s[0])!; const country = d.countries[s[0]] || entry.name; const seo = locale === "en" ? countrySeo[s[0] as keyof typeof countrySeo] : undefined; const result = meta(locale, path, `${seo?.seoTitle || t(d.directory.title, { country })} | ResolveNexa`, seo?.description || t(d.directory.intro, { country })); if (!allCompanies.some((item) => item.country === s[0])) result.robots = { index: false, follow: true }; return result; }
-  if (s.length === 3 && s[1] === "categories") { const category = d.categories[s[2]] || globalCategories.find((item) => item.slug === s[2]); const seo = categorySeo[s[2]]; const softwareSeo = s[2] === "software-technology" && locale !== "en" ? localizedSoftwareSeo[locale] : undefined; const entry = getCountry(s[0]); const country = entry ? d.countries[s[0]] || entry.name : ""; if (category && country) { const categoryDescription = locale === "en" ? `${seo?.metaDescription || `Find verified ${category.name.toLowerCase()} support routes and practical issue guides`} in ${country}.` : softwareSeo ? t(softwareSeo.description, { country }) : locale === "ta" ? `${country} நாட்டில் ${category.name} நிறுவனங்களுக்கான சரிபார்க்கப்பட்ட ஆதரவு வழிகளையும் வழிகாட்டிகளையும் கண்டறியுங்கள்.` : locale === "hi" ? `${country} में ${category.name} कंपनियों के सत्यापित सहायता मार्ग और उपयोगी गाइड पाएँ।` : `Trouvez les services officiels vérifiés et les guides ${category.name} disponibles en ${country}.`; const categoryTitle = locale === "en" && seo ? `${seo.title} in ${country} | ResolveNexa` : `${softwareSeo?.title || category.name} — ${country} | ResolveNexa`; const result = meta(locale, path, categoryTitle, categoryDescription, locale === "en" ? seo?.keywords : undefined); if (!allCompanies.some((item) => item.country === s[0] && item.category === s[2])) result.robots = { index: false, follow: true }; return result; } }
+  if (s.length === 3 && s[1] === "categories") { const category = d.categories[s[2]] || globalCategories.find((item) => item.slug === s[2]); const seo = categorySeo[s[2]]; const softwareSeo = s[2] === "software-technology" && locale !== "en" ? localizedSoftwareSeo[locale] : undefined; const entry = getCountry(s[0]); const country = entry ? d.countries[s[0]] || entry.name : ""; if (category && country) { const indiaBanking = locale === "en" && s[0] === "in" && s[2] === "banking"; const categoryDescription = indiaBanking ? "Find verified bank complaint, failed-transaction and escalation routes in India, with practical guides and official sources." : locale === "en" ? `${seo?.metaDescription || `Find verified ${category.name.toLowerCase()} support routes and practical issue guides`} in ${country}.` : softwareSeo ? t(softwareSeo.description, { country }) : locale === "ta" ? `${country} நாட்டில் ${category.name} நிறுவனங்களுக்கான சரிபார்க்கப்பட்ட ஆதரவு வழிகளையும் வழிகாட்டிகளையும் கண்டறியுங்கள்.` : locale === "hi" ? `${country} में ${category.name} कंपनियों के सत्यापित सहायता मार्ग और उपयोगी गाइड पाएँ।` : `Trouvez les services officiels vérifiés et les guides ${category.name} disponibles en ${country}.`; const categoryTitle = indiaBanking ? "Bank Complaint Escalation in India | ResolveNexa" : locale === "en" && seo ? `${seo.title} in ${country} | ResolveNexa` : `${softwareSeo?.title || category.name} — ${country} | ResolveNexa`; const categoryKeywords = locale === "en" ? [...(seo?.keywords || []), ...(indiaBanking ? ["bank complaint escalation India"] : [])] : undefined; const result = meta(locale, path, categoryTitle, categoryDescription, categoryKeywords); if (!allCompanies.some((item) => item.country === s[0] && item.category === s[2])) result.robots = { index: false, follow: true }; return result; } }
   if (s.length === 3 && s[1] === "companies") {
     const company = await getPublishedCompany(s[0], s[2]);
     const entry = getCountry(s[0]);
@@ -112,6 +140,19 @@ export async function generateMetadata({ params }: { params: Promise<PageParams>
       if (company.country === "in" && company.slug === "irctc") keywords.push("IRCTC refund not received", "IRCTC refund status", "IRCTC TDR status", "IRCTC eQuery complaint", "IRCTC ticket cancellation refund");
       if (company.country === "in" && company.slug === "lg-india") keywords.push("LG warranty India support", "LG warranty check India", "LG warranty check serial number India", "LG India warranty repair", "LG warranty claim India", "LG warranty claim rejected", "LG warranty replacement India", "LG repair booking India", "LG repair request India", "LG repair status India", "LG warranty customer care", "LG service request status", "LG service request tracking", "LG authorized service center India", "LG TV warranty India", "LG washing machine warranty India", "LG refrigerator repair India", "LG AC service request India", "LG appliance repair status", "LG warranty complaint India");
       if (company.country === "in" && company.slug === "amazon") keywords.push("Amazon India refund not received", "Amazon package delivered but not received India", "Amazon India customer support not responding", "Amazon return rejected India");
+      if (company.country === "in" && company.slug === "dell") keywords.push("Dell India warranty repair");
+      if (company.country === "in" && company.slug === "hp") keywords.push("HP warranty check India");
+      if (company.country === "in" && company.slug === "lenovo") keywords.push("Lenovo warranty status India");
+      if (company.country === "in" && company.slug === "samsung") keywords.push("Samsung repair status India");
+      if (company.country === "in" && company.slug === "apple") keywords.push("Apple India repair status");
+      if (company.country === "in" && company.slug === "phonepe") keywords.push("PhonePe money deducted transaction failed");
+      if (company.country === "in" && company.slug === "google-pay") keywords.push("Google Pay failed transaction complaint");
+      if (company.country === "in" && company.slug === "paytm") keywords.push("Paytm refund pending");
+      if (company.country === "in" && company.slug === "airtel") keywords.push("Airtel broadband complaint");
+      if (company.country === "in" && company.slug === "jio") keywords.push("Jio complaint status");
+      if (company.country === "in" && company.slug === "flipkart") keywords.push("Flipkart refund not received");
+      if (company.country === "in" && company.slug === "meesho") keywords.push("Meesho return rejected");
+      if (company.country === "in" && company.slug === "india-post") keywords.push("India Post tracking not updating");
       if (company.country === "us" && company.slug === "fedex") keywords.push("FedEx tracking not updating", "FedEx delivered but not received", "FedEx package not delivered", "FedEx claim", "FedEx customer service number");
       if (company.country === "us" && company.slug === "ups") keywords.push("UPS package not received");
       if (company.country === "us" && company.slug === "dhl-express") keywords.push("DHL shipment delayed");
@@ -197,8 +238,9 @@ async function Country({ locale, code }: { locale: Locale; code: string }) {
 async function Category({ locale, countryCode, slug }: { locale: Locale; countryCode: string; slug: string }) {
   const d = getDictionary(locale); const country = getCountry(countryCode); const cat = d.categories[slug] || globalCategories.find((item) => item.slug === slug); if (!country || !cat) notFound(); const countryName = d.countries[countryCode] || country.name; const items = (await getPublishedCompanies()).filter((item) => item.country === countryCode && item.category === slug); const seo = locale === "en" ? categorySeo[slug] : undefined; const softwareSeo = slug === "software-technology" && locale !== "en" ? localizedSoftwareSeo[locale] : undefined; const detail = locale === "en" ? countryCategoryDetails[`${countryCode}:${slug}`] : undefined;
   const faq: [string, string][] = seo?.faqs || softwareSeo?.faqs || [[t(d.category.faqTitle, { category: cat.name }), d.company.escalationText], [d.company.complaintTitle, d.company.complaintSteps.join(" ")]];
-  const title = seo ? `${seo.title} in ${countryName}` : `${softwareSeo?.title || cat.name} — ${countryName}`;
-  const intro = seo ? `${seo.intro} Browse verified company support options available for ${countryName}.` : softwareSeo?.intro || cat.description;
+  const indiaBanking = locale === "en" && countryCode === "in" && slug === "banking";
+  const title = indiaBanking ? "Bank Complaint Escalation in India" : seo ? `${seo.title} in ${countryName}` : `${softwareSeo?.title || cat.name} — ${countryName}`;
+  const intro = indiaBanking ? "Use verified bank channels for failed transactions, billing disputes and complaint escalation. Keep the original complaint reference and never disclose a PIN, CVV, password or OTP." : seo ? `${seo.intro} Browse verified company support options available for ${countryName}.` : softwareSeo?.intro || cat.description;
   return <><Hero locale={locale} currentPath={`/${countryCode}/categories/${slug}`} crumbs={[{ label: countryName, href: localePath(locale, `/${countryCode}`) }, { label: cat.name }]} eyebrow={countryName} title={title} text={intro} /><section className="section"><div className="shell"><SectionHead eyebrow={d.category.directory} title={t(d.category.listings, { category: cat.name })} /><div className="company-grid">{items.map((company) => <GlobalCompanyCard locale={locale} company={company} key={company.slug} />)}</div>{!items.length && <div className="content-card"><h2>{d.category.emptyTitle}</h2><p>{d.category.emptyText}</p></div>}</div></section>{detail && <section className="section soft"><article className="shell prose-page"><h2>{detail.title}</h2>{detail.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}{detail.sections.map((section) => <section key={section.heading}><h2>{section.heading}</h2><p>{section.body}</p></section>)}<h2>Practical issue guides</h2><ul>{detail.guideSlugs.map((guideSlug) => { const guide = d.guides.items[guideSlug]; return guide ? <li key={guideSlug}><Link href={localePath(locale, `/guides/${guideSlug}`)}>{guide.title}</Link></li> : null; })}</ul><h2>Official escalation sources</h2>{detail.officialSources.map((source) => <p key={source.url}><a href={source.url} target="_blank" rel="noopener noreferrer">{source.label} <ExternalLink size={14} /></a><br /><small>{source.note}</small></p>)}</article></section>}<section className="section soft"><div className="shell"><SectionHead eyebrow={d.category.relevant} title={t(d.category.resolve, { category: cat.name })} /><GuideCards locale={locale} slugs={categoryGuideSlugs[slug]} limit={3} /></div></section><section className="section"><div className="shell faq-wrap"><h2>{t(d.category.faqTitle, { category: cat.name })}</h2><Faqs items={faq} /></div></section></>;
 }
 

@@ -56,7 +56,7 @@ export const priorityCompanies: GlobalCompany[] = [
     aliases: ["Meesho customer care", "Meesho order help"], regions: ["India"], supportTypes: ["in-app help", "chat", "callback", "orders", "returns"],
     summary: "Official Meesho support guidance for orders, delivery, returns, exchanges, refunds and account issues through the Meesho app.",
     officialWebsite: "https://www.meesho.com/", supportWebsite: "https://www.meesho.com/adult-support/pl/9o6", helpCenter: "https://www.meesho.com/adult-support/pl/9o6",
-    refundCancellation: "Open the order in the Meesho app and use the available cancellation, return, exchange or refund flow for that item.",
+    refundCancellation: "Open the order in the Meesho app and use the available cancellation, return, exchange or refund flow for that item. If a Meesho return is rejected, review the reason shown for the order and continue through the same order-linked Help Centre with the order ID and evidence.",
     replacement: "Exchange or replacement availability is shown inside the order-specific app flow and varies by item and issue.",
     deliveryTracking: "Track the order and report delivery issues from the order details in the Meesho app.",
     billingPayment: "For payment or refund issues, select the transaction in the app and use its Help Centre options.",
@@ -64,8 +64,8 @@ export const priorityCompanies: GlobalCompany[] = [
     escalation: "Continue inside Meesho's order-linked Help Centre with the existing case information. Meesho says the official customer-care contact shown to users is available in the app, so no unverified number is published here.",
     verifiedAt, verificationStatus: "Verified",
     sourceLinks: [{ label: "Meesho official support guidance", url: "https://www.meesho.com/adult-support/pl/9o6" }, { label: "Meesho official website", url: "https://www.meesho.com/" }],
-    commonIssues: ["Order not delivered", "Return or exchange", "Refund pending", "Payment issue", "Account access"],
-    faqs: [{ question: "How do I contact Meesho support?", answer: "Open the affected order in the Meesho app and use Help Centre. Chat or callback options may be shown for the issue." }, { question: "Why is no Meesho phone number shown here?", answer: "Meesho directs users to the contact shown inside its app. ResolveNexa does not publish an unverified number." }, { question: "How do I request a Meesho return?", answer: "Open the order in the app and use the available return or exchange option shown for that item." }]
+    commonIssues: ["Order not delivered", "Return or exchange", "Return rejected", "Refund pending", "Payment issue", "Account access"],
+    faqs: [{ question: "How do I contact Meesho support?", answer: "Open the affected order in the Meesho app and use Help Centre. Chat or callback options may be shown for the issue." }, { question: "Why is no Meesho phone number shown here?", answer: "Meesho directs users to the contact shown inside its app. ResolveNexa does not publish an unverified number." }, { question: "How do I request a Meesho return?", answer: "Open the order in the app and use the available return or exchange option shown for that item." }, { question: "What should I do if a Meesho return is rejected?", answer: "Review the reason shown for the order and use the same order-linked Help Centre with the order ID, return request and relevant evidence." }]
   },
   {
     slug: "myntra", name: "Myntra", country: "in", category: "e-commerce", logoText: "MY",
@@ -159,14 +159,14 @@ export const priorityCompanies: GlobalCompany[] = [
     aliases: ["Paytm support", "Paytm payment failed", "Paytm refund"], regions: ["India"], supportTypes: ["app help", "payments", "refunds", "grievance"],
     summary: "Official Paytm support routes for payments, refunds, recharges, orders, account access, transaction disputes and grievance escalation.",
     officialWebsite: "https://paytm.com/", supportWebsite: "https://paytm.com/support", helpCenter: "https://support.paytm.com/",
-    refundCancellation: "Open the affected Paytm transaction or order to review its status and the issue-specific refund or cancellation options shown by Paytm.",
+    refundCancellation: "If a Paytm refund is pending, open the affected transaction or order to review its current status and the issue-specific refund or cancellation options shown by Paytm. Keep the transaction reference and any existing ticket for follow-up.",
     billingPayment: "Use 24x7 Help in the Paytm app or official Support page for failed, pending, duplicated or disputed transactions.",
     complaintSteps: ["Open 24x7 Help in the Paytm app or official Support page.", "Select the exact transaction, order or account issue.", "Raise a ticket and retain the reference and evidence.", "Use Paytm's official grievance route if the support ticket remains unresolved."],
     escalation: "Paytm publishes a grievance framework that begins with its app or support ticket and continues through official resolution and grievance levels. No unverified direct-agent number is published here.",
     verifiedAt, verificationStatus: "Verified",
     sourceLinks: [{ label: "Paytm Support", url: "https://paytm.com/support" }, { label: "Paytm Help Center", url: "https://support.paytm.com/" }, { label: "Paytm grievance policy", url: "https://paytm.com/company/grievance" }],
     commonIssues: ["Payment failed", "Payment pending", "Refund pending", "Recharge issue", "Account access"],
-    faqs: [{ question: "How do I contact Paytm support?", answer: "Open 24x7 Help in the Paytm app or use Paytm's official Support page and select the affected transaction." }, { question: "Why is no Paytm phone number shown?", answer: "The official sources reviewed direct users to app and web support. ResolveNexa does not publish unverified agent numbers." }, { question: "How do I escalate a Paytm complaint?", answer: "Keep the ticket reference and use Paytm's official grievance process if regular support does not resolve it." }]
+    faqs: [{ question: "How do I contact Paytm support?", answer: "Open 24x7 Help in the Paytm app or use Paytm's official Support page and select the affected transaction." }, { question: "What should I do when a Paytm refund is pending?", answer: "Open the affected transaction, review its status and use the issue-specific support option with the transaction reference and any existing ticket." }, { question: "Why is no Paytm phone number shown?", answer: "The official sources reviewed direct users to app and web support. ResolveNexa does not publish unverified agent numbers." }, { question: "How do I escalate a Paytm complaint?", answer: "Keep the ticket reference and use Paytm's official grievance process if regular support does not resolve it." }]
   },
   {
     slug: "phonepe", name: "PhonePe", country: "in", category: "banking", logoText: "PPE",
@@ -174,13 +174,13 @@ export const priorityCompanies: GlobalCompany[] = [
     summary: "Official PhonePe support for UPI and payment issues, refunds, account access, transaction complaints and grievance escalation.",
     officialWebsite: "https://www.phonepe.com/", supportWebsite: "https://www.phonepe.com/contact-us/", helpCenter: "https://support.phonepe.com/", phone: "080-68727374 / 022-68727374", supportHours: "Customer support is available 24 hours a day, 7 days a week under PhonePe's grievance policy.",
     refundCancellation: "Select the transaction in PhonePe Help to review its status and available dispute or refund route. Merchant refunds may depend on the merchant and banking process.",
-    billingPayment: "For failed, pending or incorrect transactions, open the transaction in PhonePe and raise the issue from its Help flow.",
+    billingPayment: "For a PhonePe transaction that failed after money was deducted, first open the transaction and check its displayed status. Raise the issue from the transaction-linked Help flow and keep the transaction reference and ticket ID for follow-up.",
     complaintSteps: ["Open PhonePe and select the affected transaction.", "Use the transaction-linked Help option or official customer-support number.", "Save the ticket ID and supporting evidence.", "Follow the grievance and nodal escalation levels if the ticket remains unresolved."],
     escalation: "PhonePe publishes a grievance hierarchy from customer support to grievance and nodal officers, followed by eligible external redressal routes. Use the existing ticket ID at every level.",
     verifiedAt, verificationStatus: "Verified",
     sourceLinks: [{ label: "PhonePe Contact Us", url: "https://www.phonepe.com/contact-us/" }, { label: "PhonePe grievance policy", url: "https://www.phonepe.com/grievance-policy/" }, { label: "PhonePe UPI terms", url: "https://www.phonepe.com/terms-conditions/upi/" }],
     commonIssues: ["UPI payment failed", "Payment pending", "Refund not received", "Wrong transfer", "Account issue"],
-    faqs: [{ question: "Which PhonePe numbers are verified?", answer: "PhonePe publishes 080-68727374 and 022-68727374 on its official Contact Us page." }, { question: "How do I report a failed PhonePe payment?", answer: "Open the transaction in the app and raise the issue through its Help option." }, { question: "How do I escalate a PhonePe complaint?", answer: "Use PhonePe's grievance levels with the existing ticket ID and transaction evidence." }]
+    faqs: [{ question: "Which PhonePe numbers are verified?", answer: "PhonePe publishes 080-68727374 and 022-68727374 on its official Contact Us page." }, { question: "What if a PhonePe transaction failed but money was deducted?", answer: "Open the affected transaction, check its status and raise the issue through its Help option. Keep the transaction reference and ticket ID." }, { question: "How do I escalate a PhonePe complaint?", answer: "Use PhonePe's grievance levels with the existing ticket ID and transaction evidence." }]
   },
   {
     slug: "google-pay", name: "Google Pay India", country: "in", category: "banking", logoText: "GPAY",
@@ -188,13 +188,13 @@ export const priorityCompanies: GlobalCompany[] = [
     summary: "Official Google Pay India support for UPI payments, failed transactions, refunds, bill payments, account issues and complaints.",
     officialWebsite: "https://pay.google.com/intl/en_in/about/", supportWebsite: "https://support.google.com/pay/india/answer/7562363?hl=en-GB", helpCenter: "https://support.google.com/pay/india/", tollFree: "1-800-419-0157", liveChat: "https://support.google.com/pay/india/answer/7562363?hl=en-GB", supportHours: "Official chat support is listed as available from 8 AM to 12 AM IST.",
     refundCancellation: "Open the affected transaction for its status and support option. Merchant refunds are generally controlled by the merchant and banking rails rather than cancelled directly by Google Pay.",
-    billingPayment: "For a failed merchant payment or bill payment, open the transaction and raise a ticket from the issue-specific Google Pay help flow.",
+    billingPayment: "For a failed Google Pay transaction, open the affected payment and raise a complaint from the issue-specific help flow. Save the UPI transaction reference and support ticket; do not share a UPI PIN or one-time code.",
     complaintSteps: ["Open Google Pay and select the affected transaction.", "Use Get help, chat or the officially published toll-free number.", "Save the support ticket and transaction reference.", "If eligible and unresolved, follow the bank, NPCI or official grievance route described in Google Pay Help."],
     escalation: "Follow Google Pay India's official issue-specific guidance with the ticket and UPI transaction reference. Some unresolved UPI disputes may need the user's bank or NPCI route.",
     verifiedAt, verificationStatus: "Verified",
     sourceLinks: [{ label: "Contact Google Pay India", url: "https://support.google.com/pay/india/answer/7562363?hl=en-GB" }, { label: "Failed merchant payment help", url: "https://support.google.com/pay/india/answer/9494510?hl=en" }, { label: "Bill payment dispute help", url: "https://support.google.com/pay/india/answer/9753437?hl=en-GB" }],
     commonIssues: ["UPI payment failed", "Payment pending", "Merchant refund", "Bill payment issue", "Account access"],
-    faqs: [{ question: "What Google Pay India number is verified?", answer: "Google publishes the toll-free number 1-800-419-0157 for Google Pay India support." }, { question: "How do I report a failed Google Pay payment?", answer: "Open the transaction and use its Get help or ticket option, then keep the UPI transaction reference." }, { question: "Who handles a merchant refund?", answer: "The merchant initiates the refund and banking processing affects delivery; use the transaction help flow if it is overdue." }]
+    faqs: [{ question: "What Google Pay India number is verified?", answer: "Google publishes the toll-free number 1-800-419-0157 for Google Pay India support." }, { question: "How do I make a Google Pay failed-transaction complaint?", answer: "Open the transaction and use its Get help or ticket option, then keep the UPI transaction reference and support ticket." }, { question: "Who handles a merchant refund?", answer: "The merchant initiates the refund and banking processing affects delivery; use the transaction help flow if it is overdue." }]
   },
   {
     slug: "airtel", name: "Airtel India", country: "in", category: "telecom", logoText: "ATL",
@@ -202,11 +202,11 @@ export const priorityCompanies: GlobalCompany[] = [
     summary: "Official Airtel India support for mobile, broadband, DTH, billing, recharge, network problems and complaint escalation.",
     officialWebsite: "https://www.airtel.in/", supportWebsite: "https://www.airtel.in/contact-us/", helpCenter: "https://www.airtel.in/contact-us/", phone: "121", tollFree: "198 (complaints)",
     billingPayment: "Use Airtel's official contact route for recharge, bill, payment and service-account issues. Keep the transaction or account reference ready.",
-    complaintSteps: ["Use 121 for general Airtel assistance or 198 for a service complaint.", "Select the correct mobile, broadband, DTH or payment issue.", "Keep the service-request or complaint reference.", "Use Airtel's official appellate route if the complaint remains unresolved."],
+    complaintSteps: ["Use 121 for general Airtel assistance or 198 for a service complaint.", "For an Airtel broadband complaint, select the broadband service and describe the outage, speed, billing or connection issue.", "Keep the service-request or complaint reference.", "Use Airtel's official appellate route if the complaint remains unresolved."],
     escalation: "Airtel publishes complaint and appellate routes on its official contact information. Escalate with the original complaint number, service details and requested resolution.",
     verifiedAt, verificationStatus: "Verified",
     sourceLinks: [{ label: "Airtel Contact Us", url: "https://www.airtel.in/contact-us/" }],
-    commonIssues: ["Mobile network issue", "Recharge failed", "Broadband outage", "Billing dispute", "SIM support"],
+    commonIssues: ["Mobile network issue", "Recharge failed", "Broadband complaint", "Broadband outage", "Billing dispute", "SIM support"],
     faqs: [{ question: "What are Airtel's official short codes?", answer: "Airtel publishes 121 for general assistance and 198 as the toll-free complaint number." }, { question: "How do I escalate an Airtel complaint?", answer: "Keep the complaint reference and use the appellate route listed on Airtel's official Contact Us page." }, { question: "What should I keep ready for broadband support?", answer: "Keep the registered mobile number, account or service ID, outage details and prior complaint reference." }]
   },
   {
@@ -250,5 +250,70 @@ export const priorityCompanies: GlobalCompany[] = [
     sourceLinks: [{ label: "Xiaomi India Online Support", url: "https://www.mi.com/in/support/online/" }, { label: "Xiaomi India support declaration", url: "https://www.mi.com/in/support/terms/declaration/" }, { label: "Xiaomi India warranty policy", url: "https://www.mi.com/in/support/policy/warranty/" }],
     commonIssues: ["Phone not working", "Warranty check", "Repair request", "Service centre", "Mi.com order issue"],
     faqs: [{ question: "What Xiaomi India number is verified?", answer: "Xiaomi India publishes the toll-free support number 1800 103 6286." }, { question: "What should I take to a Xiaomi service centre?", answer: "Take the device, purchase invoice and serial number or IMEI, plus any existing support reference." }, { question: "Does warranty always mean replacement?", answer: "No. The remedy depends on the diagnosed issue, product policy and warranty eligibility." }]
+  },
+  {
+    slug: "dell", name: "Dell India", country: "in", category: "electronics", logoText: "DELL",
+    aliases: ["Dell India support", "Dell India warranty repair", "Dell service request India"], regions: ["India"], supportTypes: ["warranty", "repair", "service request", "diagnostics"],
+    summary: "Official Dell India support for warranty checks, diagnostics, in-warranty repair requests and service-request status.",
+    officialWebsite: "https://www.dell.com/en-in", supportWebsite: "https://www.dell.com/support/home/en-in", helpCenter: "https://www.dell.com/support/home/en-in",
+    warranty: "Use Dell India Support with the product Service Tag to review the available warranty information, run diagnostics and open an eligible support request. Repair options depend on the product, coverage and Dell's assessment.",
+    complaintSteps: ["Find the Dell Service Tag and keep the purchase record available.", "Open Dell India Support and identify the product.", "Run the relevant diagnostics or create the support request offered for the product.", "Save the service-request number and use it to follow the repair or dispatch status."],
+    escalation: "If a Dell India warranty repair remains unresolved, follow up through Dell Support with the existing service-request number, Service Tag, diagnostic result and requested next step.",
+    verifiedAt: "2026-11-27", verificationStatus: "Verified",
+    sourceLinks: [{ label: "Dell India Support Home", url: "https://www.dell.com/support/home/en-in" }, { label: "Create an in-warranty support request", url: "https://www.dell.com/support/kbdoc/en-in/000132371/how-to-create-a-support-request-online-for-dell-emc" }],
+    commonIssues: ["Warranty check", "Hardware diagnostics", "Warranty repair", "Service request status"],
+    faqs: [{ question: "How do I start a Dell India warranty repair?", answer: "Open Dell India Support, identify the product with its Service Tag and use the diagnostics or support-request option available for that product." }, { question: "What should I keep for a Dell repair follow-up?", answer: "Keep the Service Tag, diagnostic result and existing service-request or dispatch reference." }, { question: "Does every Dell fault qualify for warranty repair?", answer: "No. The available remedy depends on the product, current coverage, fault and Dell's assessment." }]
+  },
+  {
+    slug: "hp", name: "HP India", country: "in", category: "electronics", logoText: "HP",
+    aliases: ["HP warranty check India", "HP India repair", "HP repair status India"], regions: ["India"], supportTypes: ["warranty check", "repair", "repair status", "product support"],
+    summary: "Official HP India support for warranty checks, warranty-status disputes, repairs and repair-status tracking.",
+    officialWebsite: "https://www.hp.com/in-en/home.html", supportWebsite: "https://support.hp.com/in-en", helpCenter: "https://support.hp.com/in-en",
+    warranty: "Use HP's official India warranty checker with the country or region of purchase and product serial number. If the displayed warranty details appear incorrect, use HP's official warranty-status dispute guidance.",
+    complaintSteps: ["Find the product serial number and confirm the country or region of purchase.", "Check the warranty or service status on HP Support India.", "Use HP's repair route for the diagnosed product issue.", "Keep the service-order number and use HP's repair-status option for follow-up."],
+    escalation: "If the HP warranty status appears incorrect, use HP's official warranty-status dispute process. For an existing repair, follow up with the service-order number and product serial number.",
+    verifiedAt: "2026-11-27", verificationStatus: "Verified",
+    sourceLinks: [{ label: "HP India warranty check", url: "https://support.hp.com/in-en/check-warranty" }, { label: "HP India repair and repair status", url: "https://support.hp.com/in-en/help/repair" }, { label: "Dispute an HP warranty status", url: "https://support.hp.com/in-en/document/ish_2534210-1364541-16" }],
+    commonIssues: ["Warranty check", "Warranty status dispute", "Repair request", "Repair status"],
+    faqs: [{ question: "How do I complete an HP warranty check in India?", answer: "Use HP's official India warranty checker, select India as the country or region of purchase and enter the product serial number." }, { question: "What if the HP warranty status is incorrect?", answer: "Review HP's official warranty-status dispute guidance and provide the requested purchase and product information." }, { question: "How do I check an HP repair status?", answer: "Use HP's official repair-status route with the service-order number and the requested product or contact detail." }]
+  },
+  {
+    slug: "lenovo", name: "Lenovo India", country: "in", category: "electronics", logoText: "LEN",
+    aliases: ["Lenovo warranty status India", "Lenovo India repair status", "Lenovo warranty lookup"], regions: ["India"], supportTypes: ["warranty lookup", "repair", "repair status", "technical support"],
+    summary: "Official Lenovo India support for warranty lookup, technical help, repair requests and repair-status checks.",
+    officialWebsite: "https://www.lenovo.com/in/en/", supportWebsite: "https://support.lenovo.com/in/en", helpCenter: "https://support.lenovo.com/in/en",
+    warranty: "Use Lenovo Support India's warranty lookup with the device information requested by Lenovo. Coverage and available repair options depend on the identified product and displayed warranty status.",
+    complaintSteps: ["Find the Lenovo serial number or other product identifier.", "Use Lenovo Support India's warranty lookup or product support route.", "Create or continue the repair request offered for the device.", "Track the case with the repair ticket, case, order, serial or IMEI accepted by Lenovo's status tool."],
+    escalation: "For an unresolved Lenovo India repair, follow up through Lenovo Support with the existing case or repair reference, serial number and the latest status shown by the official tool.",
+    verifiedAt: "2026-11-27", verificationStatus: "Verified",
+    sourceLinks: [{ label: "Lenovo India warranty lookup", url: "https://support.lenovo.com/in/en/warranty-lookup" }, { label: "Lenovo India repair-status check", url: "https://support.lenovo.com/in/en/track-repair-status/" }],
+    commonIssues: ["Warranty status", "Warranty lookup", "Repair request", "Repair status"],
+    faqs: [{ question: "How do I check a Lenovo warranty status in India?", answer: "Use Lenovo Support India's official warranty-lookup page and enter the product information requested by Lenovo." }, { question: "How do I check a Lenovo repair status?", answer: "Use Lenovo's India repair-status tool with an accepted case, order, serial or IMEI reference." }, { question: "What should I save after opening a Lenovo repair?", answer: "Save the repair ticket or case number, product serial number and every status update shown by Lenovo." }]
+  },
+  {
+    slug: "samsung", name: "Samsung India", country: "in", category: "electronics", logoText: "SAM",
+    aliases: ["Samsung repair status India", "Samsung India support", "Samsung track repair"], regions: ["India"], supportTypes: ["repair booking", "repair status", "warranty", "service centre"],
+    summary: "Official Samsung India support for product help, repair booking, repair-status tracking and authorised service-centre searches.",
+    officialWebsite: "https://www.samsung.com/in/", supportWebsite: "https://www.samsung.com/in/support/", helpCenter: "https://www.samsung.com/in/support/",
+    warranty: "Use Samsung India's product support and official service routes for warranty or repair questions. Available features and repair options can vary by product, model and region.",
+    complaintSteps: ["Identify the Samsung product, model and serial number or IMEI.", "Use Samsung India Support for troubleshooting or a repair request.", "Save the service-request reference supplied by Samsung.", "Use Samsung's Track My Repair route with the requested reference and contact information."],
+    escalation: "If a Samsung India repair status does not progress, follow up through Samsung Support with the existing service-request reference, product details and the latest status.",
+    verifiedAt: "2026-11-27", verificationStatus: "Verified",
+    sourceLinks: [{ label: "Samsung India Support", url: "https://www.samsung.com/in/support/" }, { label: "Samsung India Track My Repair", url: "https://www.samsung.com/in/support/your-service/track-repair-sms" }, { label: "Find a Samsung service centre", url: "https://www.samsung.com/in/support/service-center/" }],
+    commonIssues: ["Repair booking", "Repair status", "Warranty information", "Service centre"],
+    faqs: [{ question: "How do I check a Samsung repair status in India?", answer: "Use Samsung India's official Track My Repair route with the service-request reference and contact information requested on the form." }, { question: "Where should I book a Samsung repair?", answer: "Start from Samsung India Support or its authorised service-centre search rather than an unverified local listing." }, { question: "What should I keep for repair follow-up?", answer: "Keep the service-request reference, model, serial number or IMEI and the latest repair update." }]
+  },
+  {
+    slug: "apple", name: "Apple India", country: "in", category: "electronics", logoText: "APL",
+    aliases: ["Apple India repair status", "Apple repair India", "Apple My Support"], regions: ["India"], supportTypes: ["repair", "repair status", "coverage check", "authorised service"],
+    summary: "Official Apple India support for starting a repair, checking repair status, reviewing coverage and finding authorised service.",
+    officialWebsite: "https://www.apple.com/in/", supportWebsite: "https://support.apple.com/en-in/repair", helpCenter: "https://support.apple.com/en-in/",
+    warranty: "Use Apple India Support to review service options and check coverage. Apple states that repair information is available through My Support or the Apple Support app; service options depend on the product, issue, coverage and location.",
+    complaintSteps: ["Identify the Apple product and the issue before opening support.", "Start from Apple India's official repair page or Apple Support app.", "Save the Case ID or Repair ID supplied for the service.", "Sign in to My Support with the same Apple Account to review the current or recent repair."],
+    escalation: "For an unresolved Apple India repair, return to Apple Support or My Support with the existing Case ID or Repair ID and the latest service update.",
+    verifiedAt: "2026-11-27", verificationStatus: "Verified",
+    sourceLinks: [{ label: "Apple India service and repair", url: "https://support.apple.com/en-in/repair" }, { label: "Apple My Support", url: "https://support.apple.com/en-in/my-support" }, { label: "Find an Apple Case or Repair ID", url: "https://support.apple.com/en-in/102424" }],
+    commonIssues: ["Start a repair", "Repair status", "Coverage check", "Case or Repair ID"],
+    faqs: [{ question: "How do I check an Apple India repair status?", answer: "Sign in to My Support with the Apple Account used to start service and review the current or recent repair information." }, { question: "Where can I find an Apple Repair ID?", answer: "Apple says the Repair ID can appear in My Support under Recent Activity and in the repair confirmation email." }, { question: "Does every repair qualify for warranty service?", answer: "No. The available service depends on the product, issue, coverage and Apple's inspection or assessment." }]
   }
 ];
