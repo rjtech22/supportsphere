@@ -106,10 +106,13 @@ export async function generateMetadata({ params }: { params: Promise<PageParams>
       const hasVerifiedPhone = Boolean(company.phone || company.tollFree || company.technicalSupportPhone || company.salesSupportPhone);
       const keywords = [`${company.name} customer service`, `${company.name} customer support`, `${company.name} help center`, country];
       if (hasVerifiedPhone) keywords.push(`${company.name} contact number`);
-      if (company.country === "in" && company.slug === "sbi") keywords.push("SBI CRCF complaint", "SBI complaint status");
-      if (company.country === "in" && company.slug === "irctc") keywords.push("IRCTC eQuery", "IRCTC refund status", "IRCTC TDR support");
+      if (company.country === "in" && company.slug === "sbi") keywords.push("SBI complaint status", "SBI CRCF complaint", "SBI failed transaction complaint", "SBI money deducted but transaction failed", "SBI complaint escalation");
+      if (company.country === "in" && company.slug === "irctc") keywords.push("IRCTC refund not received", "IRCTC refund status", "IRCTC TDR status", "IRCTC eQuery complaint", "IRCTC ticket cancellation refund");
       if (company.country === "in" && company.slug === "lg-india") keywords.push("LG warranty India support", "LG warranty check India", "LG warranty check serial number India", "LG India warranty repair", "LG warranty claim India", "LG warranty claim rejected", "LG warranty replacement India", "LG repair booking India", "LG repair request India", "LG repair status India", "LG warranty customer care", "LG service request status", "LG service request tracking", "LG authorized service center India", "LG TV warranty India", "LG washing machine warranty India", "LG refrigerator repair India", "LG AC service request India", "LG appliance repair status", "LG warranty complaint India");
-      if (company.country === "us" && company.slug === "fedex") keywords.push("FedEx tracking questions", "FedEx package not delivered", "FedEx claim", "FedEx customer service number");
+      if (company.country === "in" && company.slug === "amazon") keywords.push("Amazon India refund not received", "Amazon package delivered but not received India", "Amazon India customer support not responding", "Amazon return rejected India");
+      if (company.country === "us" && company.slug === "fedex") keywords.push("FedEx tracking not updating", "FedEx delivered but not received", "FedEx package not delivered", "FedEx claim", "FedEx customer service number");
+      if (company.country === "us" && company.slug === "ups") keywords.push("UPS package not received");
+      if (company.country === "us" && company.slug === "dhl-express") keywords.push("DHL shipment delayed");
       const companyTitle = `${companyPageTitle(locale, company.name, country)} | ResolveNexa`;
       const companyDescription = locale === "en"
         ? clickFocusedCompanyDescriptions[`${company.country}:${company.slug}`] || `Find verified ${company.name} customer support in ${country}, official contact channels, common issue help and complaint guidance.`
