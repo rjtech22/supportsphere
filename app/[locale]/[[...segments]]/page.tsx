@@ -71,7 +71,7 @@ function companyPageTitle(locale: Locale, company: string, country: string) {
 
 const clickFocusedCompanyDescriptions: Record<string, string> = {
   "us:amazon": "Find official Amazon US customer service links and practical help for orders, missing packages, returns, refunds and unresolved support cases.",
-  "in:lg-india": "Check official LG warranty terms in India, book or track a repair, and find verified customer-care routes for appliance and electronics service.",
+  "in:lg-india": "Find official LG warranty support in India, repair booking, service-request status and verified customer-care routes for appliances and electronics.",
   "us:fedex": "Find official FedEx US customer service, tracking help and claims guidance for delayed, missing, damaged or delivered-but-not-received packages.",
   "gb:royal-mail": "Find official Royal Mail customer service, tracking and missing-parcel guidance, including the correct route for retail orders and claims.",
   "us:ups": "Find official UPS US customer service, tracking and claim links for missing, delayed or damaged packages, plus claim follow-up guidance.",
@@ -108,7 +108,7 @@ export async function generateMetadata({ params }: { params: Promise<PageParams>
       if (hasVerifiedPhone) keywords.push(`${company.name} contact number`);
       if (company.country === "in" && company.slug === "sbi") keywords.push("SBI CRCF complaint", "SBI complaint status");
       if (company.country === "in" && company.slug === "irctc") keywords.push("IRCTC eQuery", "IRCTC refund status", "IRCTC TDR support");
-      if (company.country === "in" && company.slug === "lg-india") keywords.push("LG warranty", "LG India warranty", "LG repair booking", "LG service status");
+      if (company.country === "in" && company.slug === "lg-india") keywords.push("LG warranty India support", "LG India warranty repair", "LG repair booking India", "LG warranty customer care", "LG service request status");
       if (company.country === "us" && company.slug === "fedex") keywords.push("FedEx tracking questions", "FedEx package not delivered", "FedEx claim", "FedEx customer service number");
       const companyTitle = `${companyPageTitle(locale, company.name, country)} | ResolveNexa`;
       const companyDescription = locale === "en"
@@ -302,6 +302,7 @@ async function Company({ locale, countryCode, slug }: { locale: Locale; countryC
           <h2>{d.company.escalationTitle}</h2>
           <p>{company.escalation}</p>
           {locale === "en" && company.country === "us" && company.slug === "amazon" && <p>If the order-linked support route does not resolve the problem, review <Link href={localePath(locale, "/guides/how-to-escalate-customer-complaint")}>how to escalate a customer complaint</Link> and use the <Link href={localePath(locale, "/guides/how-to-write-professional-complaint-email")}>complaint email guide</Link> to organise the case history and requested outcome.</p>}
+          {locale === "en" && company.country === "in" && company.slug === "lg-india" && <p>Before requesting a warranty replacement, review the <Link href={localePath(locale, "/guides/request-warranty-replacement")}>warranty repair and replacement guide</Link> for the documents and evidence to prepare. If an existing service request stalls, use the <Link href={localePath(locale, "/guides/customer-support-not-responding")}>customer-support follow-up guide</Link> without opening duplicate requests unless LG instructs you to do so.</p>}
           </section>
           <h2>{d.company.sourcesTitle}</h2>
           {company.sourceLinks.map((source) => <TrackedLink className="official-link" href={source.url} eventName="official_support_click" params={{ country: countryCode, company: slug, locale }} key={source.url}><span>{source.label}<small>{new URL(source.url).hostname}<span className="source-meta">Verified {company.verifiedAt}</span></small></span><ExternalLink /></TrackedLink>)}
